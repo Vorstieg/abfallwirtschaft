@@ -39,6 +39,7 @@ def is_date_range_valid(start_str, end_str, today):
         print(f"Warning: Could not parse date range '{start_str}' - '{end_str}'. Skipping.")
         return False
 
+
 def generate_xml_from_custom_csv():
     """
     Reads the specified fixed-format CSV and generates an Odoo-compatible XML file.
@@ -48,19 +49,18 @@ def generate_xml_from_custom_csv():
 
     try:
         with open(CSV_FILENAME, mode='r', encoding='utf-8') as csv_file:
-            # Using csv.reader for files without headers
-            csv_reader = csv.reader(csv_file)
-            
+            csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"', escapechar='\\')
+
             # Create the root elements for the Odoo XML file
             odoo_node = ET.Element('odoo')
             data_node = ET.SubElement(odoo_node, 'data', {'noupdate': '1'})
 
             print(f"Reading from '{CSV_FILENAME}'...")
-            
+
             record_count = 0
             for i, row in enumerate(csv_reader):
                 if len(row) < 13:
-                    print(f"Warning: Skipping malformed row {i+1}. Not enough columns.")
+                    print(f"Warning: Skipping malformed row {i + 1}. Not enough columns.")
                     continue
 
                 # --- Date Validation ---
@@ -84,18 +84,25 @@ def generate_xml_from_custom_csv():
                     'note': row[10], # Assuming you have a 'note' field
                 }
 
-                # Generate a unique ID for the XML record
-                record_id = f"{ID_PREFIX}_record_{i+1}"
-                
+                # --- External ID Generation ---
+                key_number = row[3].strip()
+                dangerous_flag = row[5].strip()
+
+                if not key_number:
+                    print(f"Warning: Skipping row {i + 1} as it's missing a key_number required for the ID.")
+                    continue
+
+                record_id = f"{key_number}{dangerous_flag}"
+
                 # Create the <record> element
                 record_node = ET.SubElement(data_node, 'record', {'id': record_id, 'model': MODEL_NAME})
-                
+
                 # Create a <field> element for each mapped field
                 for field_name, value in field_map.items():
                     if value and value.strip(): # Only create a tag if the value is not empty
                         field_node = ET.SubElement(record_node, 'field', {'name': field_name})
                         field_node.text = value.strip()
-                
+
                 record_count += 1
 
             # Create a nicely formatted string from the XML tree
@@ -106,7 +113,7 @@ def generate_xml_from_custom_csv():
             # Write the formatted XML to the output file
             with open(OUTPUT_XML_FILENAME, 'wb') as xml_file:
                 xml_file.write(pretty_xml_string)
-            
+
             print(f"\nSuccessfully generated '{OUTPUT_XML_FILENAME}' with {record_count} valid records.")
             print("You can now copy this file to your module's 'data' directory.")
 
@@ -118,4 +125,3 @@ def generate_xml_from_custom_csv():
 
 if __name__ == '__main__':
     generate_xml_from_custom_csv()
-
