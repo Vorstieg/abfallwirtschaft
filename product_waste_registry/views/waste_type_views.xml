@@ -74,7 +74,7 @@
         <!-- Menu Items -->
         <menuitem
                 id="menu_product_waste_registry_root"
-                name="Waste Management"
+                name="Waste Registry"
                 sequence="20"/>
 
         <menuitem

@@ -23,12 +23,10 @@ class WasteType(models.Model):
         in Many2one dropdowns.
         """
         for record in self:
-            name = record.name
+            name = record.key_number + " - " + record.name
             if record.specification:
-                # Format the name as "Name (Specification)" if specification exists
                 name += f" ({record.specification})"
             if record.dangerous:
-                # Format the name as "Name (Specification)" if specification exists
                 name += f" [{record.dangerous}]"
             record.display_name = name
 
@@ -44,7 +42,7 @@ class WasteType(models.Model):
         if name.isdigit():
             domain = expression.OR([
                 domain,
-                [('key_number', '=', name)],
+                [('key_number', '=like', name + '%')],
                 [('gtin', '=', name)]
             ])
 
@@ -53,3 +51,4 @@ class WasteType(models.Model):
 
         records = self.search(full_domain, limit=limit)
         return [(record.id, record.display_name) for record in records]
+

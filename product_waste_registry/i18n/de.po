@@ -24,8 +24,8 @@ msgstr "Abfallarten"
 
 #. module: product_waste_registry
 #: model:ir.ui.menu,name:product_waste_registry.menu_product_waste_registry_root
-msgid "Waste Management"
-msgstr "Abfallwirtschaft"
+msgid "Waste Registry"
+msgstr "Abfallverzeichnis"
 
 #. module: product_waste_registry
 #: model:ir.model.fields,field_description:product_waste_registry.field_waste_type__note
@@ -91,5 +91,5 @@ msgstr "Abfallart suchen"
 #. module: product_waste_registry
 #: model:ir.model.fields,field_help:product_waste_registry.field_product_template__waste_type_id
 #: model_terms:ir.ui.view,arch_db:product_waste_registry.view_waste_type_form
-msgid "Assign a waste type to this product. (You can search by name, or enter a full GTIN or key number)"
-msgstr "Weisen Sie diesem Produkt eine Abfallart zu. (Sie können nach Namen suchen oder eine vollständige GTIN oder Schlüsselnummer eingeben)"
+msgid "Assign a waste type to this product. (You can search by name or key number, or enter a full GTIN)"
+msgstr "Weisen Sie diesem Produkt eine Abfallart zu. (Sie können nach Namen oder Schlüsselnummer suchen oder eine vollständige GTIN eingeben)"

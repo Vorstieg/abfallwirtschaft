@@ -37,6 +37,6 @@ The primary data source for this module is the [**Abfallverzeichnis from the EDM
     * Restart your Odoo server.
     * Navigate to the **Apps** menu in Odoo.
     * Click **Update Apps List**.
-    * Search for "Waste Management" and click **Install**.
+    * Search for "Waste Registry" and click **Install**.
 
 The module will be installed, and the `waste.type` model will be populated with all the data from your generated XML file.
