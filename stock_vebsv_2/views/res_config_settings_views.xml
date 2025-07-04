@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="waste_management_config_settings_view_form" model="ir.ui.view">
+            <field name="name">waste.management.config.settings.view.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="100"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="Waste Management" string="Waste Management" name="calendar"
+                         groups="base.group_system">
+                        <block title="EDM User Data" name="waste_management">
+                            <setting string="EDM Username" id="edm_user_data">
+                                <field name="edm_username"/>
+                            </setting>
+                            <setting string="EDM Application Key" id="edm_user_data">
+                                <field name="edm_secret"/>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+        <record id="action_waste_management_config_settings" model="ir.actions.act_window">
+            <field name="name">Configure Waste Management</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="view_id" ref="waste_management_config_settings_view_form"/>
+        </record>
+        <menuitem id="menu_waste_management_configuration"
+                  name="Configuration"
+                  parent="product_waste_registry.menu_product_waste_registry_root"
+                  sequence="100"/>
+        <menuitem id="menu_waste_management_settings"
+                  name="Settings"
+                  parent="menu_waste_management_configuration"
+                  action="action_waste_management_config_settings"
+                  sequence="10"/>
+    </data>
+</odoo>
