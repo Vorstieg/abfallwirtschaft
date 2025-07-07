@@ -76,7 +76,7 @@
                 </field>
                 <group>
                     <group class="oe_subtotal_footer">
-                        <field name="purchase_order_tax_totals" widget="account-tax-totals-field" nolabel="1" readonly="1"/>
+                        <field name="purchase_order_tax_totals" widget="account-tax-totals-field" nolabel="1" readonly="1" invisible="('purchase_order_id', '=', False)"/>
                     </group>
                 </group>
             </xpath>
