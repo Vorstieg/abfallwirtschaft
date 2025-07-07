@@ -1,0 +1,85 @@
+<odoo>
+    <record id="view_order_form_inherit_purchase" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.purchase</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Add the purchase order field just below the partner field -->
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="purchase_order_id" options="{'no_create': True}"/>
+            </xpath>
+
+
+            <xpath expr="//group[@name='note_group']" position="after">
+                <!-- Your new element(s) here -->
+                <p>Verbundener Einkauf</p>
+                <field name="purchase_order_line_ids"
+                       widget="product_label_section_and_note_field_o2m"
+                       mode="list,kanban"
+                       context="{'default_state': 'draft'}"
+                       readonly="true">
+                    <list string="Purchase Order Lines" editable="bottom">
+                        <field name="tax_calculation_rounding_method" column_invisible="True"/>
+                        <field name="display_type" column_invisible="True"/>
+                        <field name="company_id" column_invisible="True"/>
+                        <field name="currency_id" column_invisible="True"/>
+                        <field name="state" column_invisible="True"/>
+                        <field name="product_type" column_invisible="True"/>
+                        <field name="product_uom" column_invisible="True" groups="!uom.group_uom"/>
+                        <field name="product_uom_category_id" column_invisible="True"/>
+                        <field name="invoice_lines" column_invisible="True"/>
+                        <field name="sequence" widget="handle"/>
+                        <field
+                                name="product_id"
+                                widget="product_label_section_and_note_field"
+                                readonly="state in ('purchase', 'to approve', 'done', 'cancel') or is_downpayment"
+                                required="not display_type and not is_downpayment"
+                                context="{'partner_id':parent.partner_id, 'quantity':product_qty, 'company_id': parent.company_id}"
+                                force_save="1"
+                                domain="[('purchase_ok', '=', True), '|', ('company_id', '=', False), ('company_id', 'parent_of', parent.company_id)]"/>
+                        <field name="name" widget="section_and_note_text" optional="show"/>
+                        <field name="date_planned" optional="hide" required="not display_type and not is_downpayment"
+                               force_save="1" readonly="is_downpayment"/>
+                        <field name="analytic_distribution" widget="analytic_distribution"
+                               optional="hide"
+                               groups="analytic.group_analytic_accounting"
+                               options="{'product_field': 'product_id', 'business_domain': 'purchase_order', 'amount_field': 'price_subtotal'}"/>
+                        <field name="product_qty" readonly="is_downpayment"/>
+                        <field name="qty_received_manual" column_invisible="True"/>
+                        <field name="qty_received_method" column_invisible="True"/>
+                        <field name="qty_received" string="Received"
+                               column_invisible="parent.state not in ('purchase', 'done')"
+                               readonly="qty_received_method != 'manual' or is_downpayment" optional="show"/>
+                        <field name="qty_invoiced" string="Billed"
+                               column_invisible="parent.state not in ('purchase', 'done')" optional="show"/>
+                        <field name="product_uom" string="UoM" groups="uom.group_uom"
+                               readonly="state in ('purchase', 'done', 'cancel') or is_downpayment"
+                               required="not display_type and not is_downpayment"
+                               options="{'no_open': True}"
+                               force_save="1" optional="show"/>
+                        <field name="product_packaging_qty" invisible="not product_id or not product_packaging_id"
+                               groups="product.group_stock_packaging" optional="show"/>
+                        <field name="product_packaging_id" invisible="not product_id"
+                               context="{'default_product_id': product_id, 'list_view_ref':'product.product_packaging_tree_view', 'form_view_ref':'product.product_packaging_form_view'}"
+                               groups="product.group_stock_packaging" optional="show"/>
+                        <field name="price_unit" readonly="qty_invoiced != 0"/>
+                        <button name="action_purchase_history" type="object" icon="fa-history" title="Purchase History"
+                                invisible="not id"/>
+                        <field name="taxes_id" widget="many2many_tags"
+                               domain="[('type_tax_use', '=', 'purchase'), ('company_id', 'parent_of', parent.company_id), ('country_id', '=', parent.tax_country_id), ('active', '=', True)]"
+                               context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}"
+                               options="{'no_create': True}" optional="show" readonly="is_downpayment"/>
+                        <field name="discount" string="Disc.%" width="50px" readonly="qty_invoiced != 0"
+                               optional="hide"/>
+                        <field name="price_subtotal" string="Amount"/>
+                    </list>
+                </field>
+                <group>
+                    <group class="oe_subtotal_footer">
+                        <field name="purchase_order_tax_totals" widget="account-tax-totals-field" nolabel="1" readonly="1"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
