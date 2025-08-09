@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="origin_9008390100257" model="waste.origin.type">
+            <field name="gtin">9008390100257</field>
+            <field name="rdp_code">P1</field>
+            <field name="description">Abfall aus dem Produktions- oder Dienstleistungsbereich</field>
+            <field name="detailed_description"/>
+            <field name="notes">Zur Herkunftsangabe für Abfälle, die nicht aus der Abfallsammlung oder behandlung stammen sondern aus einer Dienstleistung oder Produktion (ohne Abfalleinsatz)</field>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008003" model="waste.origin.type">
+            <field name="gtin">9008390008003</field>
+            <field name="rdp_code">R1</field>
+            <field name="description">Hauptverwendung als Brennstoff oder als anderes Mittel der Energieerzeugung</field>
+            <field name="detailed_description"/>
+            <field name="notes">Dieses Verfahren ist für die tatsächliche Verbrennung bzw. für den tatsächlichen Einsatz als Mittel zur Energieerzeugung zu verwenden und nicht für hierfür erforderliche Vorbehandlungsschritte (zB die Herstellung von Ersatzbrennstoffen, für diese ist das Verfahren R3_04 zu verwenden)</field>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008010" model="waste.origin.type">
+            <field name="gtin">9008390008010</field>
+            <field name="rdp_code">R2</field>
+            <field name="description">Rückgewinnung/Regenerierung von Lösemitteln</field>
+            <field name="detailed_description"/>
+            <field name="notes">Dieses Verfahren ist für die stoffliche Verwertung von Lösemitteln zu verwenden</field>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008027" model="waste.origin.type">
+            <field name="gtin">9008390008027</field>
+            <field name="rdp_code">R3</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390110133" model="waste.origin.type">
+            <field name="gtin">9008390110133</field>
+            <field name="rdp_code">R3_01</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Aussortieren von Störstoffen aus Abfällen zur Verwertung</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden, wenn aus den in die Anlage eingebrachten Abfällen untergeordnete Mengen an nicht verwertbaren Anteilen abgetrennt werden und die verwertbaren Abfälle gleichartig weiter behandelt werden</field>
+            <field name="hint">bisher umfasst von R3 und R3a</field>
+        </record>
+        <record id="origin_9008390110317" model="waste.origin.type">
+            <field name="gtin">9008390110317</field>
+            <field name="rdp_code">R3_02</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Aufteilen von Stoffströmen zur Verwertung zB durch Sortierung</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden, wenn die in die Anlage (zB die Sortieranlage) eingebrachten Abfälle zB an Hand ihrer Eigenschaften in verschiedene Ströme zur nachfolgenden Verwertung aufgeteilt werden (zB in unterschiedliche Verwertungsanlagen eingebracht werden)</field>
+            <field name="hint">bisher umfasst von R3 und R3a</field>
+        </record>
+        <record id="origin_9008390110324" model="waste.origin.type">
+            <field name="gtin">9008390110324</field>
+            <field name="rdp_code">R3_03</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Herstellung definierter Mischungen</field>
+            <field name="notes">Bei diesem Verfahren handelt es sich NICHT um ein einfaches Zusammenmischen verschiedener Abfälle (dies ist R12_01 zuzuordnen), sondern um die Herstellung von Gemischen mit definierten Eigenschaften zur weiteren Verwertung</field>
+            <field name="hint">bisher umfasst von R3</field>
+        </record>
+        <record id="origin_9008390110331" model="waste.origin.type">
+            <field name="gtin">9008390110331</field>
+            <field name="rdp_code">R3_04</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Herstellung von Ersatzbrennstoffen oder Ersatzbrennstoffprodukten gemäß AVV</field>
+            <field name="notes">Dieses Verfahren ist für die qualitätsgesicherte Herstellung von Ersatzbrennstoffen und Ersatzbrennstoffprodukten gemäß den Bestimmungen der Abfallverbrennungs-Verordnung zu verwenden, unabhängig davon, welche Abfälle als Ausgangsstoffe eingesetzt werden</field>
+            <field name="hint">bisher umfasst von R3</field>
+        </record>
+        <record id="origin_9008390110348" model="waste.origin.type">
+            <field name="gtin">9008390110348</field>
+            <field name="rdp_code">R3_05</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Vorbehandlung von festen Siedlungsabfällen und anderen organischen Abfällen zur thermischen Verwertung</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden, wenn Holz-, Papier-, Kunststoffabfälle etc. für die thermische Verwertung in Abfallmitverbrennungsanlagen vorbehandelt werden, aber keine Ersatzbrennstoffe hergestellt werden (für die Ersatzbrennstoffherstellung ist das Verfahren R3_04 zu verwenden); ebenso ist dieses Verfahren zu verwenden, wenn feste Siedlungsabfälle für die Verbrennung in Verbrennungsanlagen, die die Energieeffizienz-Kriterien gemäß AWG 2002 erfüllen, vorbehandelt werden</field>
+            <field name="hint">bisher umfasst von R3</field>
+        </record>
+        <record id="origin_9008390110355" model="waste.origin.type">
+            <field name="gtin">9008390110355</field>
+            <field name="rdp_code">R3_06</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Verwertung von Kunststoffen</field>
+            <field name="notes">Dieses Verfahren ist für die stoffliche Verwertung von Kunststoffabfall-Strömen zB aus der EAG- oder Altfahrzeuge-verwertung zu verwenden; werden Kunststoffabfälle zur Herstellung von Ersatzbrennstoffen verwendet, so ist das Verfahren R3_04 zu verwenden</field>
+            <field name="hint">bisher umfasst von R3</field>
+        </record>
+        <record id="origin_9008390110362" model="waste.origin.type">
+            <field name="gtin">9008390110362</field>
+            <field name="rdp_code">R3_07</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Verwertung von Holz</field>
+            <field name="notes">Dieses Verfahren ist für die stoffliche Verwertung von Holzabfällen zu verwenden; werden Holzabfälle zur Herstellung von Ersatzbrennstoffen verwendet, so ist das Verfahren R3_04 zu verwenden</field>
+            <field name="hint">bisher umfasst von R3</field>
+        </record>
+        <record id="origin_9008390110379" model="waste.origin.type">
+            <field name="gtin">9008390110379</field>
+            <field name="rdp_code">R3_08</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Verwertung von Papier</field>
+            <field name="notes">Dieses Verfahren ist für die stoffliche Verwertung von Papierabfällen zu verwenden</field>
+            <field name="hint">bisher umfasst von R3</field>
+        </record>
+        <record id="origin_9008390109731" model="waste.origin.type">
+            <field name="gtin">9008390109731</field>
+            <field name="rdp_code">R3_09</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Biologische Verwertung - Bioabfallkompostierung</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von R3 und R3b</field>
+        </record>
+        <record id="origin_9008390109748" model="waste.origin.type">
+            <field name="gtin">9008390109748</field>
+            <field name="rdp_code">R3_10</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Biologische Verwertung - Klärschlammkompostierung</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von R3 und R3c</field>
+        </record>
+        <record id="origin_9008390109755" model="waste.origin.type">
+            <field name="gtin">9008390109755</field>
+            <field name="rdp_code">R3_11</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Biologische Verwertung - Restmüllkompostierung</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von R3 und R3d</field>
+        </record>
+        <record id="origin_9008390109762" model="waste.origin.type">
+            <field name="gtin">9008390109762</field>
+            <field name="rdp_code">R3_12</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Biologische Verwertung - Erdenherstellung (für Rekultivierungsschichten)</field>
+            <field name="notes">Dieses Verfahren ist für die qualitätsgesicherte Herstellung von organikreichen Erden, die für Rekultivierungsschichten oder als Pflanzerden verwendet werden, anzugeben</field>
+            <field name="hint">bisher umfasst von R3 und R3e</field>
+        </record>
+        <record id="origin_9008390109779" model="waste.origin.type">
+            <field name="gtin">9008390109779</field>
+            <field name="rdp_code">R3_13</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Biologische Verwertung - anaerobe Verwertung</field>
+            <field name="notes">Dieses Verfahren ist für die Vergärung organikreicher Abfälle mit nachfolgender Verwertung des Gärrückstands zu verwenden</field>
+            <field name="hint">bisher umfasst von R3 und R3f</field>
+        </record>
+        <record id="origin_9008390109786" model="waste.origin.type">
+            <field name="gtin">9008390109786</field>
+            <field name="rdp_code">R3_14</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Produktherstellung / Vorbereitung zur Wiederverwendung, soweit keine spezifischeren Eintragungen wie zB Bioabfallkompostierung zutreffen</field>
+            <field name="notes">Dieses Verfahren ist zB zu verwenden, wenn in einer Produktionsanlage definierte, marktfähige Produkte hergestellt werden (zB handelsübliches Kunststoffgranulat aus Produktionsabfällen) oder wenn organische Abfälle so aufbereitet werden, dass sie für ihren ursprünglichen Verwendungszweck wiederverwendet werden können; für die Kompostherstellung gemäß Kompostverordnung sind die Verfahren R3_09, R3_10 oder R3_11 zu verwenden</field>
+            <field name="hint">bisher umfasst von R3 und R3g</field>
+        </record>
+        <record id="origin_9008390109793" model="waste.origin.type">
+            <field name="gtin">9008390109793</field>
+            <field name="rdp_code">R3_15</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Altautoverwertung</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden, wenn Altauto-Teile, die überwiegend aus organischen Stoffen wie zB aus Kunststoffen bestehen, verwertet werden; für die weitere Verwertung der hierbei anfallenden Stoffströme sind die abfallspezifischen Verfahren wie zB R3_06 zu verwenden</field>
+            <field name="hint">bisher umfasst von R3 und R3h</field>
+        </record>
+        <record id="origin_9008390110386" model="waste.origin.type">
+            <field name="gtin">9008390110386</field>
+            <field name="rdp_code">R3_16</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Altreifenverwertung</field>
+            <field name="notes">Dieses Verfahren ist für die stoffliche Verwertung von Altreifen zu verwenden, unabhängig davon, ob die Reifen bei der Altauto-Verwertung anfallen oder getrennt gesammelt wurden</field>
+            <field name="hint">bisher umfasst von R3 und R3h</field>
+        </record>
+        <record id="origin_9008390109809" model="waste.origin.type">
+            <field name="gtin">9008390109809</field>
+            <field name="rdp_code">R3_17</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Elektro- und Elektronikaltgeräteverwertung</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden, wenn Elektro- oder Elektronikaltgeräte oder Teile hiervon verwertet werden, die überwiegend aus organischen Stoffen wie zB aus Kunststoffen bestehen; für die weitere Verwertung der hierbei anfallenden Stoffströme sind die abfallspezifischen Verfahren wie zB R3_06 zu verwenden</field>
+            <field name="hint">bisher umfasst von R3 und R3i</field>
+        </record>
+        <record id="origin_9008390109816" model="waste.origin.type">
+            <field name="gtin">9008390109816</field>
+            <field name="rdp_code">R3_18</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">CPO-Behandlung (chemisch-physikalische Behandlung organischer Stoffe)</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von R3 und R3j</field>
+        </record>
+        <record id="origin_9008390109823" model="waste.origin.type">
+            <field name="gtin">9008390109823</field>
+            <field name="rdp_code">R3_19</field>
+            <field name="description">Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden (einschließlich der Kompostierung und sonstiger biologischer Umwandlungsverfahren)</field>
+            <field name="detailed_description">Mit einem anderen als den dezidiert genannten Verfahren; ausgenommen Vorbehandlungsschritte</field>
+            <field name="notes">Für erste, unspezifische Vorbehandlungsschritte vor der eigentlichen Verwertung ist das Verfahren R12_01 zu verwenden</field>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008133" model="waste.origin.type">
+            <field name="gtin">9008390008133</field>
+            <field name="rdp_code">R4</field>
+            <field name="description">Recycling/Rückgewinnung von Metallen und Metallverbindungen</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390110393" model="waste.origin.type">
+            <field name="gtin">9008390110393</field>
+            <field name="rdp_code">R4_01</field>
+            <field name="description">Recycling/Rückgewinnung von Metallen und Metallverbindungen</field>
+            <field name="detailed_description">Trennung mit chemisch-physikalischen oder trocken-physikalischen Verfahren</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden für die Auftrennung verschiedener Metallströme oder die Abtrennung von Störstoffen</field>
+            <field name="hint">bisher umfasst von R4 und R4a</field>
+        </record>
+        <record id="origin_9008390109830" model="waste.origin.type">
+            <field name="gtin">9008390109830</field>
+            <field name="rdp_code">R4_02</field>
+            <field name="description">Recycling/Rückgewinnung von Metallen und Metallverbindungen</field>
+            <field name="detailed_description">Sonstige chemisch-physikalische Behandlung (Schmelzen, Sintern, Fällen usw)</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden für die Auftrennung verschiedener Metallströme oder die Abtrennung von Störstoffen</field>
+            <field name="hint">bisher umfasst von R4 und R4b</field>
+        </record>
+        <record id="origin_9008390110409" model="waste.origin.type">
+            <field name="gtin">9008390110409</field>
+            <field name="rdp_code">R4_03</field>
+            <field name="description">Recycling/Rückgewinnung von Metallen und Metallverbindungen</field>
+            <field name="detailed_description">Metallshreddern</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden für die Einbringung von Metallabfällen in Shredderanlagen wobei die Metallabfälle nachfolgend verwertet werden</field>
+            <field name="hint">bisher umfasst von R4</field>
+        </record>
+        <record id="origin_9008390109847" model="waste.origin.type">
+            <field name="gtin">9008390109847</field>
+            <field name="rdp_code">R4_04</field>
+            <field name="description">Recycling/Rückgewinnung von Metallen und Metallverbindungen</field>
+            <field name="detailed_description">Produktherstellung / Vorbereitung zur Wiederverwendung, soweit keine spezifischeren Eintragungen zutreffen</field>
+            <field name="notes">Dieses Verfahren ist zB zu verwenden, wenn in einer Produktionsanlage definierte, marktfähige Produkte hergestellt werden (zB definierte Bleilegierungen aus Bleiabfällen) oder wenn Metallabfälle so aufbereitet werden, dass sie für ihren ursprünglichen Verwendungszweck wiederverwendet werden können</field>
+            <field name="hint">bisher umfasst von R4 und R4c</field>
+        </record>
+        <record id="origin_9008390109854" model="waste.origin.type">
+            <field name="gtin">9008390109854</field>
+            <field name="rdp_code">R4_05</field>
+            <field name="description">Recycling/Rückgewinnung von Metallen und Metallverbindungen</field>
+            <field name="detailed_description">Altautoverwertung</field>
+            <field name="notes">Dieses Verfahren ist sowohl zu verwenden, wenn Altautos oder Altauto-Teile verwertet werden; für die weitere Verwertung der hierbei anfallenden Stoffströme zB Kunststoffabfälle, Metalle sind die abfallspezifischen Verfahren wie zB R3_06, R4_07 zu verwenden</field>
+            <field name="hint">bisher umfasst von R4 und R4d</field>
+        </record>
+        <record id="origin_9008390109861" model="waste.origin.type">
+            <field name="gtin">9008390109861</field>
+            <field name="rdp_code">R4_06</field>
+            <field name="description">Recycling/Rückgewinnung von Metallen und Metallverbindungen</field>
+            <field name="detailed_description">Elektro- und Elektronikaltgeräteverwertung</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden, wenn ganze Elektro- oder Elektronikaltgeräte oder Teile hiervon verwertet werden; für die weitere Verwertung der hierbei anfallenden Stoffströme, zB Kunststoffabfälle, Metalle, sind die abfallspezifischen Verfahren wie zB R3_06, R4_07 zu verwenden</field>
+            <field name="hint">bisher umfasst von R4 und R4e</field>
+        </record>
+        <record id="origin_9008390109878" model="waste.origin.type">
+            <field name="gtin">9008390109878</field>
+            <field name="rdp_code">R4_07</field>
+            <field name="description">Recycling/Rückgewinnung von Metallen und Metallverbindungen</field>
+            <field name="detailed_description">Stoffliche Verwertung von Metallen, soweit kein spezifischeres R4-Verfahren zutrifft; ausgenommen Vorbehandlungsschritte</field>
+            <field name="notes">Für erste, unspezifische Vorbehandlungsschritte vor der eigentlichen Verwertung ist das Verfahren R12_02 zu verwenden</field>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008195" model="waste.origin.type">
+            <field name="gtin">9008390008195</field>
+            <field name="rdp_code">R5</field>
+            <field name="description">Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390110416" model="waste.origin.type">
+            <field name="gtin">9008390110416</field>
+            <field name="rdp_code">R5_01</field>
+            <field name="description">Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="detailed_description">Aussortieren von Störstoffen aus Abfällen zur Verwertung</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden, wenn aus den in die Anlage eingebrachten Abfällen untergeordnete Mengen an nicht verwertbaren Anteilen abgetrennt werden und die verwertbaren Abfälle gleichartig weiter behandelt werden; für Baurestmassenaufbereitung ist das Verfahren R5_06 zu verwenden</field>
+            <field name="hint">bisher umfasst von R5 und R5a</field>
+        </record>
+        <record id="origin_9008390110423" model="waste.origin.type">
+            <field name="gtin">9008390110423</field>
+            <field name="rdp_code">R5_02</field>
+            <field name="description">Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="detailed_description">Aufteilen von Stoffströmen zur Verwertung zB durch Sortierung</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden, wenn die in die Anlage (zB die Sortieranlage) eingebrachten Abfälle zB an Hand ihrer Eigenschaften in verschiedene Ströme zur nachfolgenden Verwertung aufgeteilt werden (zB in unterschiedliche Verwertungsanlagen eingebracht werden)</field>
+            <field name="hint">bisher umfasst von R5 und R5a</field>
+        </record>
+        <record id="origin_9008390110430" model="waste.origin.type">
+            <field name="gtin">9008390110430</field>
+            <field name="rdp_code">R5_03</field>
+            <field name="description">Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="detailed_description">Herstellung definierter Mischungen</field>
+            <field name="notes">Bei diesem Verfahren handelt es sich NICHT um ein einfaches Zusammenmischen verschiedener Abfälle (dies ist R12_03 zuzuordnen), sondern um die Herstellung von Gemischen mit definierten Eigenschaften zur weiteren Verwertung</field>
+            <field name="hint">bisher umfasst von R5 und R5a</field>
+        </record>
+        <record id="origin_9008390109885" model="waste.origin.type">
+            <field name="gtin">9008390109885</field>
+            <field name="rdp_code">R5_04</field>
+            <field name="description">Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="detailed_description">Erdenherstellung (für Untergrundverfüllung)</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden für Erden, die nur geringe organische Anteile aufweisen und zur Untergrundverfüllungen eingesetzt werden; für Verfüllungsmaßnahmen ist das Verfahren R5_05 zu verwenden</field>
+            <field name="hint">bisher umfasst von R5 und R5b</field>
+        </record>
+        <record id="origin_9008390109977" model="waste.origin.type">
+            <field name="gtin">9008390109977</field>
+            <field name="rdp_code">R5_05</field>
+            <field name="description">Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="detailed_description">Einsatz von Bodenaushub/Erden für Verfüllungen</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden für Untergrundverfüllungen mit Bodenaushub/Erden, die nur geringe organische Anteile aufweisen; für konkrete Baumaßnahmen ist das Verfahren R5_07 zu verwenden</field>
+            <field name="hint">bisher umfasst von R10 und R10c</field>
+        </record>
+        <record id="origin_9008390109892" model="waste.origin.type">
+            <field name="gtin">9008390109892</field>
+            <field name="rdp_code">R5_06</field>
+            <field name="description">Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="detailed_description">Aufbereitung von Baurestmassen</field>
+            <field name="notes">Dieses Verfahren ist für alle Arten der Baurestmassenaufbereitung (zB Herstellung von Recyclingbaustoffen und Recyclingbaustoffprodukten, Einbringen von Alt-Asphalt in eine Asphaltmischanlage, …) zu verwenden</field>
+            <field name="hint">bisher umfasst von R5 und R5c</field>
+        </record>
+        <record id="origin_9008390109908" model="waste.origin.type">
+            <field name="gtin">9008390109908</field>
+            <field name="rdp_code">R5_07</field>
+            <field name="description">Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="detailed_description">Einsatz für Baumaßnahmen (einschließlich technischer Schüttungen)</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden für die Verwertung von Abfällen im Rahmen von Baumaßnahmen im unbedingt erforderlichen Ausmaß</field>
+            <field name="hint">bisher umfasst von R5 und R5d</field>
+        </record>
+        <record id="origin_9008390109922" model="waste.origin.type">
+            <field name="gtin">9008390109922</field>
+            <field name="rdp_code">R5_08</field>
+            <field name="description">Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="detailed_description">Elektro- und Elektronikaltgeräteverwertung</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden für die Verwertung von Teilen von Elektroaltgeräten, die zum Großteil aus anorganischen Stoffen bestehen</field>
+            <field name="hint">bisher umfasst von R5 und R5f</field>
+        </record>
+        <record id="origin_9008390110447" model="waste.origin.type">
+            <field name="gtin">9008390110447</field>
+            <field name="rdp_code">R5_09</field>
+            <field name="description">Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="detailed_description">Verwertung von Glasabfällen</field>
+            <field name="notes">Dieses Verfahren ist zu verwenden für die Verwertung von Glasabfällen aus der getrennten Sammlung oder von Glasabfällen, die bei anderen Behandlungsverfahren angefallen sind</field>
+            <field name="hint">bisher umfasst von R5</field>
+        </record>
+        <record id="origin_9008390109939" model="waste.origin.type">
+            <field name="gtin">9008390109939</field>
+            <field name="rdp_code">R5_10</field>
+            <field name="description">Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="detailed_description">CPA-Behandlung (chemisch-physikalische Behandlung anorganischer Stoffe)</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von R5 und R5g</field>
+        </record>
+        <record id="origin_9008390110454" model="waste.origin.type">
+            <field name="gtin">9008390110454</field>
+            <field name="rdp_code">R5_11</field>
+            <field name="description">Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="detailed_description">Rückgewinnung anorganischer Stoffe durch Deponierückbau</field>
+            <field name="notes">Dieses Verfahren ist für die Verwertung anorganischer Stoffe, die beim Deponierückbau anfallen, zu verwenden</field>
+            <field name="hint">bisher umfasst von R5</field>
+        </record>
+        <record id="origin_9008390109915" model="waste.origin.type">
+            <field name="gtin">9008390109915</field>
+            <field name="rdp_code">R5_12</field>
+            <field name="description">Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="detailed_description">Produktherstellung / Vorbereitung zur Wiederverwendung, soweit keine spezifischeren Eintragungen wie zB Erdenherstellung zutreffen</field>
+            <field name="notes">Dieses Verfahren ist zB zu verwenden, wenn in einer Produktionsanlage definierte, marktfähige Produkte hergestellt werden (zB Glas aus Altglas) oder wenn anorganische Abfälle so aufbereitet werden, dass sie für ihren ursprünglichen Verwendungszweck wiederverwendet werden können</field>
+            <field name="hint">bisher umfasst von R5 und R5e</field>
+        </record>
+        <record id="origin_9008390109946" model="waste.origin.type">
+            <field name="gtin">9008390109946</field>
+            <field name="rdp_code">R5_13</field>
+            <field name="description">Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="detailed_description">Mit einem anderen als den dezidiert genannten Verfahren; ausgenommen Vorbehandlungsschritte</field>
+            <field name="notes">Für erste, unspezifische Vorbehandlungsschritte vor der eigentlichen Verwertung ist das Verfahren R12_03 zu verwenden</field>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008270" model="waste.origin.type">
+            <field name="gtin">9008390008270</field>
+            <field name="rdp_code">R6</field>
+            <field name="description">Regenerierung von Säuren und Basen</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008287" model="waste.origin.type">
+            <field name="gtin">9008390008287</field>
+            <field name="rdp_code">R7</field>
+            <field name="description">Wiedergewinnung von Bestandteilen, die der Bekämpfung der Verunreinigungen dienen</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008294" model="waste.origin.type">
+            <field name="gtin">9008390008294</field>
+            <field name="rdp_code">R8</field>
+            <field name="description">Wiedergewinnung von Katalysatorenbestandteilen</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008300" model="waste.origin.type">
+            <field name="gtin">9008390008300</field>
+            <field name="rdp_code">R9</field>
+            <field name="description">Erneute Ölraffination oder andere Wiederverwendungen von Öl</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008317" model="waste.origin.type">
+            <field name="gtin">9008390008317</field>
+            <field name="rdp_code">R10</field>
+            <field name="description">Aufbringung auf den Boden zum Nutzen der Landwirtschaft oder zur ökologischen Verbesserung</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390109953" model="waste.origin.type">
+            <field name="gtin">9008390109953</field>
+            <field name="rdp_code">R10_01</field>
+            <field name="description">Aufbringung auf den Boden zum Nutzen der Landwirtschaft oder zur ökologischen Verbesserung</field>
+            <field name="detailed_description">Bodenverbesserung und Düngung</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von R10a</field>
+        </record>
+        <record id="origin_9008390109960" model="waste.origin.type">
+            <field name="gtin">9008390109960</field>
+            <field name="rdp_code">R10_02</field>
+            <field name="description">Aufbringung auf den Boden zum Nutzen der Landwirtschaft oder zur ökologischen Verbesserung</field>
+            <field name="detailed_description">Rekultivierung</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von R10b</field>
+        </record>
+        <record id="origin_9008390109984" model="waste.origin.type">
+            <field name="gtin">9008390109984</field>
+            <field name="rdp_code">R10_03</field>
+            <field name="description">Aufbringung auf den Boden zum Nutzen der Landwirtschaft oder zur ökologischen Verbesserung</field>
+            <field name="detailed_description">Mit einem anderen als den dezidiert genannten Verfahren</field>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008355" model="waste.origin.type">
+            <field name="gtin">9008390008355</field>
+            <field name="rdp_code">R11</field>
+            <field name="description">Verwendung von Abfällen, die bei einem der unter R1 bis R10 aufgeführten Verfahren gewonnen werden</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008362" model="waste.origin.type">
+            <field name="gtin">9008390008362</field>
+            <field name="rdp_code">R12</field>
+            <field name="description">Austausch von Abfällen, um sie einem der unter R1 bis R11 aufgeführten Verfahren zu unterziehen</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390109991" model="waste.origin.type">
+            <field name="gtin">9008390109991</field>
+            <field name="rdp_code">R12_01</field>
+            <field name="description">Austausch von Abfällen, um sie einem der unter R1 bis R11 aufgeführten Verfahren zu unterziehen</field>
+            <field name="detailed_description">vorbereitende Verfahren wie Demontage, Sortieren, Zerkleinern, Trocknen, Konditionieren, Vermischen oder Trennen zum Recycling/Rückgewinnung organischer Stoffe, die nicht als Lösemittel verwendet werden</field>
+            <field name="notes">Nur zu verwenden, wenn kein spezifischeres Detailverfahren in R3 zutrifft</field>
+            <field name="hint">bisher umfasst von R3 und R3a</field>
+        </record>
+        <record id="origin_9008390110003" model="waste.origin.type">
+            <field name="gtin">9008390110003</field>
+            <field name="rdp_code">R12_02</field>
+            <field name="description">Austausch von Abfällen, um sie einem der unter R1 bis R11 aufgeführten Verfahren zu unterziehen</field>
+            <field name="detailed_description">vorbereitende Verfahren wie Demontage, Sortieren, Zerkleinern, Trocknen, Konditionieren, Vermischen oder Trennen zum Recycling/Rückgewinnung von Metallen und Metallverbindungen</field>
+            <field name="notes">Nur zu verwenden, wenn kein spezifischeres Detailverfahren in R4 zutrifft</field>
+            <field name="hint">bisher umfasst von R4 und R4a</field>
+        </record>
+        <record id="origin_9008390110010" model="waste.origin.type">
+            <field name="gtin">9008390110010</field>
+            <field name="rdp_code">R12_03</field>
+            <field name="description">Austausch von Abfällen, um sie einem der unter R1 bis R11 aufgeführten Verfahren zu unterziehen</field>
+            <field name="detailed_description">vorbereitende Verfahren wie Demontage, Sortieren, Zerkleinern, Trocknen, Konditionieren, Vermischen oder Trennen zum Recycling/Rückgewinnung von anderen anorganischen Stoffen</field>
+            <field name="notes">Nur zu verwenden, wenn kein spezifischeres Detailverfahren in R5 zutrifft</field>
+            <field name="hint">bisher umfasst von R5 und R5a</field>
+        </record>
+        <record id="origin_9008390110027" model="waste.origin.type">
+            <field name="gtin">9008390110027</field>
+            <field name="rdp_code">R12_04</field>
+            <field name="description">Austausch von Abfällen, um sie einem der unter R1 bis R11 aufgeführten Verfahren zu unterziehen</field>
+            <field name="detailed_description">Sammlung und Lagerung mit vorbereitenden Behandlungsschritten wie z.B. Aussortieren, Zerkleinern, Verdichten, Vermengen, Vermischen, Neuverpacken</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von R13b</field>
+        </record>
+        <record id="origin_9008390110034" model="waste.origin.type">
+            <field name="gtin">9008390110034</field>
+            <field name="rdp_code">R12_05</field>
+            <field name="description">Austausch von Abfällen, um sie einem der unter R1 bis R11 aufgeführten Verfahren zu unterziehen</field>
+            <field name="detailed_description">Mit einem anderen als den dezidiert genannten vorbereitenden Verfahren</field>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390009635" model="waste.origin.type">
+            <field name="gtin">9008390009635</field>
+            <field name="rdp_code">R13</field>
+            <field name="description">Lagerung von Abfällen bis zur Anwendung eines der unter R1 bis R12 aufgeführten Verfahren (ausgenommen zeitweilige Lagerung – bis zur Sammlung – auf dem Gelände der Entstehung der Abfälle)</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008393" model="waste.origin.type">
+            <field name="gtin">9008390008393</field>
+            <field name="rdp_code">D1</field>
+            <field name="description">Ablagerungen in oder auf dem Boden (z.B. Deponien usw.)</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008409" model="waste.origin.type">
+            <field name="gtin">9008390008409</field>
+            <field name="rdp_code">D2</field>
+            <field name="description">Behandlung im Boden (z.B. biologischer Abbau von flüssigen oder schlammigen Abfällen im Erdreich usw.)</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008416" model="waste.origin.type">
+            <field name="gtin">9008390008416</field>
+            <field name="rdp_code">D3</field>
+            <field name="description">Verpressung (z.B. Verpressung pumpfähiger Abfälle in Bohrlöcher, Salzdome oder natürliche Hohlräume usw.)</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008423" model="waste.origin.type">
+            <field name="gtin">9008390008423</field>
+            <field name="rdp_code">D4</field>
+            <field name="description">Oberflächenaufbringung (z.B. Ableitung flüssiger oder schlammiger Abfälle in Gruben, Teiche oder Lagunen usw.)</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008430" model="waste.origin.type">
+            <field name="gtin">9008390008430</field>
+            <field name="rdp_code">D5</field>
+            <field name="description">Speziell angelegte Deponien (z.B. Ablagerung in abgedichteten, getrennten Räumen, die gegeneinander und gegen die Umwelt verschlossen und isoliert werden, usw.)</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008447" model="waste.origin.type">
+            <field name="gtin">9008390008447</field>
+            <field name="rdp_code">D6</field>
+            <field name="description">Einleitung in ein Gewässer mit Ausnahme von Meeren/Ozeanen</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008454" model="waste.origin.type">
+            <field name="gtin">9008390008454</field>
+            <field name="rdp_code">D7</field>
+            <field name="description">Einleitung in Meere/Ozeane einschließlich Einbringung in den Meeresboden</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008461" model="waste.origin.type">
+            <field name="gtin">9008390008461</field>
+            <field name="rdp_code">D8</field>
+            <field name="description">Biologische Behandlung, die nicht an anderer Stelle in diesem Anhang beschrieben ist und durch die Endverbindungen oder Gemische entstehen, die mit einem der unter D1 bis D12 aufgeführten Verfahren entsorgt werden</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008478" model="waste.origin.type">
+            <field name="gtin">9008390008478</field>
+            <field name="rdp_code">D9</field>
+            <field name="description">Chemisch-physikalische Behandlung, die nicht an anderer Stelle in diesem Anhang beschrieben ist und durch die Endverbindungen oder Gemische entstehen, die mit einem der unter D1 bis D12 aufgeführten Verfahren entsorgt werden (z.B. Verdampfen, Trocknen, Kalzinieren usw.)</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390110041" model="waste.origin.type">
+            <field name="gtin">9008390110041</field>
+            <field name="rdp_code">D9_01</field>
+            <field name="description">Chemisch-physikalische Behandlung, die nicht an anderer Stelle beschrieben ist und durch die Endverbindungen oder Gemische entstehen, die mit einem der unter D1 bis D12 aufgeführten Verfahren entsorgt werden (z.B. Verdampfen, Trocknen, Kalzinieren usw.)</field>
+            <field name="detailed_description">Trennung oder Vermischung</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von D9a</field>
+        </record>
+        <record id="origin_9008390110058" model="waste.origin.type">
+            <field name="gtin">9008390110058</field>
+            <field name="rdp_code">D9_02</field>
+            <field name="description">Chemisch-physikalische Behandlung, die nicht an anderer Stelle beschrieben ist und durch die Endverbindungen oder Gemische entstehen, die mit einem der unter D1 bis D12 aufgeführten Verfahren entsorgt werden (z.B. Verdampfen, Trocknen, Kalzinieren usw.)</field>
+            <field name="detailed_description">CPA-Behandlung (chemisch-physikalische Behandlung anorganischer Stoffe)</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von D9b</field>
+        </record>
+        <record id="origin_9008390110065" model="waste.origin.type">
+            <field name="gtin">9008390110065</field>
+            <field name="rdp_code">D9_03</field>
+            <field name="description">Chemisch-physikalische Behandlung, die nicht an anderer Stelle beschrieben ist und durch die Endverbindungen oder Gemische entstehen, die mit einem der unter D1 bis D12 aufgeführten Verfahren entsorgt werden (z.B. Verdampfen, Trocknen, Kalzinieren usw.)</field>
+            <field name="detailed_description">CPO-Behandlung (chemisch-physikalische Behandlung organischer Stoffe)</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von D9c</field>
+        </record>
+        <record id="origin_9008390110072" model="waste.origin.type">
+            <field name="gtin">9008390110072</field>
+            <field name="rdp_code">D9_04</field>
+            <field name="description">Chemisch-physikalische Behandlung, die nicht an anderer Stelle beschrieben ist und durch die Endverbindungen oder Gemische entstehen, die mit einem der unter D1 bis D12 aufgeführten Verfahren entsorgt werden (z.B. Verdampfen, Trocknen, Kalzinieren usw.)</field>
+            <field name="detailed_description">Verfestigen und Stabilisieren</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von D14b</field>
+        </record>
+        <record id="origin_9008390110089" model="waste.origin.type">
+            <field name="gtin">9008390110089</field>
+            <field name="rdp_code">D9_05</field>
+            <field name="description">Chemisch-physikalische Behandlung, die nicht an anderer Stelle beschrieben ist und durch die Endverbindungen oder Gemische entstehen, die mit einem der unter D1 bis D12 aufgeführten Verfahren entsorgt werden (z.B. Verdampfen, Trocknen, Kalzinieren usw.)</field>
+            <field name="detailed_description">Mit einem anderen als den dezidiert genannten Verfahren, ausgenommen vorbereitende Verfahren wie Demontage</field>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008515" model="waste.origin.type">
+            <field name="gtin">9008390008515</field>
+            <field name="rdp_code">D10</field>
+            <field name="description">Verbrennung an Land</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008522" model="waste.origin.type">
+            <field name="gtin">9008390008522</field>
+            <field name="rdp_code">D11</field>
+            <field name="description">Verbrennung auf See</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008539" model="waste.origin.type">
+            <field name="gtin">9008390008539</field>
+            <field name="rdp_code">D12</field>
+            <field name="description">Dauerlagerung (z.B. Lagerung von Behältern in einem Bergwerk usw.)</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390008546" model="waste.origin.type">
+            <field name="gtin">9008390008546</field>
+            <field name="rdp_code">D13</field>
+            <field name="description">Vermengung oder Vermischung vor Anwendung eines der unter D1 bis D12 aufgeführten Verfahren</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390110096" model="waste.origin.type">
+            <field name="gtin">9008390110096</field>
+            <field name="rdp_code">D13_01</field>
+            <field name="description">Vermengung oder Vermischung vor Anwendung eines der unter D1 bis D12 aufgeführten Verfahren</field>
+            <field name="detailed_description">Rekonditionierung allgemein</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von D14a</field>
+        </record>
+        <record id="origin_9008390110119" model="waste.origin.type">
+            <field name="gtin">9008390110119</field>
+            <field name="rdp_code">D13_02</field>
+            <field name="description">Vermengung oder Vermischung vor Anwendung eines der unter D1 bis D12 aufgeführten Verfahren</field>
+            <field name="detailed_description">Sammlung und Lagerung mit vorbereitenden Behandlungsschritten wie z.B. Aussortieren, Zerkleinern, Verdichten, Vermengen, Vermischen</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von D15b</field>
+        </record>
+        <record id="origin_9008390110126" model="waste.origin.type">
+            <field name="gtin">9008390110126</field>
+            <field name="rdp_code">D13_03</field>
+            <field name="description">Vermengung oder Vermischung vor Anwendung eines der unter D1 bis D12 aufgeführten Verfahren</field>
+            <field name="detailed_description">Erste, unspezifische, vorbereitende Behandlungsschritte vor einer nachfolgenden Beseitigung; nur zu verwenden, wenn kein spezifischeres Detailverfahren zutrifft</field>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390009642" model="waste.origin.type">
+            <field name="gtin">9008390009642</field>
+            <field name="rdp_code">D14</field>
+            <field name="description">Neuverpacken vor Anwendung eines der unter D1 bis D13 aufgeführten Verfahren</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+        <record id="origin_9008390110102" model="waste.origin.type">
+            <field name="gtin">9008390110102</field>
+            <field name="rdp_code">D14_01</field>
+            <field name="description">Neuverpacken vor Anwendung eines der unter D1 bis D13 aufgeführten Verfahren</field>
+            <field name="detailed_description">Konditionierung und/oder Verpackung von asbesthaltigen Abfällen</field>
+            <field name="notes"/>
+            <field name="hint">bisher umfasst von D14c</field>
+        </record>
+        <record id="origin_9008390009659" model="waste.origin.type">
+            <field name="gtin">9008390009659</field>
+            <field name="rdp_code">D15</field>
+            <field name="description">Lagerung bis zur Anwendung eines der unter D1 bis D14 aufgeführten Verfahren (ausgenommen zeitweilige Lagerung – bis zur Sammlung – auf dem Gelände der Entstehung der Abfälle)</field>
+            <field name="detailed_description"/>
+            <field name="notes"/>
+            <field name="hint"/>
+        </record>
+    </data>
+</odoo>

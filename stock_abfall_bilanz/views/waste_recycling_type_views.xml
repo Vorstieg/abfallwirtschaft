@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_waste_recycling_types" model="ir.actions.act_window">
+            <field name="name">Waste Recycling Types</field>
+            <field name="res_model">waste.recycling.type</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Waste Recycling Type
+                </p><p>
+                    Manage different types of waste recycling, including GTIN, R/D/P codes, and detailed descriptions.
+                </p>
+            </field>
+        </record>
+
+        <record id="view_waste_recycling_types_list" model="ir.ui.view">
+            <field name="name">waste.recycling.type.list</field>
+            <field name="model">waste.recycling.type</field>
+            <field name="arch" type="xml">
+                <list string="Waste Recycling Types">
+                    <field name="gtin"/>
+                    <field name="rdp_code"/>
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View for Waste Recycling Types -->
+        <!-- This defines the detailed view for a single record, allowing
+             users to create or edit a Waste Recycling Type. -->
+        <record id="view_waste_recycling_types_form" model="ir.ui.view">
+            <field name="name">waste.recycling.type.form</field>
+            <field name="model">waste.recycling.type</field>
+            <field name="arch" type="xml">
+                <form string="Waste Recycling Type">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="gtin"/>
+                                <field name="rdp_code"/>
+                            </group>
+                            <group>
+                                <field name="description"/>
+                                <field name="detailed_description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_waste_recycling_types_search" model="ir.ui.view">
+            <field name="name">waste.recycling.type.search</field>
+            <field name="model">waste.recycling.type</field>
+            <field name="arch" type="xml">
+                <search string="Search Waste Recycling Types">
+                    <field name="gtin" string="GTIN"/>
+                    <field name="rdp_code" string="R/D/P Code"/>
+                    <field name="description" string="Description"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="waste_origin_type_list_view" model="ir.ui.view">
+        <field name="name">waste.origin.type.list</field>
+        <field name="model">waste.origin.type</field>
+        <field name="arch" type="xml">
+            <list string="Waste Origin Types">
+                <field name="gtin"/>
+                <field name="rdp_code"/>
+                <field name="description"/>
+                <field name="detailed_description"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="waste_origin_type_form_view" model="ir.ui.view">
+        <field name="name">waste.origin.type.form</field>
+        <field name="model">waste.origin.type</field>
+        <field name="arch" type="xml">
+            <form string="Waste Origin Type">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="gtin"/>
+                            <field name="rdp_code"/>
+                            <field name="description"/>
+                        </group>
+                        <group>
+                            <field name="detailed_description"/>
+                            <field name="notes"/>
+                            <field name="hint"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="waste_origin_type_search_view" model="ir.ui.view">
+        <field name="name">waste.origin.type.search</field>
+        <field name="model">waste.origin.type</field>
+        <field name="arch" type="xml">
+            <search string="Search Waste Origin Type">
+                <field name="gtin"/>
+                <field name="rdp_code"/>
+                <field name="description"/>
+                <field name="detailed_description"/>
+                <field name="notes"/>
+                <field name="hint"/>
+                <filter string="GTIN Present" name="gtin_present" domain="[('gtin', '!=', False)]"/>
+                <filter string="R/D/P Code Present" name="rdp_code_present" domain="[('rdp_code', '!=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_waste_origin_type" model="ir.actions.act_window">
+        <field name="name">Waste Origin Types</field>
+        <field name="res_model">waste.origin.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new waste origin type
+            </p>
+        </field>
+    </record>
+
+        <menuitem
+            id="menu_waste_recycling_types"
+            name="Waste Recycling Types"
+            parent="menu_waste_balance_core_data"
+            action="action_waste_recycling_types"
+            sequence="30"/>
+        <menuitem
+            id="menu_waste_origin_types"
+            name="Waste Origin Types"
+            parent="menu_waste_balance_core_data"
+            action="action_waste_origin_type"
+            sequence="40"/>
+
+    </data>
+</odoo>
