@@ -10,7 +10,17 @@
                     <button name="send_begleitschein"
                             type="object"
                             string="Begleitschein senden"
-                            class="oe_highlight" />
+                            class="oe_highlight"/>
+                    <button class="oe_stat_button"
+                            name="action_view_begleitscheine"
+                            type="object"
+                            icon="fa-truck">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="begleitscheine" widget="statinfo"/>
+                            </span>
+                        </div>
+                    </button>
                 </xpath>
             </field>
         </record>

@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns="http://www.umweltbundesamt.at/schema/EnvironmentalData" xmlns:gml="http://www.opengis.net/gml" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://www.umweltbundesamt.at/schema/EnvironmentalData" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.07" vc:minVersion="1.1">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="https://edm.gv.at/vebsv-web/docs/xsd/Message_GMLexcerpt.xsd"/>
+	<xs:element name="MessageEnvelope" type="MasterMessageEnvelope"/>
+	<xs:complexType name="ActualWaypointEvent">
+		<xs:sequence>
+			<xs:element name="DateTime" type="DateTime" minOccurs="0"/>
+			<xs:element name="SiteLocalUnitReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="PartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Address">
+		<xs:sequence>
+			<xs:element name="Component" type="AddressComponent" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddressComponent">
+		<xs:sequence>
+			<xs:element name="TypeID" type="ReferenceIdentifier"/>
+			<xs:element name="ID" type="ReferenceIdentifier" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="RepresentationID" type="PredeterminedScopeReferenceIdentifier"/>
+				<xs:element name="RepresentationDesignation" type="AddressComponentDesignation"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AddressComponentDesignation">
+		<xs:restriction base="Token120"/>
+	</xs:simpleType>
+	<xs:complexType name="AssignmentIdentifier">
+		<xs:simpleContent>
+			<xs:extension base="Token64">
+				<xs:attribute name="collectionID" type="SimpleToken" use="required"/>
+				<xs:attribute name="collectionDesignation" type="NormalizedString256" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="AssignmentMultiPartIdentifier">
+		<xs:sequence>
+			<xs:element name="PartIdentifier" type="Token64" minOccurs="2" maxOccurs="2"/>
+		</xs:sequence>
+		<xs:attribute name="collectionID" type="SimpleToken" use="required" fixed="9008390105825"/>
+	</xs:complexType>
+	<xs:complexType name="CommunicationNetworkEndpoint">
+		<xs:sequence>
+			<xs:element name="TypeID" type="ReferenceIdentifier"/>
+			<xs:element name="ID" type="PredeterminedScopeReferenceIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Contact">
+		<xs:sequence>
+			<xs:element name="PersonName" type="ShortNameText" minOccurs="0"/>
+			<xs:element name="CommunicationNetworkEndpoint" type="CommunicationNetworkEndpoint" minOccurs="0" maxOccurs="4"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DangerousGoodsDescription">
+		<xs:sequence>
+			<xs:element name="Description" type="MultilingualDescription" maxOccurs="16"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Date">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="DateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="DecimalNonNegativeIntegerNumeral20Digits">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:totalDigits value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DecimalNumeral25Digits">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="25"/>
+			<xs:fractionDigits value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DecimalPositiveIntegerNumeral8Digits">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:totalDigits value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Designation">
+		<xs:simpleContent>
+			<xs:extension base="Token120">
+				<xs:attribute name="languageID" type="SimpleToken" use="optional" fixed="de"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="Description">
+		<xs:simpleContent>
+			<xs:extension base="String1024">
+				<xs:attribute name="languageID" type="SimpleToken" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="DescriptionConstrained">
+		<xs:simpleContent>
+			<xs:extension base="String1024">
+				<xs:attribute name="languageID" type="SimpleToken" use="required" fixed="de"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="Dimension">
+		<xs:sequence>
+			<xs:element name="WidthMeasure" type="NumericValue"/>
+			<xs:element name="DepthMeasure" type="NumericValue"/>
+			<xs:element name="HeightMeasure" type="NumericValue"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DocumentScopeAssignmentIdentifier">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+			<xs:pattern value="[a-zA-Z0-9]([a-zA-Z0-9_-]*[a-zA-Z0-9])?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DocumentScopeReferenceIdentifier">
+		<xs:simpleContent>
+			<xs:extension base="DocumentScopeReferenceIdentifierContent"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="DocumentScopeReferenceIdentifierContent">
+		<xs:restriction base="Token64"/>
+	</xs:simpleType>
+	<xs:simpleType name="FamilyNameText">
+		<xs:restriction base="Token40"/>
+	</xs:simpleType>
+	<xs:simpleType name="GivenNameText">
+		<xs:restriction base="Token40"/>
+	</xs:simpleType>
+	<xs:simpleType name="Indicator">
+		<xs:restriction base="xs:boolean">
+			<xs:pattern value="true"/>
+			<xs:pattern value="false"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocalUnitMeta">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier"/>
+			<xs:element name="ID" type="AssignmentIdentifier" minOccurs="0" maxOccurs="8"/>
+			<xs:element name="PredeterminedScopeAssignmentID" type="PredeterminedScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="MultiPartID" type="AssignmentMultiPartIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Name" type="LongNameText" minOccurs="0"/>
+			<xs:element name="TypeID" type="ReferenceIdentifier"/>
+			<xs:element name="Description" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+			<xs:element name="Address" type="Address" minOccurs="0"/>
+			<xs:element ref="gml:Point" minOccurs="0"/>
+		</xs:sequence>
+			</xs:complexType>
+	<xs:complexType name="LogisticUnitObject">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="UUID" type="UUIDIdentifier"/>
+			<xs:element name="ID" type="AssignmentIdentifier" minOccurs="0" maxOccurs="8"/>
+			<xs:element name="Package" type="PackageCollectionObject" minOccurs="0"/>
+			<xs:element name="Description" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+			<xs:element name="GrossPropertyStatement" type="PropertyStatement" minOccurs="0"/>
+			<xs:element name="NetPropertyStatement" type="PropertyStatement" minOccurs="0"/>
+			<xs:element name="Dimension" type="Dimension" minOccurs="0"/>
+		</xs:sequence>
+		</xs:complexType>
+	<xs:simpleType name="LongNameText">
+		<xs:restriction base="Token120"/>
+	</xs:simpleType>
+	<xs:complexType name="MasterMessageData">
+		<xs:sequence>
+			<xs:element name="Shipment" type="ShipmentEvent" minOccurs="1" maxOccurs="1"/>
+			<xs:element maxOccurs="0" name="TransportMovement" type="TransportMovementEvent" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MasterMessageEnvelope">
+		<xs:sequence>
+			<xs:element name="ListedData" type="MessageListedData" minOccurs="0"/>
+			<xs:element name="MessageData" type="MasterMessageData" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageListedData">
+		<xs:sequence>
+			<xs:element name="Person" type="PersonMeta" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Organization" type="OrganizationMeta" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="LocalUnit" type="LocalUnitMeta" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element maxOccurs="0" name="Shipment" type="ShipmentEventMeta" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MultilingualDescription">
+		<xs:sequence>
+			<xs:element name="IndividualDescription" type="Description" maxOccurs="4"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MultilingualDescriptionConstrained">
+		<xs:sequence>
+			<xs:element name="IndividualDescription" type="DescriptionConstrained"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MultilingualDesignationConstrained">
+		<xs:sequence>
+			<xs:element name="IndividualDesignation" type="Designation"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="NormalizedString256">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="NumericValue">
+		<xs:simpleContent>
+			<xs:extension base="DecimalNumeral25Digits">
+				<xs:attribute name="unitID" type="Token64" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="SiteServiceEvent">
+		<xs:sequence>
+			<xs:element name="Period" type="Period" minOccurs="0"/>
+			<xs:element name="Description" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+			<xs:element name="Contact" type="Contact" minOccurs="0"/>
+			<xs:element name="SiteLocalUnitReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="StationaryInstallationLocalUnitReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="MobileInstallationLocalUnitReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="PartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationMeta">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier"/>
+			<xs:element name="ID" type="AssignmentIdentifier" minOccurs="0" maxOccurs="8"/>
+			<xs:element name="Name" type="LongNameText" minOccurs="0"/>
+			<xs:element name="Address" type="Address" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PackageCollectionObject">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="PackageTypeID" type="ReferenceIdentifier"/>
+				<xs:element name="PackageTypeDesignation" type="Designation"/>
+			</xs:choice>
+			<xs:element name="TotalQuantity" type="DecimalNonNegativeIntegerNumeral20Digits"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Period">
+		<xs:sequence>
+			<xs:element name="StartDate" type="Date"/>
+			<xs:element name="EndDate" type="Date"/>
+			<xs:element name="StartTime" type="Time" minOccurs="0"/>
+			<xs:element name="EndTime" type="Time" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonMeta">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier"/>
+			<xs:element name="ID" type="AssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="GivenName" type="GivenNameText" minOccurs="0"/>
+			<xs:element name="FamilyName" type="FamilyNameText" minOccurs="0"/>
+			<xs:element name="GenderID" type="ReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="Address" type="Address" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PlannedWaypointEvent">
+		<xs:sequence>
+			<xs:element name="Period" minOccurs="0">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="Period">
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SiteLocalUnitReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="PartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="LoadingWaypoint" type="Indicator" minOccurs="1"/>
+			<xs:element name="TransshipmentWaypoint" type="Indicator" minOccurs="0"/>
+			<xs:element name="InitialPartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="InitialSiteLocalUnitReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PredeterminedScopeAssignmentIdentifier">
+		<xs:simpleContent>
+			<xs:extension base="Token64">
+				<xs:attribute name="collectionDesignation" type="NormalizedString256" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PredeterminedScopeReferenceIdentifier">
+		<xs:simpleContent>
+			<xs:extension base="Token64"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PropertyStatement">
+		<xs:sequence>
+			<xs:element name="PropertyKindID" type="ReferenceIdentifier"/>
+			<xs:element name="ValueAssignmentStatement" type="ValueAssignmentStatement"/>
+			<xs:element name="QuantificationTypeID" type="ReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="MethodID" type="RelaxedReferenceNoRoleIdentifier" minOccurs="0"/>
+			<xs:element name="MethodDescription" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReferenceIdentifier">
+		<xs:simpleContent>
+			<xs:extension base="SimpleToken">
+				<xs:attribute name="collectionID" type="SimpleToken" use="required"/>
+				<xs:attribute name="objectDesignation" type="NormalizedString256" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="RelaxedReferenceNoRoleIdentifier">
+		<xs:simpleContent>
+			<xs:extension base="Token64">
+				<xs:attribute name="collectionID" type="SimpleToken" use="required"/>
+				<xs:attribute name="objectDesignation" type="NormalizedString256" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ShipmentEvent">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="UUID" type="UUIDIdentifier" minOccurs="0"/>
+			<xs:element name="PredeterminedScopeAssignmentID" type="PredeterminedScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="ID" type="AssignmentIdentifier" minOccurs="0" maxOccurs="8"/>
+			<xs:element name="Designation" type="MultilingualDesignationConstrained" minOccurs="0"/>
+			<xs:element name="Description" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+			<xs:element name="ShipmentItem" type="ShipmentItemObject" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Package" type="PackageCollectionObject" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PickUpSiteService" type="SiteServiceEvent" minOccurs="0"/>
+			<xs:element name="DropOffSiteService" type="SiteServiceEvent" minOccurs="0"/>
+			<xs:element name="HandOverPartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="IntermediatePartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="TakeOverPartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="RejectionReasonID" type="ReferenceIdentifier" minOccurs="0" maxOccurs="0"/>
+			<xs:element name="LatestResponseDateTime" type="DateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShipmentEventMeta">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier"/>
+			<xs:element name="UUID" type="UUIDIdentifier"/>
+			<xs:element name="PredeterminedScopeAssignmentID" type="PredeterminedScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="Designation" type="MultilingualDesignationConstrained" minOccurs="0"/>
+			<xs:element name="ShipmentItem" type="ShipmentItemMeta" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShipmentItemMeta">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier"/>
+			<xs:element name="UUID" type="UUIDIdentifier"/>
+			<xs:element name="PredeterminedScopeAssignmentID" type="PredeterminedScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="Designation" type="MultilingualDesignationConstrained" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShipmentItemObject">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="UUID" type="UUIDIdentifier" minOccurs="0"/>
+			<xs:element name="LineItemNumber" type="DecimalPositiveIntegerNumeral8Digits" minOccurs="0"/>
+			<xs:element name="PredeterminedScopeAssignmentID" type="PredeterminedScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="WasteTypeID" type="ReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="WasteContaminationTypeID" type="ReferenceIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Description" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+			<xs:element name="Package" type="PackageCollectionObject" minOccurs="0"/>
+			<xs:element name="GrossPropertyStatement" type="PropertyStatement" minOccurs="0"/>
+			<xs:element name="NetPropertyStatement" type="PropertyStatement" minOccurs="0"/>
+			<xs:element name="LogisticUnit" type="LogisticUnitObject" minOccurs="0"/>
+			<xs:element name="ConsignmentNoteReferenceID" type="PredeterminedScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="DangerousGoodsDescription" type="DangerousGoodsDescription" minOccurs="0"/>
+			<xs:element name="ContainsPersistentOrganicPollutant" type="Indicator" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ShortNameText">
+		<xs:restriction base="Token50"/>
+	</xs:simpleType>
+	<xs:simpleType name="SimpleToken">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+			<xs:pattern value="[a-zA-Z0-9]([a-zA-Z0-9_-]*[a-zA-Z0-9])?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String1024">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1024"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Time">
+		<xs:restriction base="xs:time"/>
+	</xs:simpleType>
+	<xs:simpleType name="Token120">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="120"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Token256">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Token40">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Token50">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Token64">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="TransportItemObject">
+		<xs:sequence>
+			<xs:element name="ShipmentItemReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="ServiceTypeID" type="PredeterminedScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="WasteTypeID" type="ReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="WasteContaminationTypeID" type="ReferenceIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Description" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+			<xs:element name="Package" type="PackageCollectionObject" minOccurs="0"/>
+			<xs:element name="GrossPropertyStatement" type="PropertyStatement" minOccurs="0"/>
+			<xs:element name="NetPropertyStatement" type="PropertyStatement" minOccurs="0"/>
+			<xs:element name="ConsignmentNoteReferenceID" type="PredeterminedScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="DangerousGoodsDescription" type="DangerousGoodsDescription" minOccurs="0"/>
+			<xs:element name="ContainsPersistentOrganicPollutant" type="Indicator" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransportMeansObject">
+		<xs:sequence>
+			<xs:element name="PredeterminedScopeAssignmentID" type="PredeterminedScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="ModeID" type="ReferenceIdentifier" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransportMovementEvent">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="UUID" type="UUIDIdentifier"/>
+			<xs:element name="PredeterminedScopeAssignmentID" type="PredeterminedScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="Designation" type="MultilingualDesignationConstrained" minOccurs="0"/>
+			<xs:element name="Description" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+			<xs:element name="Contact" type="Contact" minOccurs="0"/>
+			<xs:element name="TransportMeans" type="TransportMeansObject" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="AbortReasonId" type="ReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="ActualWaypointEvent" type="ActualWaypointEvent" minOccurs="0"/>
+			<xs:element name="PlannedWaypointEvent" type="PlannedWaypointEvent" minOccurs="0" maxOccurs="2"/>
+			<xs:element name="TransportItem" type="TransportItemObject" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="CarrierPartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="UUIDIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\d|[a-f]){8}\-((\d|[a-f]){4}\-){3}(\d|[a-f]){12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ValueAssignmentStatement">
+		<xs:sequence>
+			<xs:element name="NumericValue" type="NumericValue" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

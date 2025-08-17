@@ -15,9 +15,12 @@
     'version': '0.1',
     'license': 'LGPL-3',
 
-    'depends': ['base', 'stock'],
+    'depends': ['base', 'stock', 'partner_identification_gln'],
     'data': [
         'views/report_anv_begleitschein.xml',
         'views/res_config_settings_views.xml',
+        'views/begleitschein_views.xml',
+        'security/ir.model.access.csv',
+
     ],
 }

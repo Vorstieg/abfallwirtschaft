@@ -15,7 +15,7 @@
     'version': '0.1',
     'license': 'LGPL-3',
 
-    'depends': ['base', 'stock','product_waste_registry'],
+    'depends': ['base', 'stock','product_waste_registry', 'partner_identification_gln'],
     'data': [
         'views/report_anv_begleitschein.xml',  # Corrected path
     ],
