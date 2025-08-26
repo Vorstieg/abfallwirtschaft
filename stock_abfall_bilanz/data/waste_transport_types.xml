@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="9008390101544" model="waste.transport.type">
+            <field name="gtin">9008390101544</field>
+            <field name="name">Übernahme</field>
+            <field name="description">Normale Übernahme von Abfall.</field>
+        </record>
+        <record id="9008390101551" model="waste.transport.type">
+            <field name="gtin">9008390101551</field>
+            <field name="name">Rücknahme aus Lohnarbeit</field>
+            <field name="description">Rücknahme eines Abfalls nach der Behandlung in Lohnarbeit.</field>
+        </record>
+        <record id="9008390101568" model="waste.transport.type">
+            <field name="gtin">9008390101568</field>
+            <field name="name">Übernahme in Lohnarbeit</field>
+            <field name="description">Übernahme eines Abfalls zur Behandlung in Lohnarbeit.</field>
+        </record>
+        <record id="9008390101575" model="waste.transport.type">
+            <field name="gtin">9008390101575</field>
+            <field name="name">Übernahme in Streckengeschäft</field>
+            <field name="description">Übernahme eines Abfalls zur Weiterführung in einem Streckengeschäft (Beginn des Streckengeschäftes).</field>
+        </record>
+        <record id="9008390101582" model="waste.transport.type">
+            <field name="gtin">9008390101582</field>
+            <field name="name">Übernahme aus Streckengeschäft</field>
+            <field name="description">Übernahme eines Abfalls am Ende eines Streckengeschäftes.</field>
+        </record>
+        <record id="9008390101599" model="waste.transport.type">
+            <field name="gtin">9008390101599</field>
+            <field name="name">Übernahme aus/in Streckengeschäft</field>
+            <field name="description">Übernahme eines Abfalls aus einem Streckengeschäft mit direkter Weiterführung in ein folgendes Streckengeschäft.</field>
+        </record>
+        <record id="9008390101605" model="waste.transport.type">
+            <field name="gtin">9008390101605</field>
+            <field name="name">Rücknahme aus Lohnarbeit mit Übernahme in Streckengeschäft</field>
+            <field name="description">Rücknahme eines Abfalls nach der Behandlung in Lohnarbeit mit direkter Weiterführung in ein folgendes Streckengeschäft.</field>
+        </record>
+        <record id="9008390101612" model="waste.transport.type">
+            <field name="gtin">9008390101612</field>
+            <field name="name">Übernahme aus Streckengeschäft in Lohnarbeit</field>
+            <field name="description">Übernahme eines Abfalls am Ende eines Streckengeschäftes zu einer folgenden Behandlung in Lohnarbeit.</field>
+        </record>
+        <record id="9008390101629" model="waste.transport.type">
+            <field name="gtin">9008390101629</field>
+            <field name="name">Übernahme in Sammeltour</field>
+            <field name="description">Übernahme eines Abfalls im Zuge einer Sammelfahrt wobei die Abfälle mehrerer Übergeber gemeinsam zu einem Standort des Übernehmers gebracht werden.</field>
+        </record>
+        <record id="9008390101636" model="waste.transport.type">
+            <field name="gtin">9008390101636</field>
+            <field name="name">Übernahme in Sammeltour/Streckengeschäft</field>
+            <field name="description">Übernahme eines Abfalls im Zuge einer Sammelfahrt wobei die Abfälle mehrerer Übergeber gemeinsam vom Übernehmer in einem Streckengeschäft weitergeführt werden.</field>
+        </record>
+        <record id="9008390102534" model="waste.transport.type">
+            <field name="gtin">9008390102534</field>
+            <field name="name">Übernahme einer Kleinmenge zur Deponierung</field>
+            <field name="description">Übernahme einer Kleinmenge zur Deponierung gemäß § 13 Abs. 1 und 2 Deponieverordnung 2008</field>
+        </record>
+        <record id="9008390101643" model="waste.transport.type">
+            <field name="gtin">9008390101643</field>
+            <field name="name">Übergabe</field>
+            <field name="description">Normale Übergabe von Abfall.</field>
+        </record>
+        <record id="9008390101650" model="waste.transport.type">
+            <field name="gtin">9008390101650</field>
+            <field name="name">Übergabe in Lohnarbeit</field>
+            <field name="description">Übergabe eines Abfalls zur Behandlung in Lohnarbeit.</field>
+        </record>
+        <record id="9008390101667" model="waste.transport.type">
+            <field name="gtin">9008390101667</field>
+            <field name="name">Rückgabe aus Lohnarbeit</field>
+            <field name="description">Rückgabe eines Abfalls nach der Behandlung in Lohnarbeit.</field>
+        </record>
+        <record id="9008390101674" model="waste.transport.type">
+            <field name="gtin">9008390101674</field>
+            <field name="name">Übergabe in Streckengeschäft</field>
+            <field name="description">Übergabe eines Abfalls, der vom Übernehmer in einem Streckengeschäft weitergeführt wird (Beginn des Streckengeschäftes).</field>
+        </record>
+        <record id="9008390101681" model="waste.transport.type">
+            <field name="gtin">9008390101681</field>
+            <field name="name">Übergabe aus Streckengeschäft</field>
+            <field name="description">Übergabe eines Abfalls am Ende eines Streckengeschäftes.</field>
+        </record>
+        <record id="9008390101698" model="waste.transport.type">
+            <field name="gtin">9008390101698</field>
+            <field name="name">Übergabe aus/in Streckengeschäft</field>
+            <field name="description">Übergabe eines Abfalls, der bereits in einem Streckengeschäft geführt wird, in ein folgendes Streckengeschäft.</field>
+        </record>
+        <record id="9008390101704" model="waste.transport.type">
+            <field name="gtin">9008390101704</field>
+            <field name="name">Rückgabe aus Lohnarbeit mit Übergabe in Streckengeschäft</field>
+            <field name="description">Rückgabe eines Abfalls nach der Behandlung in Lohnarbeit, wobei der Übernehmer diesen in einem Streckengeschäft weiterführt.</field>
+        </record>
+        <record id="9008390101711" model="waste.transport.type">
+            <field name="gtin">9008390101711</field>
+            <field name="name">Übergabe aus Streckengeschäft in Lohnarbeit</field>
+            <field name="description">Übergabe eines Abfalls am Ende eines Streckengeschäftes zur Behandlung in Lohnarbeit.</field>
+        </record>
+        <record id="9008390110515" model="waste.transport.type">
+            <field name="gtin">9008390110515</field>
+            <field name="name">Produktübergabe</field>
+            <field name="description">Übergabe eines Produkts, z.B. gemäß § 14 Abs. 3 Recycling-Baustoffverordnung.</field>
+        </record>
+        <record id="9008390101728" model="waste.transport.type">
+            <field name="gtin">9008390101728</field>
+            <field name="name">Innerbetriebliche Abfallbewegung</field>
+            <field name="description">Abfallbewegung zwischen Anlagen oder Standorten derselben Rechtsperson.</field>
+        </record>
+    </data>
+</odoo>
