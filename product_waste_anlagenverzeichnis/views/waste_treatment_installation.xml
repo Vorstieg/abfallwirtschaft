@@ -106,13 +106,13 @@
     <menuitem
             id="waste_treatment_installation_menu"
             name="Waste Treatment Installations"
-            parent="menu_waste_balance_core_data"
+            parent="product_waste_registry.menu_product_waste_registry_root"
             action="waste_treatment_installation_action"
             sequence="50"/>
 
         <menuitem id="waste_treatment_site_menu"
               name="Waste Treatment Sites"
-              parent="menu_waste_balance_core_data"
+              parent="product_waste_registry.menu_product_waste_registry_root"
               action="waste_treatment_site_action"
               sequence="40"/>
 </odoo>

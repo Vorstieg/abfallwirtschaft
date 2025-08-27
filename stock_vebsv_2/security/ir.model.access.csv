@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_waste_begleitschein_user,stock_vebsv_2.waste_begleitschein,model_waste_begleitschein,base.group_user,1,1,1,0
 access_waste_begleitschein_admin,stock_vebsv_2.waste_begleitschein,model_waste_begleitschein,base.group_system,1,1,1,1
+access_waste_begleitschein_line_user,stock_vebsv_2.waste_begleitschein_line,model_waste_begleitschein_line,base.group_user,1,1,1,1

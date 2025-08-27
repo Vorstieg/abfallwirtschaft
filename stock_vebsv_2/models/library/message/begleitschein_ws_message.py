@@ -1,5 +1,4 @@
 import os
-from typing import List
 
 import requests
 import zeep.xsd
@@ -7,8 +6,8 @@ from zeep import Client, Settings, xsd
 from zeep.loader import load_external
 from zeep.transports import Transport
 
-from .structure import *
 from ..auth import Auth
+from ..structure import *
 
 WSDL_URL = "https://edmdemo.umweltbundesamt.at/messaging-ws/MessagingService?wsdl"
 base_path = os.path.dirname(os.path.abspath(__file__))
@@ -165,6 +164,35 @@ def share_document(auth: Auth, transaction_uuid, message_envelope, shipment_uuid
     return client.service.ShareDocument(**request_data)
 
 
+def query_update(auth, db_uuid, last_message_uuid="00000000-0000-0000-0000-000000000000"):
+    session.headers.update({
+        'Authorization': auth.message_query_update_special_case_auth_header(last_message_uuid, db_uuid),
+    })
+
+    request_data = {
+        'InterfaceVersionID': '1.09',
+        'ConnectorVersionID': '1.00',
+        'UpdateRangeStartUUID': last_message_uuid
+    }
+    return client.service.QueryUpdate(**request_data)
+
+
+def refresh_binding(auth):
+    transaction_uuid = uuid.uuid4()
+    session.headers.update({
+        'Authorization': auth.message_auth_header(f"{transaction_uuid}\n",
+                                                  transaction_uuid,
+                                                  f"{transaction_uuid}\n\nRefreshBinding"),
+    })
+
+    request_data = {
+        'InterfaceVersionID': '1.09',
+        'ConnectorVersionID': '1.00',
+        'TransactionUUID': transaction_uuid
+    }
+    return client.service.RefreshBinding(**request_data)
+
+
 class BegleitScheinMessageService():
     auth: Auth
 
@@ -215,6 +243,18 @@ class BegleitScheinMessageService():
     def cancel_begleitschein(self):
         # TODO: implement cancellation
         return
+
+    def pull_news(self, db_uuid):
+        try:
+            result = query_update(self.auth, db_uuid)
+        except Exception as e:
+            db_uuid = refresh_binding(self.auth)
+            result = query_update(self.auth, db_uuid)
+
+        return {
+            db_uuid: db_uuid,
+            result: result
+        }
 
 
 class BegleitScheinMockMessageService(BegleitScheinMessageService):

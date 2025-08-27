@@ -1,3 +1,3 @@
 from . import auth
-from . import begleitschein_ws_transfer
+from . import transfer
 from . import message

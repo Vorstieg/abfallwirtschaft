@@ -1,17 +1,10 @@
-from datetime import datetime
-import json
-import base64
+from datetime import date
 
-import pytz
 from odoo import http
 from odoo.http import request, content_disposition
 
-from odoo.addons.pos_registrierkasse.models.utils.a_trust_library import OrderData
-
-from odoo.addons.pos_registrierkasse.models.utils.order_utils import jws_signature_compact
-
 from .library.parser import create_waste_handling_notification_xml
-from datetime import date
+
 
 class DatenErfassungsProtokollController(http.Controller):
 

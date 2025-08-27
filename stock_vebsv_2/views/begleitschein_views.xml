@@ -14,16 +14,46 @@
                 <header>
                     <field name="state" widget="statusbar" nolabel="1"/>
                     <button name="start_transport" type="object" string="Start Transport" class="oe_highlight"
-                             invisible="state != 'new'"/>
+                            invisible="state != 'new'"/>
                     <button name="end_transport" type="object" string="End Transport" class="oe_highlight"
-                             invisible="state != 'in_transport'"/>
+                            invisible="state != 'in_transport'"/>
                     <button name="cancel_begleitschein" type="object" string="Cancel Transport" class="oe_secondary"
-                             invisible="state == 'canceled'"/>
+                            invisible="state == 'canceled'"/>
+                    <button name="pull_changes" type="object" string="Fetch Updates" class="oe_secondary"/>
                 </header>
                 <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" default_focus="1" placeholder="Begleitschein Reference"/>
+                        </h1>
+                    </div>
                     <group>
-                        <field name="purchase_order_id"/>
+                        <group>
+                            <field name="purchase_order_id"/>
+                            <field name="partner_id" widget="res_partner_many2one_avatar_user"
+                                   context="{'res_partner_search_mode': 'customer'}"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="company_partner_id" widget="res_partner_many2one_avatar_user"
+                                   context="{'res_partner_search_mode': 'supplier'}"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                        <group>
+                            <field name="source_installation"/>
+                            <field name="source_site"/>
+                            <field name="target_installation"/>
+                            <field name="target_site"/>
+                        </group>
                     </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="begleitschein_lines">
+                                <list string="Begleitschein Lines" editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="product_qty"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
                 <div class="o_attachment_preview"/>
                 <chatter/>

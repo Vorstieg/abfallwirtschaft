@@ -3,7 +3,5 @@ access_waste_transport_type_user,Waste Transport Type User Access,model_waste_tr
 access_waste_quantification_type_user,Waste Quantification Type User Access,model_waste_quantification_type,base.group_user,1,1,1,1
 access_waste_recycling_types_user,Waste Recycling Types User Access,model_waste_recycling_type,base.group_user,1,1,1,1
 access_waste_origin_types_user,Waste Origin Types User Access,model_waste_origin_type,base.group_user,1,1,1,1
-access_waste_installation_user,Waste Installation User Access,model_waste_treatment_installation,base.group_user,1,1,1,1
-access_waste_location_user,Waste Location User Access,model_waste_treatment_site,base.group_user,1,1,1,1
 access_waste_move,Waste Move User Access,model_waste_move,base.group_user,1,1,1,1
 access_waste_bilanz,Waste Balance User Access,model_waste_bilanz,base.group_user,1,1,1,1

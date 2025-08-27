@@ -2,6 +2,7 @@ import hmac
 import hashlib
 import base64
 
+
 class Auth:
     edm_user: str
     edm_key: str
@@ -57,3 +58,10 @@ class Auth:
             f'userID="{self.edm_user}",'
             f'userHMAC="{self._message_user_hmac(user_string)}"'
         )
+
+    # for the query update request, auth is a special snowflake
+    def message_query_update_special_case_auth_header(self, update_start_range_uuid, db_uuid):
+        connector_string = f"{update_start_range_uuid}\n\nQueryUpdate"
+        return (f'EDM0 connectorID="{self.connection_id}",'
+                f'connectorHMAC="{self._message_connector_hmac(connector_string)}",'
+                f'dbUUID="{db_uuid}"')

@@ -65,8 +65,30 @@ class NetProperty:
             }
         }
 
+    def parse_transfer(self):
+        return {
+            'PropertyKindID': {
+                # Transfer and message WS use different reference tables for PropertyKindID. The message WS uses 9000 while the transfer WS uses 5618.
+                # The 5618 table currently has only one entry, which is masse.
+                'collectionID': '5618',
+                'objectDesignation': 'Masse',
+                '_value_1': '9008390104439',
+            },
+            'ValueAssignmentStatement': {
+                'NumericValue': {
+                    'unitID': 'kg',
+                    '_value_1': self.mass_in_kg,
+                },
+            },
+            # the Transfer and Message WS call the quantification type different names. However, they use the same reference table.
+            'MethodID': {
+                'collectionID': '7299',
+                '_value_1': self.quantification_type_id,
+            }}
+
 
 @dataclass()
+# This is called ShipmentItem in the message WS. In the transfer WS it is called Object
 class ShipmentItem:
     shipment_item_uuid: uuid.UUID
     line_item_number: int
@@ -93,6 +115,22 @@ class ShipmentItem:
             # 'ConsignmentNoteReferenceID' : ''              # ID from first call, not relevant if no "meldepflichtige Abälle"
             'DangerousGoodsDescription': dangerous_goods_description(self.waste_type_description),  # ADR information
             'ContainsPersistentOrganicPollutant': self.contains_pop
+        }
+
+    def parse_transfer(self):
+        return {
+            'TypeID': {
+                'collectionID': '5174',
+                '_value_1': self.waste_type_gtin,
+            },
+            'Description': {
+                'IndividualDescription': {
+                    'languageID': 'de',
+                    '_value_1': self.waste_type_description,
+                },
+            },
+            'PropertyStatement': self.netProperty.parse_transfer(),
+            'ContainsPersistentOrganicPollutant': self.contains_pop,
         }
 
 

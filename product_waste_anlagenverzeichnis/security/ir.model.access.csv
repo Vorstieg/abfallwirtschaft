@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_waste_installation_user,Waste Installation User Access,model_waste_treatment_installation,base.group_user,1,1,1,1
+access_waste_location_user,Waste Location User Access,model_waste_treatment_site,base.group_user,1,1,1,1
