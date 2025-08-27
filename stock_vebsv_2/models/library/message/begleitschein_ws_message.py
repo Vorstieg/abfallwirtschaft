@@ -1,3 +1,4 @@
+import logging
 import os
 
 import requests
@@ -8,6 +9,8 @@ from zeep.transports import Transport
 
 from ..auth import Auth
 from ..structure import *
+
+_logger = logging.getLogger(__name__)
 
 WSDL_URL = "https://edmdemo.umweltbundesamt.at/messaging-ws/MessagingService?wsdl"
 base_path = os.path.dirname(os.path.abspath(__file__))
@@ -119,7 +122,6 @@ def share_document(auth: Auth, transaction_uuid, message_envelope, shipment_uuid
 
     session.headers.update({
         'Authorization': auth.message_auth_header(f"{transaction_uuid}\n{DOCUMENT_UUID}",
-                                                  transaction_uuid,
                                                   f"{transaction_uuid}\n{DOCUMENT_UUID}\nShareDocument"),
     })
 
@@ -164,9 +166,9 @@ def share_document(auth: Auth, transaction_uuid, message_envelope, shipment_uuid
     return client.service.ShareDocument(**request_data)
 
 
-def query_update(auth, db_uuid, last_message_uuid="00000000-0000-0000-0000-000000000000"):
+def query_update(auth, last_message_uuid="00000000-0000-0000-0000-000000000000"):
     session.headers.update({
-        'Authorization': auth.message_query_update_special_case_auth_header(last_message_uuid, db_uuid),
+        'Authorization': auth.message_query_update_special_case_auth_header(last_message_uuid),
     })
 
     request_data = {
@@ -180,9 +182,7 @@ def query_update(auth, db_uuid, last_message_uuid="00000000-0000-0000-0000-00000
 def refresh_binding(auth):
     transaction_uuid = uuid.uuid4()
     session.headers.update({
-        'Authorization': auth.message_auth_header(f"{transaction_uuid}\n",
-                                                  transaction_uuid,
-                                                  f"{transaction_uuid}\n\nRefreshBinding"),
+        'Authorization': auth.message_auth_header(f"{transaction_uuid}\n", f"{transaction_uuid}\n\nRefreshBinding"),
     })
 
     request_data = {
@@ -191,6 +191,20 @@ def refresh_binding(auth):
         'TransactionUUID': transaction_uuid
     }
     return client.service.RefreshBinding(**request_data)
+
+
+def retrieve_document(auth, referred_transaction_uuid):
+    session.headers.update({
+        'Authorization': auth.message_auth_header(f"{referred_transaction_uuid}\n",
+                                                  f"{referred_transaction_uuid}\n\nRetrieveDocument"),
+    })
+
+    request_data = {
+        'InterfaceVersionID': '1.09',
+        'ConnectorVersionID': '1.00',
+        'ReferredTransactionUUID': referred_transaction_uuid
+    }
+    return client.service.RetrieveDocument(**request_data)
 
 
 class BegleitScheinMessageService():
@@ -244,17 +258,21 @@ class BegleitScheinMessageService():
         # TODO: implement cancellation
         return
 
-    def pull_news(self, db_uuid):
+    def pull_news(self, own_gln):
         try:
-            result = query_update(self.auth, db_uuid)
+            result = query_update(self.auth)
         except Exception as e:
-            db_uuid = refresh_binding(self.auth)
-            result = query_update(self.auth, db_uuid)
+            _logger.info("Refresh binding needs to be called")
+            refresh_binding(self.auth)
+            result = query_update(self.auth)
 
-        return {
-            db_uuid: db_uuid,
-            result: result
-        }
+        for update in result["Update"]:
+            if update["ForwardSharingEvent"]:
+                if any(party["RecipientID"] == own_gln for party in update["ForwardSharingEvent"]["SharedToParty"]):
+                    referenced_transaction_uuid = update["ForwardSharingEvent"]['TransactionUUID']
+                    print(retrieve_document(self.auth, referenced_transaction_uuid))
+
+        return result
 
 
 class BegleitScheinMockMessageService(BegleitScheinMessageService):

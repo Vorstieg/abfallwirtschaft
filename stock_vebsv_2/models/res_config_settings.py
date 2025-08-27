@@ -1,3 +1,5 @@
+import uuid
+
 from odoo import fields, models, api
 
 class WasteManagementConfigSettings(models.TransientModel):
@@ -16,5 +18,6 @@ class WasteManagementConfigSettings(models.TransientModel):
     edm_db_uuid = fields.Char(
         string="EDM DB UUID",
         config_parameter='waste_management.edm_db_uuid',
-        help="UUID used to identify application for polling message ws"
+        help="UUID used to identify application for polling message ws",
+        default=uuid.uuid4()
     )

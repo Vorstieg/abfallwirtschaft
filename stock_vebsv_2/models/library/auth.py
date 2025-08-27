@@ -1,19 +1,23 @@
-import hmac
-import hashlib
 import base64
+import hashlib
+import hmac
+import logging
 
+_logger = logging.getLogger(__name__)
 
 class Auth:
     edm_user: str
     edm_key: str
     connection_id: str
     connection_key: str
+    db_uuid: str
 
-    def __init__(self, edm_user, edm_key, connection_id, connection_key):
+    def __init__(self, edm_user, edm_key, connection_id, connection_key, db_uuid):
         self.edm_user = edm_user
         self.edm_key = edm_key
         self.connection_id = connection_id
         self.connection_key = connection_key
+        self.db_uuid = db_uuid
 
     def _user_key_base64(self):
         return base64.b64decode(self.edm_key)
@@ -46,22 +50,22 @@ class Auth:
         return base64.b64encode(hmac.new(hashed_user_key, user_string, hashlib.sha256).digest()).decode('utf-8')
 
     def _message_connector_hmac(self, connector_string):
-        connector_string = f"{connector_string}".encode('utf-8')
+        connector_string = connector_string.encode('utf-8')
         return base64.b64encode(
             hmac.new(self._connector_key_base64(), connector_string, hashlib.sha256).digest()).decode('utf-8')
 
-    def message_auth_header(self, user_string, transaction_uuid, connector_string):
+    def message_auth_header(self, user_string, connector_string):
         return (
             f'EDM0 connectorID="{self.connection_id}",'
             f'connectorHMAC="{self._message_connector_hmac(connector_string)}",'
-            f'dbUUID="{transaction_uuid}",'
+            f'dbUUID="{self.db_uuid}",'
             f'userID="{self.edm_user}",'
             f'userHMAC="{self._message_user_hmac(user_string)}"'
         )
 
     # for the query update request, auth is a special snowflake
-    def message_query_update_special_case_auth_header(self, update_start_range_uuid, db_uuid):
+    def message_query_update_special_case_auth_header(self, update_start_range_uuid):
         connector_string = f"{update_start_range_uuid}\n\nQueryUpdate"
         return (f'EDM0 connectorID="{self.connection_id}",'
                 f'connectorHMAC="{self._message_connector_hmac(connector_string)}",'
-                f'dbUUID="{db_uuid}"')
+                f'dbUUID="{self.db_uuid}"')

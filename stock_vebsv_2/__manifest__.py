@@ -20,6 +20,7 @@
         'views/report_anv_begleitschein.xml',
         'views/res_config_settings_views.xml',
         'views/begleitschein_views.xml',
+        'views/ir.cron.xml',
         'security/ir.model.access.csv',
     ],
 }
