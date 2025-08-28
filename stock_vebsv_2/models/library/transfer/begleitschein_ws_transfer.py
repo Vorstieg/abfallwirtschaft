@@ -9,6 +9,9 @@ from ..structure import Organisation, LocalUnit, ShipmentItem
 
 WSDL_URL = "https://edmdemo.umweltbundesamt.at/vebsv-ws/TransferOfWasteService?wsdl"
 
+INTERFACE_VERSION = '1.09'
+CONNECTOR_VERSION = '1.00'
+
 settings = Settings(strict=False)
 session = requests.Session()
 transport = Transport(session=session)
@@ -21,7 +24,7 @@ def request_waste_transfer_id(auth: Auth, transaction_uuid):
         'Authorization': auth.transfer_auth_header(transaction_uuid, "RequestWasteTransferID"),
     })
     request_data = {
-        'ConnectorVersionID': "1.00",
+        'ConnectorVersionID': CONNECTOR_VERSION,
         'TransactionUUID': transaction_uuid
     }
 
@@ -35,8 +38,8 @@ def share_document(auth: Auth, transaction_uuid, organisations: List[Organisatio
         'Authorization': auth.transfer_auth_header(transaction_uuid, "RequestWasteTransferID"),
     })
     request_data = {
-        'InterfaceVersionID': '1.00',
-        'ConnectorVersionID': 'ebs-api',
+        'InterfaceVersionID': INTERFACE_VERSION,
+        'ConnectorVersionID': CONNECTOR_VERSION,
         'TransactionUUID': transaction_uuid,
         'EnvironmentalDataInstance': {
             'EnvironmentalDataEnvelope': {

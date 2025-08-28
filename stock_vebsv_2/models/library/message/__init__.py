@@ -1,1 +1,1 @@
-from . import begleitschein_ws_message
+from . import begleitschein_message_service

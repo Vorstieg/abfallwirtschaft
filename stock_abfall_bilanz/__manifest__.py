@@ -9,6 +9,7 @@
 
     'author': "Vorstieg Software FlexCo",
     'website': "https://abfallwirtschaft.vorstieg.eu",
+    'images': ['images/template.png'],
 
     'category': 'Inventory',
     'version': '0.1',

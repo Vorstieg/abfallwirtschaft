@@ -1,4 +1,3 @@
-import logging
 import os
 
 import requests
@@ -10,7 +9,8 @@ from zeep.transports import Transport
 from ..auth import Auth
 from ..structure import *
 
-_logger = logging.getLogger(__name__)
+INTERFACE_VERSION = '1.09'
+CONNECTOR_VERSION = '1.00'
 
 WSDL_URL = "https://edmdemo.umweltbundesamt.at/messaging-ws/MessagingService?wsdl"
 base_path = os.path.dirname(os.path.abspath(__file__))
@@ -113,8 +113,7 @@ def tr_end_message(transport_uuid, actual_time: datetime):
 # Transport end message
 # also transport empfangsbestätigung
 def share_document(auth: Auth, transaction_uuid, message_envelope, shipment_uuid, context_uuid, recipient_gln,
-                   sender_gln):
-    UG_UN_MESSAGE_ID = '9008390117712'
+                   sender_gln, documentTypeId):
     CONTEXT_TYPE_ID = '9008390117408'  # Abholauftrag, Transportauftrag, Entsorgungsauftrag
 
     DOCUMENT_UUID = uuid.uuid4()  # Unique uuid for each document; when updating document, a new uuid is needed
@@ -126,7 +125,7 @@ def share_document(auth: Auth, transaction_uuid, message_envelope, shipment_uuid
     })
 
     request_data = {
-        'ConnectorVersionID': "1.00",
+        'ConnectorVersionID': CONNECTOR_VERSION,
         'TransactionUUID': transaction_uuid,
         'InterfaceVersionID': "1.10",
         'Recipient': {
@@ -172,8 +171,8 @@ def query_update(auth, last_message_uuid="00000000-0000-0000-0000-000000000000")
     })
 
     request_data = {
-        'InterfaceVersionID': '1.09',
-        'ConnectorVersionID': '1.00',
+        'InterfaceVersionID': INTERFACE_VERSION,
+        'ConnectorVersionID': CONNECTOR_VERSION,
         'UpdateRangeStartUUID': last_message_uuid
     }
     return client.service.QueryUpdate(**request_data)
@@ -186,8 +185,8 @@ def refresh_binding(auth):
     })
 
     request_data = {
-        'InterfaceVersionID': '1.09',
-        'ConnectorVersionID': '1.00',
+        'InterfaceVersionID': INTERFACE_VERSION,
+        'ConnectorVersionID': CONNECTOR_VERSION,
         'TransactionUUID': transaction_uuid
     }
     return client.service.RefreshBinding(**request_data)
@@ -200,93 +199,8 @@ def retrieve_document(auth, referred_transaction_uuid):
     })
 
     request_data = {
-        'InterfaceVersionID': '1.09',
-        'ConnectorVersionID': '1.00',
+        'InterfaceVersionID': INTERFACE_VERSION,
+        'ConnectorVersionID': CONNECTOR_VERSION,
         'ReferredTransactionUUID': referred_transaction_uuid
     }
     return client.service.RetrieveDocument(**request_data)
-
-
-class BegleitScheinMessageService():
-    auth: Auth
-
-    def __init__(self, auth):
-        self.auth = auth
-
-    def create_begleitschein(self, organisations: List[Organisation], shipment: Shipment, belgeitschein, partner_gln,
-                             company_gln,
-                             planned_waypoints, transport_items, message_name):
-        message_envelope = ug_un_message(organisations, shipment)
-
-        share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.shipment_uuid,
-                       belgeitschein.business_case_uuid, partner_gln, company_gln)
-
-        local_units = [LocalUnit("pickup_site", "9008390004500", "9008390109199"),
-                       LocalUnit("dropoff_site", "9008390004494", "9008390109199")]
-        message_envelope = tr_message(organisations, local_units, shipment, belgeitschein.transport_uuid,
-                                      message_name + "transport",
-                                      planned_waypoints, transport_items)
-
-        share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.shipment_uuid,
-                       belgeitschein.business_case_uuid, partner_gln,
-                       company_gln)
-
-    def start_transport(self, transport_mean, belgeitschein, partner_gln, company_gln):
-        message_envelope = tr_st_message(belgeitschein.transport_uuid, transport_mean, datetime.now())
-
-        share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.shipment_uuid,
-                       belgeitschein.business_case_uuid, partner_gln, company_gln)
-
-    def end_transport(self, transport_mean, belgeitschein, partner_gln, company_gln, organisations: List[Organisation],
-                      shipment: Shipment):
-        message_envelope = tr_end_message(belgeitschein.transport_uuid, datetime.now())
-
-        share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.shipment_uuid,
-                       belgeitschein.business_case_uuid, partner_gln, company_gln)
-
-        message_envelope = tr_end_message(belgeitschein.transport_uuid, datetime.now())
-
-        share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.shipment_uuid,
-                       belgeitschein.business_case_uuid, partner_gln, company_gln)
-
-        message_envelope = ug_best_message(organisations, shipment)
-
-        share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.shipment_uuid,
-                       belgeitschein.business_case_uuid, partner_gln, company_gln)
-
-    def cancel_begleitschein(self):
-        # TODO: implement cancellation
-        return
-
-    def pull_news(self, own_gln):
-        try:
-            result = query_update(self.auth)
-        except Exception as e:
-            _logger.info("Refresh binding needs to be called")
-            refresh_binding(self.auth)
-            result = query_update(self.auth)
-
-        for update in result["Update"]:
-            if update["ForwardSharingEvent"]:
-                if any(party["RecipientID"] == own_gln for party in update["ForwardSharingEvent"]["SharedToParty"]):
-                    referenced_transaction_uuid = update["ForwardSharingEvent"]['TransactionUUID']
-                    print(retrieve_document(self.auth, referenced_transaction_uuid))
-
-        return result
-
-
-class BegleitScheinMockMessageService(BegleitScheinMessageService):
-
-    def create_begleitschein(self, organisations: List[Organisation], shipment: Shipment, belgeitschein, partner_gln,
-                             company_gln, planned_waypoints, transport_items, message_name):
-        return
-
-    def start_transport(self, transport_mean, belgeitschein, partner_gln, company_gln):
-        return
-
-    def end_transport(self, transport_mean, belgeitschein, partner_gln, company_gln, organisations: List[Organisation],
-                      shipment: Shipment):
-        return
-
-    def cancel_begleitschein(self):
-        return
