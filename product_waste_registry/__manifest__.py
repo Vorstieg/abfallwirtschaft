@@ -13,7 +13,7 @@
     'category': 'Sales',
     'version': '0.1',
     'license': 'LGPL-3',
-    'images': ['images/registrierkasse_thumbnail.png'],
+    'images': ['images/template.png'],
 
     'depends': ['base', 'product'],
     'data': [

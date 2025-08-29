@@ -9,12 +9,13 @@
 
     'author': "Vorstieg Software FlexCo",
     'website': "https://abfallwirtschaft.vorstieg.eu",
+    'images': ['images/template.png'],
 
     'category': 'Inventory',
     'version': '0.1',
     'license': 'LGPL-3',
 
-    'depends': ['base', 'stock','product_waste_registry'],
+    'depends': ['base', 'stock','product_waste_registry','product_waste_anlagenverzeichnis'],
     'data': [
         "views/waste_transport_views.xml",
         'security/ir.model.access.csv',
@@ -24,7 +25,6 @@
         "data/waste_origin_types.xml",
         "views/waste_quantification_type.xml",
         "views/waste_recycling_type_views.xml",
-        "views/waste_treatment_installation.xml",
         "views/waste_move.xml",
     ],
 }

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:gml="http://www.opengis.net/gml" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opengis.net/gml" version="3.2.1 2010-01-28">
+	<xs:element name="Curve" type="gml:CurveType"/>
+	<xs:element name="MultiPoint" type="gml:MultiPointType"/>
+	<xs:element name="MultiSurface" type="gml:MultiSurfaceType"/>
+	<xs:element name="Point" type="gml:PointType"/>
+	<xs:element name="Polygon" type="gml:PolygonType"/>
+	<xs:simpleType name="AggregationType" final="#all">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="set"/>
+			<xs:enumeration value="bag"/>
+			<xs:enumeration value="sequence"/>
+			<xs:enumeration value="array"/>
+			<xs:enumeration value="record"/>
+			<xs:enumeration value="table"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurveInterpolationType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="linear"/>
+			<xs:enumeration value="geodesic"/>
+			<xs:enumeration value="circularArc3Points"/>
+			<xs:enumeration value="circularArc2PointWithBulge"/>
+			<xs:enumeration value="circularArcCenterPointWithRadius"/>
+			<xs:enumeration value="elliptical"/>
+			<xs:enumeration value="clothoid"/>
+			<xs:enumeration value="conic"/>
+			<xs:enumeration value="polynomialSpline"/>
+			<xs:enumeration value="cubicSpline"/>
+			<xs:enumeration value="rationalSpline"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CurveSegmentArrayPropertyType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="LineStringSegment" type="gml:LineStringSegmentType" form="qualified"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CurveType">
+		<xs:sequence>
+			<xs:element name="segments" type="gml:CurveSegmentArrayPropertyType" form="qualified"/>
+		</xs:sequence>
+		<xs:attribute ref="gml:id"/>
+		<xs:attributeGroup ref="gml:SRSReferenceGroup"/>
+	</xs:complexType>
+	<xs:complexType name="DirectPositionListType">
+		<xs:simpleContent>
+			<xs:extension base="gml:doubleList">
+				<xs:attributeGroup ref="gml:SRSReferenceGroup"/>
+				<xs:attribute name="count" type="xs:positiveInteger"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="DirectPositionType">
+		<xs:simpleContent>
+			<xs:extension base="gml:doubleList">
+				<xs:attributeGroup ref="gml:SRSReferenceGroup"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="doubleList">
+		<xs:list itemType="xs:double"/>
+	</xs:simpleType>
+	<xs:complexType name="LinearRingType">
+		<xs:choice>
+			<xs:element name="pos" type="gml:DirectPositionType" form="qualified" minOccurs="4" maxOccurs="unbounded"/>
+			<xs:element name="posList" type="gml:DirectPositionListType" form="qualified"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="LineStringSegmentType">
+		<xs:choice>
+			<xs:element name="pos" type="gml:DirectPositionType" form="qualified" minOccurs="2" maxOccurs="unbounded"/>
+			<xs:element name="posList" type="gml:DirectPositionListType" form="qualified"/>
+		</xs:choice>
+		<xs:attribute name="numDerivativesAtStart" type="xs:integer" default="0"/>
+		<xs:attribute name="numDerivativesAtEnd" type="xs:integer" default="0"/>
+		<xs:attribute name="numDerivativeInterior" type="xs:integer" default="0"/>
+		<xs:attribute name="interpolation" type="gml:CurveInterpolationType" fixed="linear"/>
+	</xs:complexType>
+	<xs:complexType name="MultiPointType">
+		<xs:sequence>
+			<xs:element name="pointMember" type="gml:PointPropertyType" form="qualified" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="gml:id"/>
+		<xs:attributeGroup ref="gml:SRSReferenceGroup"/>
+		<xs:attributeGroup ref="gml:AggregationAttributeGroup"/>
+	</xs:complexType>
+	<xs:complexType name="MultiSurfaceType">
+		<xs:sequence>
+			<xs:element name="surfaceMember" type="gml:SurfacePropertyType" form="qualified" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="gml:id"/>
+		<xs:attributeGroup ref="gml:SRSReferenceGroup"/>
+		<xs:attributeGroup ref="gml:AggregationAttributeGroup"/>
+	</xs:complexType>
+	<xs:complexType name="PointPropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element name="Point" type="gml:PointType" form="qualified"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PointType">
+		<xs:sequence>
+			<xs:element name="pos" type="gml:DirectPositionType" form="qualified"/>
+		</xs:sequence>
+		<xs:attribute ref="gml:id"/>
+		<xs:attributeGroup ref="gml:SRSReferenceGroup"/>
+	</xs:complexType>
+	<xs:complexType name="PolygonType">
+		<xs:sequence>
+			<xs:element name="exterior" type="gml:RingPropertyType" form="qualified" minOccurs="0"/>
+			<xs:element name="interior" type="gml:RingPropertyType" form="qualified" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="gml:id"/>
+		<xs:attributeGroup ref="gml:SRSReferenceGroup"/>
+	</xs:complexType>
+	<xs:complexType name="RingPropertyType">
+		<xs:sequence>
+			<xs:element name="LinearRing" type="gml:LinearRingType" form="qualified"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SurfacePropertyType">
+		<xs:sequence minOccurs="0">
+			<xs:element name="Polygon" type="gml:PolygonType" form="qualified"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:attributeGroup name="AggregationAttributeGroup">
+		<xs:attribute name="aggregationType" type="gml:AggregationType"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="SRSReferenceGroup">
+		<xs:attribute name="srsName" type="xs:anyURI"/>
+		<xs:attribute name="srsDimension" type="xs:positiveInteger"/>
+	</xs:attributeGroup>
+	<xs:attribute name="id" type="xs:ID"/>
+</xs:schema>

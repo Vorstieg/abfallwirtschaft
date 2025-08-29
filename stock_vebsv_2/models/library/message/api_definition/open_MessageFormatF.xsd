@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns="http://www.umweltbundesamt.at/schema/EnvironmentalData" xmlns:gml="http://www.opengis.net/gml" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://www.umweltbundesamt.at/schema/EnvironmentalData" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.07" vc:minVersion="1.1">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="https://edm.gv.at/vebsv-web/docs/xsd/Message_GMLexcerpt.xsd"/>
+	<xs:element name="MessageEnvelope" type="MasterMessageEnvelope"/>
+	<xs:complexType name="ActualWaypointEvent">
+		<xs:sequence>
+			<xs:element name="DateTime" type="DateTime" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="SiteLocalUnitReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="PartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Address">
+		<xs:sequence>
+			<xs:element name="Component" type="AddressComponent" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!--<xs:assert> count(distinct-values(Component/TypeID)) eq count(Component/TypeID) </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="AddressComponent">
+		<xs:sequence>
+			<xs:element name="TypeID" type="ReferenceIdentifier"/>
+			<xs:element name="ID" type="ReferenceIdentifier" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="RepresentationID" type="PredeterminedScopeReferenceIdentifier"/>
+				<xs:element name="RepresentationDesignation" type="AddressComponentDesignation"/>
+			</xs:choice>
+		</xs:sequence>
+		<!--<xs:assert> every $m in TypeID/@collectionID satisfies $m eq '6856' </xs:assert>-->
+	</xs:complexType>
+	<xs:simpleType name="AddressComponentDesignation">
+		<xs:restriction base="Token120"/>
+	</xs:simpleType>
+	<xs:complexType name="AssignmentIdentifier">
+		<xs:simpleContent>
+			<xs:extension base="Token64">
+				<xs:attribute name="collectionID" type="SimpleToken" use="required"/>
+				<xs:attribute name="collectionDesignation" type="NormalizedString256" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="AssignmentMultiPartIdentifier">
+		<xs:sequence>
+			<xs:element name="PartIdentifier" type="Token64" minOccurs="2" maxOccurs="2"/>
+		</xs:sequence>
+		<xs:attribute name="collectionID" type="SimpleToken" use="required" fixed="9008390105825"/>
+	</xs:complexType>
+	<xs:complexType name="CommunicationNetworkEndpoint">
+		<xs:sequence>
+			<xs:element name="TypeID" type="ReferenceIdentifier"/>
+			<xs:element name="ID" type="PredeterminedScopeReferenceIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Contact">
+		<xs:sequence>
+			<xs:element name="PersonName" type="ShortNameText" minOccurs="0"/>
+			<xs:element name="CommunicationNetworkEndpoint" type="CommunicationNetworkEndpoint" minOccurs="0" maxOccurs="4"/>
+		</xs:sequence>
+		<!--<xs:assert> count(distinct-values(CommunicationNetworkEndpoint/TypeID)) eq count(CommunicationNetworkEndpoint/TypeID) </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="DangerousGoodsDescription">
+		<xs:sequence>
+			<xs:element name="Description" type="MultilingualDescription" maxOccurs="16"/>
+		</xs:sequence>
+		<!--<xs:assert> count(distinct-values(Description/concat(IndividualDescription[1]/@languageID,IndividualDescription[2]/@languageID,IndividualDescription[3]/@languageID,IndividualDescription[4]/@languageID))) eq 1 </xs:assert>-->
+	</xs:complexType>
+	<xs:simpleType name="Date">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="DateTime">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="DecimalNonNegativeIntegerNumeral20Digits">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:totalDigits value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DecimalNumeral25Digits">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="25"/>
+			<xs:fractionDigits value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DecimalPositiveIntegerNumeral8Digits">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:totalDigits value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Designation">
+		<xs:simpleContent>
+			<xs:extension base="Token120">
+				<xs:attribute name="languageID" type="SimpleToken" use="optional" fixed="de"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="Description">
+		<xs:simpleContent>
+			<xs:extension base="String1024">
+				<xs:attribute name="languageID" type="SimpleToken" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="DescriptionConstrained">
+		<xs:simpleContent>
+			<xs:extension base="String1024">
+				<xs:attribute name="languageID" type="SimpleToken" use="required" fixed="de"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="Dimension">
+		<xs:sequence>
+			<xs:element name="WidthMeasure" type="NumericValue"/>
+			<xs:element name="DepthMeasure" type="NumericValue"/>
+			<xs:element name="HeightMeasure" type="NumericValue"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DocumentScopeAssignmentIdentifier">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+			<xs:pattern value="[a-zA-Z0-9]([a-zA-Z0-9_-]*[a-zA-Z0-9])?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DocumentScopeReferenceIdentifier">
+		<xs:simpleContent>
+			<xs:extension base="DocumentScopeReferenceIdentifierContent"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="DocumentScopeReferenceIdentifierContent">
+		<xs:restriction base="Token64"/>
+	</xs:simpleType>
+	<xs:simpleType name="FamilyNameText">
+		<xs:restriction base="Token40"/>
+	</xs:simpleType>
+	<xs:simpleType name="GivenNameText">
+		<xs:restriction base="Token40"/>
+	</xs:simpleType>
+	<xs:simpleType name="Indicator">
+		<xs:restriction base="xs:boolean">
+			<xs:pattern value="true"/>
+			<xs:pattern value="false"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="LocalUnitMeta">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier"/>
+			<xs:element name="ID" type="AssignmentIdentifier" minOccurs="0" maxOccurs="8"/>
+			<xs:element name="PredeterminedScopeAssignmentID" type="PredeterminedScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="MultiPartID" type="AssignmentMultiPartIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Name" type="LongNameText" minOccurs="0"/>
+			<xs:element name="TypeID" type="ReferenceIdentifier"/>
+			<xs:element name="Description" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+			<xs:element name="Address" type="Address" minOccurs="0"/>
+			<xs:element ref="gml:Point" minOccurs="0"/>
+		</xs:sequence>
+		<!--<xs:assert> every $m in TypeID/@collectionID satisfies $m eq '9351' </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(ID/@collectionID)) eq count(ID/@collectionID) </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(MultiPartID/concat(PartIdentifier[1],',',PartIdentifier[2]))) eq count(MultiPartID) </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="LogisticUnitObject">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="UUID" type="UUIDIdentifier"/>
+			<xs:element name="ID" type="AssignmentIdentifier" minOccurs="0" maxOccurs="8"/>
+			<xs:element name="Package" type="PackageCollectionObject" minOccurs="0"/>
+			<xs:element name="Description" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+			<xs:element name="GrossPropertyStatement" type="PropertyStatement" minOccurs="0"/>
+			<xs:element name="NetPropertyStatement" type="PropertyStatement" minOccurs="0"/>
+			<xs:element name="Dimension" type="Dimension" minOccurs="0"/>
+		</xs:sequence>
+		<!--<xs:assert> every $m in PackageTypeID/@collectionID satisfies $m eq '3863' </xs:assert>-->
+		<!--<xs:assert> every $m in GrossPropertyStatement/PropertyKindID/@collectionID satisfies $m eq '4288' </xs:assert>-->
+		<!--<xs:assert> every $m in NetPropertyStatement/PropertyKindID/@collectionID satisfies $m eq '9000' </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(ID/@collectionID)) eq count(ID/@collectionID) </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(GrossPropertyStatement/PropertyKindID)) eq count(GrossPropertyStatement/PropertyKindID) </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(NetPropertyStatement/PropertyKindID)) eq count(NetPropertyStatement/PropertyKindID) </xs:assert>-->
+	</xs:complexType>
+	<xs:simpleType name="LongNameText">
+		<xs:restriction base="Token120"/>
+	</xs:simpleType>
+	<xs:complexType name="MasterMessageData">
+		<xs:sequence>
+			<xs:element maxOccurs="0" name="Shipment" type="ShipmentEvent" minOccurs="0"/>
+			<xs:element name="TransportMovement" type="TransportMovementEvent" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MasterMessageEnvelope">
+		<xs:sequence>
+			<xs:element name="ListedData" type="MessageListedData" minOccurs="0"/>
+			<xs:element name="MessageData" type="MasterMessageData" minOccurs="0"/>
+		</xs:sequence>
+		<!--<xs:assert> not(.//*[@xsi:type]) </xs:assert>-->
+		<!--<xs:assert> not(ListedData/Shipment and MessageData/Shipment) </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(.//DocumentScopeAssignmentID)) eq count(.//DocumentScopeAssignmentID) </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(.//UUID)) eq count(.//UUID) </xs:assert>-->
+		<!--<xs:assert> count(MessageData/Shipment) eq count(MessageData/Shipment/UUID) </xs:assert>-->
+		<!--<xs:assert> count(MessageData/Shipment/ShipmentItem) eq count(MessageData/Shipment/ShipmentItem/UUID) </xs:assert>-->
+		<!--<xs:assert> every $m in MessageData/Shipment/ShipmentItem/DocumentScopeAssignmentID satisfies (exists(MessageData/Shipment/ShipmentItem[DocumentScopeAssignmentID eq $m]/UUID)) </xs:assert>-->
+		<!--<xs:assert> every $m in MessageData/Shipment/DocumentScopeAssignmentID satisfies (exists(MessageData/Shipment[DocumentScopeAssignmentID eq $m]/UUID)) </xs:assert>-->
+		<!--<xs:assert> every $m in .//*[ends-with(local-name(), 'ShipmentItemReferenceID')] satisfies (exists(ListedData/Shipment/ShipmentItem[DocumentScopeAssignmentID eq $m]) or exists(MessageData/Shipment/ShipmentItem[DocumentScopeAssignmentID eq $m])) </xs:assert>-->
+		<!--<xs:assert> every $m in .//*[ends-with(local-name(), 'ShipmentReferenceID')] satisfies (exists(ListedData/Shipment[DocumentScopeAssignmentID eq $m]) or exists(MessageData/Shipment[DocumentScopeAssignmentID eq $m])) </xs:assert>-->
+		<!--<xs:assert> every $m in .//*[ends-with(local-name(), 'PartyReferenceID') or ends-with(local-name(), 'HandOverPartyReferenceID') or ends-with(local-name(), 'IntermediatePartyReferenceID')] satisfies (exists(ListedData/Person[DocumentScopeAssignmentID eq $m]) or exists(ListedData/Organization[DocumentScopeAssignmentID eq $m])) </xs:assert>-->
+		<!--<xs:assert> every $m in .//*[ends-with(local-name(), 'ServiceProviderPartyReferenceID') or ends-with(local-name(), 'TakeOverPartyReferenceID')] satisfies (exists(ListedData/Organization[DocumentScopeAssignmentID eq $m])) </xs:assert>-->
+		<!--<xs:assert> every $m in .//SiteLocalUnitReferenceID satisfies exists(ListedData/LocalUnit[TypeID eq '9008390109199' and DocumentScopeAssignmentID eq $m]) </xs:assert>-->
+		<!--<xs:assert> every $m in .//StationaryInstallationLocalUnitReferenceID satisfies exists(ListedData/LocalUnit[TypeID eq '9008390116340' and DocumentScopeAssignmentID eq $m]) </xs:assert>-->
+		<!--<xs:assert> every $m in .//MobileInstallationLocalUnitReferenceID satisfies exists(ListedData/LocalUnit[TypeID eq '9008390116357' and DocumentScopeAssignmentID eq $m]) </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="MessageListedData">
+		<xs:sequence>
+			<xs:element maxOccurs="0" name="Person" type="PersonMeta" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="Organization" type="OrganizationMeta" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="LocalUnit" type="LocalUnitMeta" minOccurs="0"/>
+			<xs:element name="Shipment" type="ShipmentEventMeta" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+		<!--<xs:assert> count(distinct-values(Person/ID/concat(.,',',@collectionID))) eq count(Person/ID) </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(Organization/ID/concat(.,',',@collectionID))) eq count(Organization/ID) </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(LocalUnit/ID/concat(.,',',@collectionID))) eq count(LocalUnit/ID) </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="MultilingualDescription">
+		<xs:sequence>
+			<xs:element name="IndividualDescription" type="Description" maxOccurs="4"/>
+		</xs:sequence>
+		<!--<xs:assert> count(distinct-values(IndividualDescription/@languageID)) eq count(IndividualDescription/@languageID) </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="MultilingualDescriptionConstrained">
+		<xs:sequence>
+			<xs:element name="IndividualDescription" type="DescriptionConstrained"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MultilingualDesignationConstrained">
+		<xs:sequence>
+			<xs:element name="IndividualDesignation" type="Designation"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="NormalizedString256">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="NumericValue">
+		<xs:simpleContent>
+			<xs:extension base="DecimalNumeral25Digits">
+				<xs:attribute name="unitID" type="Token64" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="SiteServiceEvent">
+		<xs:sequence>
+			<xs:element name="Period" type="Period" minOccurs="0"/>
+			<xs:element name="Description" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+			<xs:element name="Contact" type="Contact" minOccurs="0"/>
+			<xs:element name="SiteLocalUnitReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="StationaryInstallationLocalUnitReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="MobileInstallationLocalUnitReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="PartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+		</xs:sequence>
+		<!--<xs:assert> every $m in ServiceComponent/ServiceTypeID/@collectionID satisfies $m eq '3438' </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(ServiceComponent/ServiceTypeID)) eq count(ServiceComponent/ServiceTypeID) </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="OrganizationMeta">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier"/>
+			<xs:element name="ID" type="AssignmentIdentifier" minOccurs="0" maxOccurs="8"/>
+			<xs:element name="Name" type="LongNameText" minOccurs="0"/>
+			<xs:element name="Address" type="Address" minOccurs="0"/>
+		</xs:sequence>
+		<!--<xs:assert> count(distinct-values(ID/@collectionID)) eq count(ID/@collectionID) </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="PackageCollectionObject">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="PackageTypeID" type="ReferenceIdentifier"/>
+				<xs:element name="PackageTypeDesignation" type="Designation"/>
+			</xs:choice>
+			<xs:element name="TotalQuantity" type="DecimalNonNegativeIntegerNumeral20Digits"/>
+		</xs:sequence>
+		<!--<xs:assert> every $m in PackageTypeID/@collectionID satisfies $m eq '3863' </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="Period">
+		<xs:sequence>
+			<xs:element name="StartDate" type="Date"/>
+			<xs:element name="EndDate" type="Date"/>
+			<xs:element name="StartTime" type="Time" minOccurs="0"/>
+			<xs:element name="EndTime" type="Time" minOccurs="0"/>
+		</xs:sequence>
+		<!--<xs:assert> EndDate ge StartDate </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="PersonMeta">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier"/>
+			<xs:element name="ID" type="AssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="GivenName" type="GivenNameText" minOccurs="0"/>
+			<xs:element name="FamilyName" type="FamilyNameText" minOccurs="0"/>
+			<xs:element name="GenderID" type="ReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="Address" type="Address" minOccurs="0"/>
+		</xs:sequence>
+		<!--<xs:assert> every $m in GenderID/@collectionID satisfies $m eq '4287' </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="PlannedWaypointEvent">
+		<xs:sequence>
+			<xs:element name="Period" minOccurs="0">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="Period">
+							<!--<xs:assert> EndDate eq StartDate </xs:assert>-->
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SiteLocalUnitReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="PartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="LoadingWaypoint" type="Indicator" minOccurs="1"/>
+			<xs:element name="TransshipmentWaypoint" type="Indicator" minOccurs="0"/>
+			<xs:element name="InitialPartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="InitialSiteLocalUnitReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PredeterminedScopeAssignmentIdentifier">
+		<xs:simpleContent>
+			<xs:extension base="Token64">
+				<xs:attribute name="collectionDesignation" type="NormalizedString256" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PredeterminedScopeReferenceIdentifier">
+		<xs:simpleContent>
+			<xs:extension base="Token64"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PropertyStatement">
+		<xs:sequence>
+			<xs:element name="PropertyKindID" type="ReferenceIdentifier"/>
+			<xs:element name="ValueAssignmentStatement" type="ValueAssignmentStatement"/>
+			<xs:element name="QuantificationTypeID" type="ReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="MethodID" type="RelaxedReferenceNoRoleIdentifier" minOccurs="0"/>
+			<xs:element name="MethodDescription" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+		</xs:sequence>
+		<!--<xs:assert> every $m in QuantificationTypeID/@collectionID satisfies $m eq '7299' </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="ReferenceIdentifier">
+		<xs:simpleContent>
+			<xs:extension base="SimpleToken">
+				<xs:attribute name="collectionID" type="SimpleToken" use="required"/>
+				<xs:attribute name="objectDesignation" type="NormalizedString256" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="RelaxedReferenceNoRoleIdentifier">
+		<xs:simpleContent>
+			<xs:extension base="Token64">
+				<xs:attribute name="collectionID" type="SimpleToken" use="required"/>
+				<xs:attribute name="objectDesignation" type="NormalizedString256" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ShipmentEvent">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="UUID" type="UUIDIdentifier" minOccurs="0"/>
+			<xs:element name="PredeterminedScopeAssignmentID" type="PredeterminedScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="ID" type="AssignmentIdentifier" minOccurs="0" maxOccurs="8"/>
+			<xs:element name="Designation" type="MultilingualDesignationConstrained" minOccurs="0"/>
+			<xs:element name="Description" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+			<xs:element name="ShipmentItem" type="ShipmentItemObject" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Package" type="PackageCollectionObject" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PickUpSiteService" type="SiteServiceEvent" minOccurs="0"/>
+			<xs:element name="DropOffSiteService" type="SiteServiceEvent" minOccurs="0"/>
+			<xs:element name="HandOverPartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="IntermediatePartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="TakeOverPartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="RejectionReasonID" type="ReferenceIdentifier" minOccurs="0" maxOccurs="0"/>
+			<xs:element name="LatestResponseDateTime" type="DateTime" minOccurs="0" maxOccurs="0"/>
+		</xs:sequence>
+		<!--<xs:assert> count(distinct-values(ID/@collectionID)) eq count(ID/@collectionID) </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(ShipmentItem/LineItemNumber)) eq count(ShipmentItem/LineItemNumber) </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(Package/PackageTypeID)) eq count(Package/PackageTypeID) </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(Package/PackageTypeDesignation)) eq count(Package/PackageTypeDesignation) </xs:assert>-->
+		<!--<xs:assert> if (HandOverPartyReferenceID/text() != TakeOverPartyReferenceID/text()) then (every $i in ShipmentItem satisfies (lower-case($i/ContainsPersistentOrganicPollutant/text()) != 'true' or $i/ConsignmentNoteReferenceID)) else true() </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="ShipmentEventMeta">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier"/>
+			<xs:element name="UUID" type="UUIDIdentifier"/>
+			<xs:element name="PredeterminedScopeAssignmentID" type="PredeterminedScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="Designation" type="MultilingualDesignationConstrained" minOccurs="0"/>
+			<xs:element name="ShipmentItem" type="ShipmentItemMeta" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShipmentItemMeta">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier"/>
+			<xs:element name="UUID" type="UUIDIdentifier"/>
+			<xs:element name="PredeterminedScopeAssignmentID" type="PredeterminedScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="Designation" type="MultilingualDesignationConstrained" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShipmentItemObject">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="UUID" type="UUIDIdentifier" minOccurs="0"/>
+			<xs:element name="LineItemNumber" type="DecimalPositiveIntegerNumeral8Digits" minOccurs="0"/>
+			<xs:element name="PredeterminedScopeAssignmentID" type="PredeterminedScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="WasteTypeID" type="ReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="WasteContaminationTypeID" type="ReferenceIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Description" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+			<xs:element name="Package" type="PackageCollectionObject" minOccurs="0"/>
+			<xs:element name="GrossPropertyStatement" type="PropertyStatement" minOccurs="0"/>
+			<xs:element name="NetPropertyStatement" type="PropertyStatement" minOccurs="0"/>
+			<xs:element name="LogisticUnit" type="LogisticUnitObject" minOccurs="0"/>
+			<xs:element name="ConsignmentNoteReferenceID" type="PredeterminedScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="DangerousGoodsDescription" type="DangerousGoodsDescription" minOccurs="0"/>
+			<xs:element name="ContainsPersistentOrganicPollutant" type="Indicator" minOccurs="0"/>
+		</xs:sequence>
+		<!--<xs:assert> exists(DocumentScopeAssignmentID) or exists(UUID) </xs:assert>-->
+		<!--<xs:assert> every $m in WasteTypeID/@collectionID satisfies $m eq '5174' </xs:assert>-->
+		<!--<xs:assert> every $m in WasteContaminationTypeID/@collectionID satisfies $m eq '7835' </xs:assert>-->
+		<!--<xs:assert> every $m in GrossPropertyStatement/PropertyKindID/@collectionID satisfies $m eq '4288' </xs:assert>-->
+		<!--<xs:assert> every $m in NetPropertyStatement/PropertyKindID/@collectionID satisfies $m eq '9000' </xs:assert>-->
+		<!--<xs:assert> if (exists(ConsignmentNoteReferenceID)) then (every $m in NetPropertyStatement/PropertyKindID satisfies $m eq '9008390104439') else (true()) </xs:assert>-->
+		<!--<xs:assert> if (exists(ConsignmentNoteReferenceID)) then (every $m in NetPropertyStatement/ValueAssignmentStatement/NumericValue/@unitID satisfies $m eq 'kg') else (true()) </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(WasteContaminationTypeID)) eq count(WasteContaminationTypeID) </xs:assert>-->
+		<!--<xs:assert> not(ConsignmentNoteReferenceID) or matches(ConsignmentNoteReferenceID, '^\d{12}$') </xs:assert>-->
+	</xs:complexType>
+	<xs:simpleType name="ShortNameText">
+		<xs:restriction base="Token50"/>
+	</xs:simpleType>
+	<xs:simpleType name="SimpleToken">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+			<xs:pattern value="[a-zA-Z0-9]([a-zA-Z0-9_-]*[a-zA-Z0-9])?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String1024">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1024"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Time">
+		<xs:restriction base="xs:time"/>
+	</xs:simpleType>
+	<xs:simpleType name="Token120">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="120"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Token256">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Token40">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Token50">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Token64">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="TransportItemObject">
+		<xs:sequence>
+			<xs:element name="ShipmentItemReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="ServiceTypeID" type="PredeterminedScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="WasteTypeID" type="ReferenceIdentifier" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="WasteContaminationTypeID" type="ReferenceIdentifier" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="Description" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="Package" type="PackageCollectionObject" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="GrossPropertyStatement" type="PropertyStatement" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="NetPropertyStatement" type="PropertyStatement" minOccurs="0"/>
+			<xs:element name="ConsignmentNoteReferenceID" type="PredeterminedScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="DangerousGoodsPartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="DangerousGoodsDescription" type="DangerousGoodsDescription" minOccurs="0"/>
+			<xs:element name="ContainsPersistentOrganicPollutant" type="Indicator" minOccurs="0"/>
+		</xs:sequence>
+		<!--<xs:assert> every $m in WasteTypeID/@collectionID satisfies $m eq '5174' </xs:assert>-->
+		<!--<xs:assert> every $m in WasteContaminationTypeID/@collectionID satisfies $m eq '7835' </xs:assert>-->
+		<!--<xs:assert> every $m in GrossPropertyStatement/PropertyKindID/@collectionID satisfies $m eq '4288' </xs:assert>-->
+		<!--<xs:assert> every $m in NetPropertyStatement/PropertyKindID/@collectionID satisfies $m eq '9000' </xs:assert>-->
+		<!--<xs:assert> if (exists(ConsignmentNoteReferenceID)) then (every $m in NetPropertyStatement/PropertyKindID satisfies $m eq '9008390104439') else (true()) </xs:assert>-->
+		<!--<xs:assert> if (exists(ConsignmentNoteReferenceID)) then (every $m in NetPropertyStatement/ValueAssignmentStatement/NumericValue/@unitID satisfies $m eq 'kg') else (true()) </xs:assert>-->
+		<!--<xs:assert> count(distinct-values(WasteContaminationTypeID)) eq count(WasteContaminationTypeID) </xs:assert>-->
+		<!--<xs:assert> not(ConsignmentNoteReferenceID) or matches(ConsignmentNoteReferenceID, '^\d{12}$') </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="TransportMeansObject">
+		<xs:sequence>
+			<xs:element name="PredeterminedScopeAssignmentID" type="PredeterminedScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="ModeID" type="ReferenceIdentifier" minOccurs="0"/>
+		</xs:sequence>
+		<!--<xs:assert> every $m in ModeID/@collectionID satisfies $m eq '2939' </xs:assert>-->
+	</xs:complexType>
+	<xs:complexType name="TransportMovementEvent">
+		<xs:sequence>
+			<xs:element name="DocumentScopeAssignmentID" type="DocumentScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element name="UUID" type="UUIDIdentifier"/>
+			<xs:element maxOccurs="0" name="PredeterminedScopeAssignmentID" type="PredeterminedScopeAssignmentIdentifier" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="Designation" type="MultilingualDesignationConstrained" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="Description" type="MultilingualDescriptionConstrained" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="Contact" type="Contact" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="TransportMeans" type="TransportMeansObject" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="AbortReasonId" type="ReferenceIdentifier" minOccurs="0"/>
+			<xs:element name="ActualWaypointEvent" type="ActualWaypointEvent" minOccurs="0"/>
+			<xs:element maxOccurs="0" name="PlannedWaypointEvent" type="PlannedWaypointEvent" minOccurs="0"/>
+			<xs:element name="TransportItem" type="TransportItemObject" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element maxOccurs="0" name="CarrierPartyReferenceID" type="DocumentScopeReferenceIdentifier" minOccurs="0"/>
+		</xs:sequence>
+		<!--<xs:assert> count(TransportItem[not(exists(ShipmentItemReferenceID))]) eq 0 </xs:assert>-->
+	</xs:complexType>
+	<xs:simpleType name="UUIDIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\d|[a-f]){8}\-((\d|[a-f]){4}\-){3}(\d|[a-f]){12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ValueAssignmentStatement">
+		<xs:sequence>
+			<xs:element name="NumericValue" type="NumericValue" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

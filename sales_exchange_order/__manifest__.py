@@ -4,7 +4,7 @@
 
     'summary': 'Extend the sales order view to connect a purchase order',
     'description': """
-    Create a combined Sales and Purchase order. Used to combine purchasing of recyclable materials with sale of waste collection services. 
+    Create a combined sales and purchase order. Used to combine purchasing of recyclable materials with sale of waste collection services. 
     """,
 
     'author': "Vorstieg Software FlexCo",
@@ -13,6 +13,7 @@
     'category': 'Sales',
     'version': '0.1',
     'license': 'LGPL-3',
+    'images': ['images/template.png'],
 
     'depends': ['sale_management', 'purchase', 'account','product'],
     'data': [
