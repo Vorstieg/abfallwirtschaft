@@ -3,6 +3,16 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import List
 
+def dangerous_goods_description(dangerous_waste_description):
+    return {
+        'Description': {
+            'IndividualDescription': {
+                "_value_1": dangerous_waste_description,
+                "languageID": "de"
+            }
+        }
+    }
+
 
 @dataclass()
 class Organisation:
@@ -27,16 +37,14 @@ class LocalUnit:
 
     def parse(self):
         return {
-            'LocalUnit': {
-                'DocumentScopeAssignmentID': self.internal_id,
-                'ID': {
-                    'collectionID': '9008390104026',
-                    '_value_1': self.location_gln,
-                },
-                'TypeID': {
-                    'collectionID': '9351',
-                    '_value_1': self.location_type,
-                }
+            'DocumentScopeAssignmentID': self.internal_id,
+            'ID': {
+                'collectionID': '9008390104026',
+                '_value_1': self.location_gln,
+            },
+            'TypeID': {
+                'collectionID': '9351',
+                '_value_1': self.location_type,
             }
         }
 
@@ -117,6 +125,25 @@ class ShipmentItem:
             'ContainsPersistentOrganicPollutant': self.contains_pop
         }
 
+    def parse_message_transport(self):
+        return {
+            'DocumentScopeAssignmentID': 'shipment_item_' + str(self.line_item_number),
+            'UUID': self.shipment_item_uuid,
+        }
+
+    def parse_message_transport_item(self):
+        return {
+            'ShipmentItemReferenceID': 'shipment_item_' + str(self.line_item_number),
+            'WasteTypeID': {
+                'collectionID': '5174',
+                '_value_1': self.waste_type_gtin
+            },
+            'NetPropertyStatement': self.netProperty.parse(),
+            # 'ConsignmentNoteReferenceID': '',
+            'DangerousGoodsDescription': dangerous_goods_description(self.waste_type_description),
+            'ContainsPersistentOrganicPollutant': self.contains_pop
+        }
+
     def parse_transfer(self):
         return {
             'TypeID': {
@@ -149,6 +176,13 @@ class Shipment:
             'TakeOverPartyReferenceID': "takeover",
         }
 
+    def parse_message_transport(self):
+        return {
+            'UUID': self.shipment_uuid,
+            'DocumentScopeAssignmentID': self.internal_id,
+            'ShipmentItem': [list(map(lambda x: x.parse_message_transport(), self.shipment_items))]
+        }
+
 
 @dataclass()
 class PlannedWaypoint:
@@ -161,53 +195,17 @@ class PlannedWaypoint:
 
     def parse(self):
         return {
-            'PlannedWaypointEvent': {
-                'Period': {
-                    'StartDate': self.start_date.date().isoformat(),
-                    'EndDate': self.end_date.date().isoformat(),
-                    'StartTime': self.start_date.time().isoformat(),
-                    'EndTime': self.end_date.time().isoformat(),
-                },
-                'SiteLocalUnitReferenceID': self.location_internal_id,
-                'PartyReferenceID': self.party_internal_id,
-                'LoadingWaypoint': self.loading_waypoint,
-                'TransshipmentWaypoint': self.transshipment_waypoint,
-            }
+            'Period': {
+                'StartDate': self.start_date.date().isoformat(),
+                'EndDate': self.end_date.date().isoformat(),
+                'StartTime': self.start_date.time().isoformat(),
+                'EndTime': self.end_date.time().isoformat(),
+            },
+            'SiteLocalUnitReferenceID': self.location_internal_id,
+            'PartyReferenceID': self.party_internal_id,
+            'LoadingWaypoint': self.loading_waypoint,
+            'TransshipmentWaypoint': self.transshipment_waypoint,
         }
-
-
-@dataclass()
-class TransportItem:
-    waste_type_gtin: str
-    dangerous_waste_description: str
-    contains_pop: bool
-    netProperty: NetProperty
-
-    def parse(self):
-        return {
-            'TransportItem': {
-                'ShipmentItemReferenceID': 'shipment_item_1',
-                'WasteTypeID': {
-                    'collectionID': '5174',
-                    '_value_1': self.waste_type_gtin
-                },
-                'NetPropertyStatement': self.netProperty.parse(),
-                # 'ConsignmentNoteReferenceID': '',
-                'DangerousGoodsDescription': dangerous_goods_description(self.dangerous_waste_description),
-                'ContainsPersistentOrganicPollutant': self.contains_pop
-            }
-        }
-
-
-def dangerous_goods_description(dangerous_waste_description):
-    return {
-        'Description': {
-            'IndividualDescription': {
-                "_value_1": dangerous_waste_description,
-                "languageID": "de"
-            }
-        }
-    }
 
 
 @dataclass()

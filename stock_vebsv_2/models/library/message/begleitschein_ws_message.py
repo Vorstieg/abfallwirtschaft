@@ -1,4 +1,5 @@
 import os
+from enum import Enum
 
 import requests
 import zeep.xsd
@@ -7,7 +8,7 @@ from zeep.loader import load_external
 from zeep.transports import Transport
 
 from ..auth import Auth
-from ..structure import *
+from ..mappings import *
 
 INTERFACE_VERSION = '1.09'
 CONNECTOR_VERSION = '1.00'
@@ -21,13 +22,27 @@ transport = Transport(session=session)
 
 client = Client(wsdl=WSDL_URL, settings=settings, transport=transport)
 
+class MessageType(Enum):
+    BESTELL_MESSAGE = '9008390117699'
+    AVISO_MESSAGE = '9008390117705'
+    BESTELLANTWORT_MESSAGE = '9008390117729'
+    UEBERGABE_UEBERNAHME_MESSAGE = '9008390117712'
+    TRANSPORT_MESSAGE = '9008390117439'
+    TRANSPORTSTART_MESSAGE = '9008390117422'
+    TRANSPORTABSCHLUSS_MESSAGE = '9008390117446'
+    EMPFANGSBESTAETIGUNGS_MESSAGE = '9008390117453'
+    UEBERNAHMEBESTAETIGUNGS_MESSAGE = '9008390117460'
+    TRANSPORTABBRUCHS_MESSAGE = '9008390127445'
+    ABLEHNUNGS_MESSAGE = '9008390127452'
 
 def load_message_envelope(xsd_file):
-    with open(base_path + xsd_file, 'rb') as f:
+    schema = load_message_xsd(xsd_file)
+    return schema.get_element('ns0:MessageEnvelope')
+
+def load_message_xsd(xsd_file):
+    with open(base_path + "/api_definition" + xsd_file, 'rb') as f:
         xmlschema_doc = load_external(f, transport, base_path)
-    schema = xsd.Schema(xmlschema_doc, transport=transport)
-    MessageEnvelope = schema.get_element('ns0:MessageEnvelope')
-    return MessageEnvelope
+    return xsd.Schema(xmlschema_doc, transport=transport)
 
 
 # Übergabe-/Übernahme-Message
@@ -52,41 +67,39 @@ def ug_best_message(organisations: List[Organisation], shipment: Shipment):
     }))
 
 
-# Übergabe bestätigungs meassage
+# Transport Message
 def tr_message(organisations: List[Organisation], local_unit: List[LocalUnit], shipment: Shipment, transport_uuid,
-               internal_id, planned_waypoint: List[PlannedWaypoint], transport_item: List[TransportItem]):
+               internal_id, planned_waypoint: List[PlannedWaypoint]):
     transport_mean = TransportMean("[transport label]", "[mode gtin]")
 
     MessageEnvelope = load_message_envelope("/open_MessageFormatD.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
-        'ListedData': [
-            list(map(lambda x: x.parse(), organisations)) +
-            list(map(lambda x: x.parse(), local_unit)) +
-            [{'Shipment': shipment.parse()}]
-        ],
+        'ListedData': {
+            'Organization': list(map(lambda x: x.parse(), organisations)),
+            'LocalUnit': list(map(lambda x: x.parse(), local_unit)),
+            'Shipment': shipment.parse_message_transport()
+        },
         'MessageData': {
             'TransportMovement': {
                 'UUID': transport_uuid,
                 'PredeterminedScopeAssignmentID': internal_id,
-                'TransportMeans': transport_mean,
-                'PlannedWaypointEvent': [
-                    list(map(lambda x: x.parse(), planned_waypoint))
-                ],
+                'TransportMeans': transport_mean.parse(),
+                'PlannedWaypointEvent': list(map(lambda x: x.parse(), planned_waypoint)),
                 'TransportItem': [
-                    list(map(lambda x: x.parse(), transport_item))
+                    list(map(lambda x: x.parse_message_transport_item(), shipment.shipment_items))
                 ]
             }
         }
     }))
 
-
+# Transport start message
 def tr_st_message(transport_uuid, transport_mean: TransportMean, actual_time: datetime):
     MessageEnvelope = load_message_envelope("/open_MessageFormatE.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'MessageData': {
             'TransportMovement': {
                 'UUID': transport_uuid,
-                'TransportMeans': transport_mean,
+                'TransportMeans': transport_mean.parse(),
                 'ActualWaypointEvent': {
                     'DateTime': actual_time.isoformat(),
                 }
@@ -95,7 +108,8 @@ def tr_st_message(transport_uuid, transport_mean: TransportMean, actual_time: da
     }))
 
 
-# Transport start message
+# Transport end message
+# also transport empfangsbestätigung
 def tr_end_message(transport_uuid, actual_time: datetime):
     MessageEnvelope = load_message_envelope("/open_MessageFormatF.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
@@ -109,11 +123,20 @@ def tr_end_message(transport_uuid, actual_time: datetime):
         }
     }))
 
+def share_document(auth: Auth, transaction_uuid, message_envelope, object_uuid, context_uuid, recipient_gln,
+                   sender_gln, documentTypeId: MessageType):
+    """
 
-# Transport end message
-# also transport empfangsbestätigung
-def share_document(auth: Auth, transaction_uuid, message_envelope, shipment_uuid, context_uuid, recipient_gln,
-                   sender_gln, documentTypeId):
+    :param auth:
+    :param transaction_uuid:
+    :param message_envelope:
+    :param object_uuid: for ug_un and ug_best_message ShipmentUUID, for transport related message, TransportMovementUUID
+    :param context_uuid:
+    :param recipient_gln:
+    :param sender_gln:
+    :param documentTypeId:
+    :return:
+    """
     CONTEXT_TYPE_ID = '9008390117408'  # Abholauftrag, Transportauftrag, Entsorgungsauftrag
 
     DOCUMENT_UUID = uuid.uuid4()  # Unique uuid for each document; when updating document, a new uuid is needed
@@ -140,13 +163,13 @@ def share_document(auth: Auth, transaction_uuid, message_envelope, shipment_uuid
                 'DocumentHeader': {
                     'DocumentTypeID': {
                         'collectionID': '2551',
-                        '_value_1': UG_UN_MESSAGE_ID  # changes, based on which message is sent
+                        '_value_1': documentTypeId.value
                     },
                     'DocumentUUID': DOCUMENT_UUID,
                     'VersionBracketUUID': VERSION_BRAKCET_UUID,
                     'VersionSequenceNumber': "0",
                     'DocumentOriginPartyID': sender_gln,
-                    'ObjectUUID': shipment_uuid,
+                    'ObjectUUID': object_uuid,
                     'ContextUUIDReference': {
                         'ContextUUID': context_uuid,
                         'ContextTypeID': {

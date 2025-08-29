@@ -5,7 +5,7 @@ from zeep import Client, Settings
 from zeep.transports import Transport
 import requests
 from ..auth import Auth
-from ..structure import Organisation, LocalUnit, ShipmentItem
+from ..mappings import Organisation, LocalUnit, ShipmentItem
 
 WSDL_URL = "https://edmdemo.umweltbundesamt.at/vebsv-ws/TransferOfWasteService?wsdl"
 

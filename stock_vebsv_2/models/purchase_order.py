@@ -13,7 +13,7 @@ class PurchaseOrder(models.Model):
         )
 
         belgeitschein = self.env['waste.begleitschein'].create({
-            'name': self.name + ' Belgeitschein',
+            'name': self.name + '_Belgeitschein',
             'purchase_order_id': self.id,
             'partner_id': self.partner_id.id,
             'company_partner_id': self.company_id.partner_id.id,

@@ -16,7 +16,7 @@
     'version': '0.1',
     'license': 'LGPL-3',
 
-    'depends': ['base', 'stock', 'partner_identification_gln','product_waste_anlagenverzeichnis'],
+    'depends': ['base', 'stock', 'partner_identification_gln','product_waste_anlagenverzeichnis', "purchase"],
     'data': [
         'views/report_anv_begleitschein.xml',
         'views/res_config_settings_views.xml',

@@ -4,14 +4,14 @@ import uuid
 from odoo import models, fields, _
 from odoo.exceptions import UserError
 
-from odoo.addons.stock_vebsv_2.models.library.message.begleitschein_ws_message import BegleitScheinMockMessageService
+from .library.message.begleitschein_message_service import BegleitscheinMessageService
 from .library.auth import Auth
 from .library.structure import *
 
 COMPANY_GLN_MISSING = "You need to have a GLN configured for your company"
 
 
-class WasteBegleitschein(models.Model):
+class Begleitschein(models.Model):
     _name = "waste.begleitschein"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
@@ -53,6 +53,18 @@ class WasteBegleitschein(models.Model):
         if len(self.begleitschein_lines) == 0:
             raise UserError(_("You need at least one product with a waste code"))
 
+        organizations = [Organisation(partner_gln, "handover"),
+                         Organisation(company_gln, "takeover")]
+
+        planned_waypoints = [PlannedWaypoint(datetime.now(), datetime.now(), "pickup_site", "handover", True, False),
+                             PlannedWaypoint(datetime.now(), datetime.now(), "dropoff_site", "takeover", False, False)]
+
+        self._get_begleitschein_message_service().create_begleitschein(organizations, self._get_shipment(), self,
+                                                                       partner_gln,
+                                                                       company_gln, planned_waypoints,
+                                                                       self.name)
+
+    def _get_shipment(self):
         shipment_items = [ShipmentItem(
             uuid.uuid4(),
             index + 1,
@@ -66,31 +78,18 @@ class WasteBegleitschein(models.Model):
                         )
         ) for index, line in enumerate(self.begleitschein_lines)
         ]
-
-        organizations = [Organisation(partner_gln, "handover"),
-                         Organisation(company_gln, "takeover")]
         shipment = Shipment(self.shipment_uuid, self.name, shipment_items)
-
-        planned_waypoints = [PlannedWaypoint(datetime.now(), datetime.now(), "pickup_site", "handover", True, False),
-                             (datetime.now(), datetime.now(), "dropoff_site", "takeover", False, False)]
-
-        transport_items = list(map(lambda line: TransportItem(line.product_id.waste_type_id.gtin, 'None',
-                                                              False,
-                                                              NetProperty("9008390104439", line.product_qty,
-                                                                          "9008390100028")),
-                                   self.begleitschein_lines))
-
-        self._get_begleitschein_message_service().create_begleitschein(organizations, shipment, self, partner_gln,
-                                                                       company_gln, planned_waypoints, transport_items,
-                                                                       self.name)
+        return shipment
 
     def start_transport(self):
         if self.state != 'new':
             raise UserError(_("You already started a transport."))
 
+        partner_gln = self._get_person_gln(self.partner_id, _("Partner needs to have a GLN configured"))
+        company_gln = self._get_person_gln(self.company_partner_id, _(COMPANY_GLN_MISSING))
         transport_mean = TransportMean("Straße", "9008390100059")
 
-        self._get_begleitschein_message_service().start_transport(transport_mean, self, "", "")
+        self._get_begleitschein_message_service().start_transport(transport_mean, self, partner_gln, company_gln)
 
         self.state = 'in_transport'
 
@@ -98,8 +97,15 @@ class WasteBegleitschein(models.Model):
         if self.state != 'in_transport':
             raise UserError(_("Can not finish a begleitschein, that is still in transport"))
 
+        partner_gln = self._get_person_gln(self.partner_id, _("Partner needs to have a GLN configured"))
+        company_gln = self._get_person_gln(self.company_partner_id, _(COMPANY_GLN_MISSING))
         transport_mean = TransportMean("Straße", "9008390100059")
-        self._get_begleitschein_message_service().end_transport(transport_mean, self, "", "", [], "")
+
+        organizations = [Organisation(partner_gln, "handover"), Organisation(company_gln, "takeover")]
+
+        self._get_begleitschein_message_service().end_transport(transport_mean, self, partner_gln, company_gln,
+                                                                organizations,
+                                                                self._get_shipment())
 
         self.state = 'done'
 
@@ -109,17 +115,29 @@ class WasteBegleitschein(models.Model):
         self.state = 'canceled'
 
     def pull_changes(self):
-        company_gln = self._get_person_gln(self.company_partner_id, _(COMPANY_GLN_MISSING))
-        response = self._get_begleitschein_message_service().pull_news(company_gln)
+        try:
+            company_gln = self._get_person_gln(self.company_partner_id, _(COMPANY_GLN_MISSING))
+            self._get_begleitschein_message_service().pull_news(company_gln)
+        except UserError:
+            return
 
     def _get_begleitschein_message_service(self):
         config_params = self.env['ir.config_parameter'].sudo()
-        auth = Auth(config_params.get_param('waste_management.edm_username'),
-                    config_params.get_param('waste_management.edm_secret'),
-                    os.getenv('CONNECTOR_ID'),
-                    os.getenv('CONNECTOR_KEY'),
+
+        edm_username = config_params.get_param('waste_management.edm_username')
+        edm_secret = config_params.get_param('waste_management.edm_secret')
+
+        connector_id = os.getenv('CONNECTOR_ID')
+        connector_key = os.getenv('CONNECTOR_KEY')
+
+        if not edm_username or not edm_secret:
+            raise UserError(_("You need to configure edm username and secret."))
+        if not connector_id or not connector_key:
+            raise UserError(_("You need to configure connector id and connector key."))
+
+        auth = Auth(edm_username, edm_secret, connector_id, connector_key,
                     config_params.get_param('waste_management.edm_db_uuid'))
-        return BegleitScheinMockMessageService(auth)
+        return BegleitscheinMessageService(auth)
 
     def _get_person_gln(self, contact, error):
         try:
@@ -129,7 +147,7 @@ class WasteBegleitschein(models.Model):
         return partner_gln
 
 
-class WasteBegleitscheinLine(models.Model):
+class BegleitscheinLine(models.Model):
     _name = "waste.begleitschein.line"
     product_id = fields.Many2one(
         comodel_name='product.product',
