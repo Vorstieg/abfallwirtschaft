@@ -188,7 +188,7 @@ def share_document(auth: Auth, transaction_uuid, message_envelope, object_uuid, 
     return client.service.ShareDocument(**request_data)
 
 
-def query_update(auth, last_message_uuid="00000000-0000-0000-0000-000000000000"):
+def query_update(auth, last_message_uuid):
     session.headers.update({
         'Authorization': auth.message_query_update_special_case_auth_header(last_message_uuid),
     })

@@ -1,12 +1,11 @@
 import os
-import uuid
 
 from odoo import models, fields, _
 from odoo.exceptions import UserError
 
-from .library.message.begleitschein_message_service import BegleitscheinMessageService
 from .library.auth import Auth
-from .library.structure import *
+from .library.mappings import *
+from .library.message.begleitschein_message_service import BegleitscheinMessageService
 
 COMPANY_GLN_MISSING = "You need to have a GLN configured for your company"
 
@@ -115,11 +114,35 @@ class Begleitschein(models.Model):
         self.state = 'canceled'
 
     def pull_changes(self):
-        try:
-            company_gln = self._get_person_gln(self.company_partner_id, _(COMPANY_GLN_MISSING))
-            self._get_begleitschein_message_service().pull_news(company_gln)
-        except UserError:
-            return
+        config_params = self.env['ir.config_parameter'].sudo()
+        edm_last_transaction_uuid = config_params.get_param(
+            'waste_management.edm_last_transaction_uuid') or "00000000-0000-0000-0000-000000000000"
+
+        company_gln = self._get_person_gln(self.company_partner_id, _(COMPANY_GLN_MISSING))
+        respone = self._get_begleitschein_message_service().pull_news(company_gln, edm_last_transaction_uuid)
+        for line in respone["changes"]:
+            if line["state"] == 'NEW':
+                begleitschein = line["begleitschein"]
+                handover_partner = self.env["res.partner.id_number"].search(
+                    [("name", "=", begleitschein["handover_gln"])])
+                takeover_partner = self.env["res.partner.id_number"].search(
+                    [("name", "=", begleitschein["takeover_gln"])])
+                new_begleitschein = self.env['waste.begleitschein'].create({
+                    'name': f"{takeover_partner.partner_id.name} {begleitschein['name']}",
+                    'partner_id': takeover_partner.partner_id.id,
+                    'company_partner_id': handover_partner.partner_id.id,
+                    'begleitschein_lines': [(0, 0, {
+                        'product_qty': l["quantity"],
+                        'contains_pop': l["pop"],
+                        'abfallart': self.env['waste.type'].search([("gtin", "=", l["abfallart"])]).id,
+                    }) for l in begleitschein["begleitschein_lines"]],
+                })
+                new_begleitschein.message_post(
+                    body=line["message"],
+                    subtype_xmlid='mail.mt_note'
+                )
+
+        config_params.set_param('waste_management.edm_last_transaction_uuid', respone["last_transaction_uuid"])
 
     def _get_begleitschein_message_service(self):
         config_params = self.env['ir.config_parameter'].sudo()
@@ -154,9 +177,9 @@ class BegleitscheinLine(models.Model):
         string="Product",
         change_default=True, ondelete='restrict', index='btree_not_null')
 
-    product_qty = fields.Float(
-        string="Quantity", default=1.0,
-        store=True, readonly=False, required=True)
+    abfallart = fields.Many2one('waste.type', "Abfallart")
+    product_qty = fields.Float(string="Quantity", default=1.0, required=True)
+    contains_pop = fields.Boolean(string="POP", default=False)
 
     begleitschein_id = fields.Many2one(
         'waste.begleitschein', 'Begleitschein', index=True, ondelete='set null')

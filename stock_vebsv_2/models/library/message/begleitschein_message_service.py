@@ -6,6 +6,7 @@ from .begleitschein_ws_message import *
 
 _logger = logging.getLogger(__name__)
 
+
 class BegleitscheinMessageService():
     auth: Auth
 
@@ -60,35 +61,75 @@ class BegleitscheinMessageService():
         # TODO: implement cancellation
         return
 
-    def pull_news(self, own_gln):
+    def pull_news(self, own_gln, last_transaction_uuid):
         try:
-            result = query_update(self.auth)
+            result = query_update(self.auth, last_transaction_uuid)
         except Exception as e:
             _logger.info("Refresh binding needs to be called")
             refresh_binding(self.auth)
-            result = query_update(self.auth)
+            result = query_update(self.auth, last_transaction_uuid)
 
+        changes = []
         for update in result["Update"]:
             if update["ForwardSharingEvent"]:
                 if any(party["RecipientID"] == own_gln for party in update["ForwardSharingEvent"]["SharedToParty"]):
-                    referenced_transaction_uuid = update["ForwardSharingEvent"]['TransactionUUID']
-                    document = retrieve_document(self.auth, referenced_transaction_uuid)
+                    last_transaction_uuid = update["ForwardSharingEvent"]['TransactionUUID']
+                    document = retrieve_document(self.auth, last_transaction_uuid)
                     documentType = document["AuthenticatedDocument"]["DocumentUQ"]["DocumentHeader"]["DocumentTypeID"][
                         "_value_1"]
                     if documentType == MessageType.UEBERGABE_UEBERNAHME_MESSAGE.value:
-                        self.process_uebernahme_response(document)
+                        begleitschein = self.process_uebernahme_response(document)
+                        if begleitschein:
+                            changes.append({
+                                'state': 'NEW',
+                                'begleitschein': begleitschein,
+                                'message': "Recived Übergabe Übernahme Message"
+                            })
+
+        return {
+            'last_transaction_uuid': last_transaction_uuid,
+            'changes': changes
+        }
 
     def process_uebernahme_response(self, document):
         try:
             document_content = document["AuthenticatedDocument"]["DocumentUQ"]["DocumentContent"]
             xsd = load_message_xsd("/open_MessageFormatC.xsd")
-            xmlschema_doc = xsd.deserialize(document_content._value_1[0])
+            data = xsd.deserialize(document_content._value_1[0])
         except XMLParseError as e:
             _logger.error(
                 f"Error while parsing XML response for document {document['AuthenticatedDocument']['DocumentUQ']['DocumentHeader']['DocumentUUID']}: {e.message}")
             return
-        print(xmlschema_doc)
-        # todo: process Übernahme Message
+
+        if not data['ListedData']:
+            _logger.error(
+                f"Error while parsing XML response for document {document['AuthenticatedDocument']['DocumentUQ']['DocumentHeader']['DocumentUUID']}: ListedData is empty")
+            return
+        org_data = {
+            org['DocumentScopeAssignmentID']: org['ID'][0]['_value_1']
+            for org in data['ListedData']['Organization']
+            if org['DocumentScopeAssignmentID'] in ['handover', 'takeover'] and org['ID']
+        }
+        shipment = data['MessageData']['Shipment']
+        begleitschein_lines = [
+            {'abfallart': item['WasteTypeID']['_value_1'],
+             'pop': item['ContainsPersistentOrganicPollutant'],
+             'quantity': item['NetPropertyStatement']['ValueAssignmentStatement']['NumericValue']['_value_1']
+             }
+            for item in shipment['ShipmentItem']
+        ]
+
+        return {
+            'handover_gln': org_data['handover'],
+            'takeover_gln': org_data['takeover'],
+            'business_case_uuid':
+                document["AuthenticatedDocument"]["DocumentUQ"]["DocumentHeader"]["ContextUUIDReference"][
+                    "ContextUUID"],
+            'shipment_uuid': shipment['UUID'],
+            'name': shipment['PredeterminedScopeAssignmentID']['_value_1'],
+            'begleitschein_lines': begleitschein_lines
+        }
+
 
 class BegleitscheinMessageServiceMock(BegleitscheinMessageService):
 

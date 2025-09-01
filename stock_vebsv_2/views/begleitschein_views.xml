@@ -48,8 +48,10 @@
                         <page string="Lines">
                             <field name="begleitschein_lines">
                                 <list string="Begleitschein Lines" editable="bottom">
-                                    <field name="product_id"/>
+                                    <field name="abfallart"/>
                                     <field name="product_qty"/>
+                                    <field name="contains_pop"/>
+                                    <field name="product_id"/>
                                 </list>
                             </field>
                         </page>
@@ -66,7 +68,8 @@
         <field name="model">waste.begleitschein</field>
         <field name="arch" type="xml">
             <list string="Waste Begleitschein">
-                <field name="purchase_order_id"/>
+                <field name="name"/>
+                <field name="state"/>
             </list>
         </field>
     </record>
