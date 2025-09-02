@@ -77,11 +77,11 @@ def ug_un_message(organisations: List[Organisation], shipment: Shipment):
     }))
 
 
-def ug_best_message(organisations: List[Organisation], shipment: Shipment):
+def ug_best_message(shipment: Shipment):
     MessageEnvelope = load_message_envelope("/open_MessageFormatC.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'MessageData': {
-            'Shipment': shipment.parse()
+            'Shipment': shipment.parse_message_un_message()
         }
     }))
 
@@ -104,7 +104,8 @@ def tr_message(organisations: List[Organisation], local_unit: List[LocalUnit], s
                 'PlannedWaypointEvent': list(map(lambda x: x.parse(), planned_waypoint)),
                 'TransportItem': [
                     list(map(lambda x: x.parse_message_transport_item(), shipment.shipment_items))
-                ]
+                ],
+                'CarrierPartyReferenceID': 'takeover'
             }
         }
     }))

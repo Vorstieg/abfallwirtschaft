@@ -17,6 +17,9 @@ class Begleitschein(models.Model):
     _name = "waste.begleitschein"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+    stock_picking_id = fields.Many2one(
+        'stock.picking', 'Stock Picking', index=True, ondelete='set null')
+
     purchase_order_id = fields.Many2one(
         'purchase.order', 'Purchase Order', index=True, ondelete='set null')
 

@@ -53,7 +53,7 @@ class BegleitscheinMessageService():
                        belgeitschein.business_case_uuid, partner_gln, company_gln,
                        MessageType.EMPFANGSBESTAETIGUNGS_MESSAGE)
 
-        message_envelope = ug_best_message(organisations, shipment)
+        message_envelope = ug_best_message(shipment)
 
         share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.shipment_uuid,
                        belgeitschein.business_case_uuid, partner_gln, company_gln,
