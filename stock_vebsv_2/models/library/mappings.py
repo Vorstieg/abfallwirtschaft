@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import List
 
+
 def dangerous_goods_description(dangerous_waste_description):
     return {
         'Description': {
@@ -215,9 +216,11 @@ class TransportMean:
 
     def parse(self):
         return {
-            'PredeterminedScopeAssignmentID': self.internal_id,
+            'PredeterminedScopeAssignmentID': {
+                '_value_1': self.internal_id,
+            },
             'ModeID': {
                 'collectionID': '2939',
                 '_value_1': self.gtin,
             },
-        },
+        }

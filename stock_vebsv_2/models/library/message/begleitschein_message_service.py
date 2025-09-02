@@ -23,9 +23,11 @@ class BegleitscheinMessageService():
 
         local_units = [LocalUnit("pickup_site", "9008390004500", "9008390109199"),
                        LocalUnit("dropoff_site", "9008390004494", "9008390109199")]
+        transport_mean = TransportMean("Strasse", "9008390100059")
+
         message_envelope = tr_message(organisations, local_units, shipment, belgeitschein.transport_uuid,
                                       message_name + "transport",
-                                      planned_waypoints)
+                                      planned_waypoints, transport_mean)
 
         share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.transport_uuid,
                        belgeitschein.business_case_uuid, partner_gln,
@@ -77,6 +79,11 @@ class BegleitscheinMessageService():
                     document = retrieve_document(self.auth, last_transaction_uuid)
                     documentType = document["AuthenticatedDocument"]["DocumentUQ"]["DocumentHeader"]["DocumentTypeID"][
                         "_value_1"]
+                    business_case_id = \
+                        document["AuthenticatedDocument"]["DocumentUQ"]["DocumentHeader"]["ContextUUIDReference"][
+                            "ContextUUID"]
+                    _logger.info(
+                        f"Message {documentType} found for business case {business_case_id}, with document id {business_case_id}")
                     if documentType == MessageType.UEBERGABE_UEBERNAHME_MESSAGE.value:
                         begleitschein = self.process_uebernahme_response(document)
                         if begleitschein:
@@ -85,6 +92,49 @@ class BegleitscheinMessageService():
                                 'begleitschein': begleitschein,
                                 'message': "Recived Übergabe Übernahme Message"
                             })
+                    elif documentType == MessageType.TRANSPORT_MESSAGE.value:
+                        changes.append({
+                            'state': 'INFO',
+                            'begleitschein': {
+                                'business_case_uuid': business_case_id,
+                            },
+                            'message': "Recived transport message"
+                        })
+                    elif documentType == MessageType.TRANSPORTSTART_MESSAGE.value:
+                        changes.append({
+                            'state': 'INFO',
+                            'begleitschein': {
+                                'business_case_uuid': business_case_id,
+                            },
+                            'message': "Recived transport start message"
+                        })
+                    elif documentType == MessageType.TRANSPORTABSCHLUSS_MESSAGE.value:
+                        changes.append({
+                            'state': 'INFO',
+                            'begleitschein': {
+                                'business_case_uuid': business_case_id,
+                            },
+                            'message': "Recived transport abschluss message"
+                        })
+                    elif documentType == MessageType.UEBERNAHMEBESTAETIGUNGS_MESSAGE.value:
+                        changes.append({
+                            'state': 'INFO',
+                            'begleitschein': {
+                                'business_case_uuid': business_case_id,
+                            },
+                            'message': "Übernahme bestätigungs message"
+                        })
+            elif update["PostProcessingEvent"]:
+                last_transaction_uuid = update["PostProcessingEvent"]['TransactionUUID']
+                document = retrieve_document_validation_result(self.auth, last_transaction_uuid)
+                _logger.warning(document)
+            elif update["ProcessingEvent"]:
+                last_transaction_uuid = update["ProcessingEvent"]['TransactionUUID']
+                try:
+                    document = retrieve_document_validation_result(self.auth, last_transaction_uuid)
+                    _logger.warning(document)
+                except Exception as e:
+                    _logger.warning(e)
 
         return {
             'last_transaction_uuid': last_transaction_uuid,

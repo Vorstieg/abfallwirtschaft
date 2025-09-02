@@ -1,3 +1,4 @@
+import logging
 import os
 
 from odoo import models, fields, _
@@ -8,6 +9,8 @@ from .library.mappings import *
 from .library.message.begleitschein_message_service import BegleitscheinMessageService
 
 COMPANY_GLN_MISSING = "You need to have a GLN configured for your company"
+
+_logger = logging.getLogger(__name__)
 
 
 class Begleitschein(models.Model):
@@ -86,7 +89,7 @@ class Begleitschein(models.Model):
 
         partner_gln = self._get_person_gln(self.partner_id, _("Partner needs to have a GLN configured"))
         company_gln = self._get_person_gln(self.company_partner_id, _(COMPANY_GLN_MISSING))
-        transport_mean = TransportMean("Straße", "9008390100059")
+        transport_mean = TransportMean("Strasse", "9008390100059")
 
         self._get_begleitschein_message_service().start_transport(transport_mean, self, partner_gln, company_gln)
 
@@ -98,7 +101,7 @@ class Begleitschein(models.Model):
 
         partner_gln = self._get_person_gln(self.partner_id, _("Partner needs to have a GLN configured"))
         company_gln = self._get_person_gln(self.company_partner_id, _(COMPANY_GLN_MISSING))
-        transport_mean = TransportMean("Straße", "9008390100059")
+        transport_mean = TransportMean("Strasse", "9008390100059")
 
         organizations = [Organisation(partner_gln, "handover"), Organisation(company_gln, "takeover")]
 
@@ -131,6 +134,7 @@ class Begleitschein(models.Model):
                     'name': f"{takeover_partner.partner_id.name} {begleitschein['name']}",
                     'partner_id': takeover_partner.partner_id.id,
                     'company_partner_id': handover_partner.partner_id.id,
+                    'business_case_uuid': begleitschein["business_case_uuid"],
                     'begleitschein_lines': [(0, 0, {
                         'product_qty': l["quantity"],
                         'contains_pop': l["pop"],
@@ -141,6 +145,10 @@ class Begleitschein(models.Model):
                     body=line["message"],
                     subtype_xmlid='mail.mt_note'
                 )
+            elif line["state"] == 'INFO':
+                for begleitschein in (self.env['waste.begleitschein']
+                        .search([("business_case_uuid", "=", line["begleitschein"]["business_case_uuid"])])):
+                    begleitschein.message_post(body=line["message"], subtype_xmlid='mail.mt_note')
 
         config_params.set_param('waste_management.edm_last_transaction_uuid', respone["last_transaction_uuid"])
 
