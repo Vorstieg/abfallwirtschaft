@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import List
 
+
 def dangerous_goods_description(dangerous_waste_description):
     return {
         'Description': {
@@ -121,7 +122,7 @@ class ShipmentItem:
             # },
             'NetPropertyStatement': self.netProperty.parse(),
             # 'ConsignmentNoteReferenceID' : ''              # ID from first call, not relevant if no "meldepflichtige Abälle"
-            'DangerousGoodsDescription': dangerous_goods_description(self.waste_type_description),  # ADR information
+            # 'DangerousGoodsDescription':  # ADR information
             'ContainsPersistentOrganicPollutant': self.contains_pop
         }
 
@@ -175,6 +176,12 @@ class Shipment:
             'HandOverPartyReferenceID': "handover",
             'TakeOverPartyReferenceID': "takeover",
         }
+    def parse_message_uebernahme(self):
+        return {
+            'UUID': self.shipment_uuid,
+            'PredeterminedScopeAssignmentID': self.internal_id,
+            'ShipmentItem': [list(map(lambda x: x.parse(), self.shipment_items))]
+        }
 
     def parse_message_transport(self):
         return {
@@ -215,9 +222,11 @@ class TransportMean:
 
     def parse(self):
         return {
-            'PredeterminedScopeAssignmentID': self.internal_id,
+            'PredeterminedScopeAssignmentID': {
+                '_value_1': self.internal_id,
+            },
             'ModeID': {
                 'collectionID': '2939',
                 '_value_1': self.gtin,
             },
-        },
+        }

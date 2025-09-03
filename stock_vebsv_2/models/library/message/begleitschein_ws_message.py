@@ -1,17 +1,33 @@
+import logging
 import os
 from enum import Enum
+from lxml import etree
 
 import requests
 import zeep.xsd
-from zeep import Client, Settings, xsd
+from zeep import Client, Settings, xsd, Plugin
 from zeep.loader import load_external
 from zeep.transports import Transport
 
 from ..auth import Auth
 from ..mappings import *
 
+_logger = logging.getLogger(__name__)
+
 INTERFACE_VERSION = '1.09'
 CONNECTOR_VERSION = '1.00'
+
+
+class MyLoggingPlugin(Plugin):
+
+    def ingress(self, envelope, http_headers, operation):
+        _logger.info(etree.tostring(envelope, pretty_print=False))
+        return envelope, http_headers
+
+    def egress(self, envelope, http_headers, operation, binding_options):
+        _logger.info(etree.tostring(envelope, pretty_print=False))
+        return envelope, http_headers
+
 
 WSDL_URL = "https://edmdemo.umweltbundesamt.at/messaging-ws/MessagingService?wsdl"
 base_path = os.path.dirname(os.path.abspath(__file__))
@@ -20,7 +36,8 @@ session = requests.Session()
 settings = Settings(strict=False)
 transport = Transport(session=session)
 
-client = Client(wsdl=WSDL_URL, settings=settings, transport=transport)
+client = Client(wsdl=WSDL_URL, settings=settings, transport=transport, plugins=[MyLoggingPlugin()])
+
 
 class MessageType(Enum):
     BESTELL_MESSAGE = '9008390117699'
@@ -35,9 +52,11 @@ class MessageType(Enum):
     TRANSPORTABBRUCHS_MESSAGE = '9008390127445'
     ABLEHNUNGS_MESSAGE = '9008390127452'
 
+
 def load_message_envelope(xsd_file):
     schema = load_message_xsd(xsd_file)
     return schema.get_element('ns0:MessageEnvelope')
+
 
 def load_message_xsd(xsd_file):
     with open(base_path + "/api_definition" + xsd_file, 'rb') as f:
@@ -46,7 +65,7 @@ def load_message_xsd(xsd_file):
 
 
 # Übergabe-/Übernahme-Message
-def ug_un_message(organisations: List[Organisation], shipment: Shipment):
+def create_ug_un_message(organisations: List[Organisation], shipment: Shipment):
     MessageEnvelope = load_message_envelope("/open_MessageFormatC.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'ListedData': {
@@ -58,20 +77,18 @@ def ug_un_message(organisations: List[Organisation], shipment: Shipment):
     }))
 
 
-def ug_best_message(organisations: List[Organisation], shipment: Shipment):
+def create_ug_best_message(shipment: Shipment):
     MessageEnvelope = load_message_envelope("/open_MessageFormatC.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'MessageData': {
-            'Shipment': shipment.parse()
+            'Shipment': shipment.parse_message_uebernahme()
         }
     }))
 
 
 # Transport Message
-def tr_message(organisations: List[Organisation], local_unit: List[LocalUnit], shipment: Shipment, transport_uuid,
-               internal_id, planned_waypoint: List[PlannedWaypoint]):
-    transport_mean = TransportMean("[transport label]", "[mode gtin]")
-
+def create_tr_message(organisations: List[Organisation], local_unit: List[LocalUnit], shipment: Shipment, transport_uuid,
+                      internal_id, planned_waypoint: List[PlannedWaypoint], transport_mean: TransportMean):
     MessageEnvelope = load_message_envelope("/open_MessageFormatD.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'ListedData': {
@@ -87,13 +104,15 @@ def tr_message(organisations: List[Organisation], local_unit: List[LocalUnit], s
                 'PlannedWaypointEvent': list(map(lambda x: x.parse(), planned_waypoint)),
                 'TransportItem': [
                     list(map(lambda x: x.parse_message_transport_item(), shipment.shipment_items))
-                ]
+                ],
+                'CarrierPartyReferenceID': 'takeover'
             }
         }
     }))
 
+
 # Transport start message
-def tr_st_message(transport_uuid, transport_mean: TransportMean, actual_time: datetime):
+def create_tr_st_message(transport_uuid, transport_mean: TransportMean, actual_time: datetime):
     MessageEnvelope = load_message_envelope("/open_MessageFormatE.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'MessageData': {
@@ -110,7 +129,7 @@ def tr_st_message(transport_uuid, transport_mean: TransportMean, actual_time: da
 
 # Transport end message
 # also transport empfangsbestätigung
-def tr_end_message(transport_uuid, actual_time: datetime):
+def create_tr_end_message(transport_uuid, actual_time: datetime):
     MessageEnvelope = load_message_envelope("/open_MessageFormatF.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'MessageData': {
@@ -122,6 +141,7 @@ def tr_end_message(transport_uuid, actual_time: datetime):
             }
         }
     }))
+
 
 def share_document(auth: Auth, transaction_uuid, message_envelope, object_uuid, context_uuid, recipient_gln,
                    sender_gln, documentTypeId: MessageType):
@@ -185,10 +205,11 @@ def share_document(auth: Auth, transaction_uuid, message_envelope, object_uuid, 
         }
 
     }
+    _logger.info(f"Share document request for type {documentTypeId} for business case {context_uuid}")
     return client.service.ShareDocument(**request_data)
 
 
-def query_update(auth, last_message_uuid="00000000-0000-0000-0000-000000000000"):
+def query_update(auth, last_message_uuid):
     session.headers.update({
         'Authorization': auth.message_query_update_special_case_auth_header(last_message_uuid),
     })
@@ -227,3 +248,17 @@ def retrieve_document(auth, referred_transaction_uuid):
         'ReferredTransactionUUID': referred_transaction_uuid
     }
     return client.service.RetrieveDocument(**request_data)
+
+
+def retrieve_document_validation_result(auth, referred_transaction_uuid):
+    session.headers.update({
+        'Authorization': auth.message_auth_header(f"{referred_transaction_uuid}\n",
+                                                  f"{referred_transaction_uuid}\n\nQueryDocumentValidationResult"),
+    })
+
+    request_data = {
+        'InterfaceVersionID': INTERFACE_VERSION,
+        'ConnectorVersionID': CONNECTOR_VERSION,
+        'ReferredTransactionUUID': referred_transaction_uuid
+    }
+    return client.service.QueryDocumentValidationResult(**request_data)
