@@ -35,11 +35,11 @@ class StockPicking(models.Model):
         belgeitschein = self.env['waste.begleitschein'].create({
             'name': self.name.replace("/", "_") + '_Belgeitschein',
             'stock_picking_id': self.id,
-            'partner_id': self.partner_id.id,
-            'company_partner_id': self.company_id.partner_id.id,
+            'source_partner_id': self.partner_id.id,
+            'target_partner_id': self.company_id.partner_id.id,
             'begleitschein_lines': [(0, 0, {
                 'product_id': l.product_id.id,
-                'begleitschein_id': l.product_id.waste_type_id.id,
+                'abfallart': l.product_id.waste_type_id.id,
                 'product_qty': l.quantity,
             }) for l in waste_products],
         })
