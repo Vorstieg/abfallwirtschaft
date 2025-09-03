@@ -16,6 +16,11 @@ class WasteManagementConfigSettings(models.TransientModel):
         config_parameter='waste_management.edm_secret',
         help="Secret key/password for authenticating with the EDM"
     )
+    begleitscheine_non_reporting = fields.Boolean(
+        string="Create Begleitscheine für non obligatory reporting waste",
+        config_parameter='waste_management.begleitscheine_non_reporting',
+        default=True
+    )
     edm_db_uuid = fields.Char(
         string="EDM DB UUID",
         config_parameter='waste_management.edm_db_uuid',

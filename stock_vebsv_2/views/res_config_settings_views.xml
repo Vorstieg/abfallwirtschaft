@@ -17,6 +17,9 @@
                             <setting string="EDM Application Key" id="edm_user_data">
                                 <field name="edm_secret"/>
                             </setting>
+                            <setting string="EDM Application Key" id="edm_begleitschein_settings">
+                                <field name="begleitscheine_non_reporting"/>
+                            </setting>
                         </block>
                     </app>
                 </xpath>

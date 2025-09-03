@@ -61,13 +61,8 @@ class Begleitschein(models.Model):
         organizations = [Organisation(partner_gln, "handover"),
                          Organisation(company_gln, "takeover")]
 
-        planned_waypoints = [PlannedWaypoint(datetime.now(), datetime.now(), "pickup_site", "handover", True, False),
-                             PlannedWaypoint(datetime.now(), datetime.now(), "dropoff_site", "takeover", False, False)]
-
         self._get_begleitschein_message_service().create_begleitschein(organizations, self._get_shipment(), self,
-                                                                       partner_gln,
-                                                                       company_gln, planned_waypoints,
-                                                                       self.name)
+                                                                       partner_gln, company_gln)
 
     def _get_shipment(self):
         shipment_items = [ShipmentItem(
@@ -93,8 +88,16 @@ class Begleitschein(models.Model):
         partner_gln = self._get_person_gln(self.partner_id, _("Partner needs to have a GLN configured"))
         company_gln = self._get_person_gln(self.company_partner_id, _(COMPANY_GLN_MISSING))
         transport_mean = TransportMean("Strasse", "9008390100059")
+        organizations = [Organisation(partner_gln, "handover"),
+                         Organisation(company_gln, "takeover")]
+        planned_waypoints = [PlannedWaypoint(datetime.now(), datetime.now(), "pickup_site", "handover", True, False),
+                             PlannedWaypoint(datetime.now(), datetime.now(), "dropoff_site", "takeover", False, False)]
+        local_units = [LocalUnit("pickup_site", "9008390004500", "9008390109199"),
+                       LocalUnit("dropoff_site", "9008390004494", "9008390109199")]
 
-        self._get_begleitschein_message_service().start_transport(transport_mean, self, partner_gln, company_gln)
+
+        self._get_begleitschein_message_service().start_transport(transport_mean, self, partner_gln, company_gln,
+                                                                  organizations,local_units,self._get_shipment(), planned_waypoints,self.name)
 
         self.state = 'in_transport'
 

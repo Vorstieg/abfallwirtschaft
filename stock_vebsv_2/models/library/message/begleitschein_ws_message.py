@@ -65,7 +65,7 @@ def load_message_xsd(xsd_file):
 
 
 # Übergabe-/Übernahme-Message
-def ug_un_message(organisations: List[Organisation], shipment: Shipment):
+def create_ug_un_message(organisations: List[Organisation], shipment: Shipment):
     MessageEnvelope = load_message_envelope("/open_MessageFormatC.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'ListedData': {
@@ -77,18 +77,18 @@ def ug_un_message(organisations: List[Organisation], shipment: Shipment):
     }))
 
 
-def ug_best_message(shipment: Shipment):
+def create_ug_best_message(shipment: Shipment):
     MessageEnvelope = load_message_envelope("/open_MessageFormatC.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'MessageData': {
-            'Shipment': shipment.parse_message_un_message()
+            'Shipment': shipment.parse_message_uebernahme()
         }
     }))
 
 
 # Transport Message
-def tr_message(organisations: List[Organisation], local_unit: List[LocalUnit], shipment: Shipment, transport_uuid,
-               internal_id, planned_waypoint: List[PlannedWaypoint], transport_mean: TransportMean):
+def create_tr_message(organisations: List[Organisation], local_unit: List[LocalUnit], shipment: Shipment, transport_uuid,
+                      internal_id, planned_waypoint: List[PlannedWaypoint], transport_mean: TransportMean):
     MessageEnvelope = load_message_envelope("/open_MessageFormatD.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'ListedData': {
@@ -112,7 +112,7 @@ def tr_message(organisations: List[Organisation], local_unit: List[LocalUnit], s
 
 
 # Transport start message
-def tr_st_message(transport_uuid, transport_mean: TransportMean, actual_time: datetime):
+def create_tr_st_message(transport_uuid, transport_mean: TransportMean, actual_time: datetime):
     MessageEnvelope = load_message_envelope("/open_MessageFormatE.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'MessageData': {
@@ -129,7 +129,7 @@ def tr_st_message(transport_uuid, transport_mean: TransportMean, actual_time: da
 
 # Transport end message
 # also transport empfangsbestätigung
-def tr_end_message(transport_uuid, actual_time: datetime):
+def create_tr_end_message(transport_uuid, actual_time: datetime):
     MessageEnvelope = load_message_envelope("/open_MessageFormatF.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'MessageData': {
