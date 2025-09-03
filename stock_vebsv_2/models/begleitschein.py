@@ -1,7 +1,7 @@
 import logging
 import os
 
-from odoo import models, fields, _
+from odoo import models, fields, _, api
 from odoo.exceptions import UserError
 
 from .library.auth import Auth
@@ -51,6 +51,17 @@ class Begleitschein(models.Model):
         ('done', 'Done'),
         ('canceled', 'Canceled'),
     ], string='Status', default='new')
+
+    total_product_qty = fields.Float(
+        string='Total Product Quantity',
+        compute='_compute_total_product_qty',
+        store=True,
+    )
+
+    @api.depends('begleitschein_lines.product_qty')
+    def _compute_total_product_qty(self):
+        for record in self:
+            record.total_product_qty = sum(record.begleitschein_lines.mapped('product_qty'))
 
     def start_begleitschein(self):
         partner_gln = self._get_person_gln(self.partner_id, _("Partner needs to have a GLN configured"))

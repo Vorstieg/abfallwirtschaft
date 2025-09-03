@@ -3,7 +3,7 @@
     <record id="action_waste_begleitschein" model="ir.actions.act_window">
         <field name="name">Waste Begleitscheine</field>
         <field name="res_model">waste.begleitschein</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">kanban,graph,list,form</field>
     </record>
 
     <record id="view_waste_begleitschein_form" model="ir.ui.view">
@@ -60,6 +60,58 @@
                 <div class="o_attachment_preview"/>
                 <chatter/>
             </form>
+        </field>
+    </record>
+
+    <record id="view_waste_begleitschein_search" model="ir.ui.view">
+        <field name="name">waste.begleitschein.search</field>
+        <field name="model">waste.begleitschein</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter string="New" name="new" domain="[('state', '=', 'new')]"/>
+                <filter string="In Transport" name="in_transport" domain="[('state', '=', 'in_transport')]"/>
+                <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_waste_begleitschein_kanban" model="ir.ui.view">
+        <field name="name">waste.begleitschein.kanban</field>
+        <field name="model">waste.begleitschein</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="o_kanban_card_content">
+                                <div>
+                                    <field name="name"/>
+                                </div>
+                                <div>
+                                    <field name="partner_id"/>
+                                </div>
+                                <div>
+                                    <field name="source_site"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_waste_begleitschein_graph" model="ir.ui.view">
+        <field name="name">waste.begleitschein.graph</field>
+        <field name="model">waste.begleitschein</field>
+        <field name="arch" type="xml">
+            <graph string="Waste Begleitschein" type="bar">
+                <field name="state"/>
+                <field name="total_product_qty" type="measure"/>
+                <field name="partner_id" type="row"/>
+            </graph>
         </field>
     </record>
 
