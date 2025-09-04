@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Waste Registry",
+    'name': "Waste Management",
     'summary': """
-        Adds a model to manage different types of waste and links them to products.""",
+        This addon adds core functionality for managing waste in Austria""",
     'description': """
-        This module introduces a new data model for managing 'Waste Types' and adds a 'Waste Type' field to the product form.
+        This module introduces the core data for waste management in Austria.
     """,
 
     'author': "Vorstieg Software FlexCo",
@@ -19,7 +19,15 @@
     'data': [
         'security/ir.model.access.csv',
         'data/waste_type_data.xml',
+        'data/waste_origin_types.xml',
+        'data/waste_quantification_type.xml',
+        'data/waste_recycling_types.xml',
+        'data/waste_transport_types.xml',
         'views/waste_type_views.xml',
+        'views/waste_quantification_type_views.xml',
+        'views/waste_recycling_type_views.xml',
+        'views/waste_transport_type_views.xml',
         'views/product_template_views.xml',
-    ],
+		'views/waste_menu_views.xml',
+],
 }

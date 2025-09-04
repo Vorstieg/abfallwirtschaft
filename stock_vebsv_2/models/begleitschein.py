@@ -23,16 +23,17 @@ class Begleitschein(models.Model):
     purchase_order_id = fields.Many2one(
         'purchase.order', 'Purchase Order', index=True, ondelete='set null')
 
-    name = fields.Char(string='Begleitschein Ref', required=True, readonly=True, copy=False)
+    name = fields.Char(string='Begleitschein Ref', required=True, copy=False)
 
-    partner_id = fields.Many2one('res.partner', string='Target', required=True, change_default=True, tracking=True)
-    company_partner_id = fields.Many2one('res.partner', string='Company', required=True, change_default=True,
-                                         tracking=True)
+    source_partner_id = fields.Many2one('res.partner', string='Target', required=True, change_default=True,
+                                        tracking=True)
+    target_partner_id = fields.Many2one('res.partner', string='Company', required=True, change_default=True,
+                                        tracking=True)
 
-    source_installation = fields.Many2one('waste.treatment.installation', string='Source Installation', required=False)
+    source_installation = fields.Many2one('waste.treatment.installation', string='Source Installation')
     source_site = fields.Many2one('waste.treatment.site', string='Source Site')
 
-    target_installation = fields.Many2one('waste.treatment.installation', string='Target Installation', required=False)
+    target_installation = fields.Many2one('waste.treatment.installation', string='Target Installation')
     target_site = fields.Many2one('waste.treatment.site', string='Target Site')
 
     begleitschein_lines = fields.One2many(
@@ -50,7 +51,7 @@ class Begleitschein(models.Model):
         ('in_transport', 'In Transport'),
         ('done', 'Done'),
         ('canceled', 'Canceled'),
-    ], string='Status', default='new')
+    ], string='Status', default='new', readonly=True)
 
     total_product_qty = fields.Float(
         string='Total Product Quantity',
@@ -58,14 +59,22 @@ class Begleitschein(models.Model):
         store=True,
     )
 
+    @api.onchange('source_site')
+    def _onchange_source_site(self):
+        self.source_installation = False
+
+    @api.onchange('target_site')
+    def _onchange_target_site(self):
+        self.target_installation = False
+
     @api.depends('begleitschein_lines.product_qty')
     def _compute_total_product_qty(self):
         for record in self:
             record.total_product_qty = sum(record.begleitschein_lines.mapped('product_qty'))
 
     def start_begleitschein(self):
-        partner_gln = self._get_person_gln(self.partner_id, _("Partner needs to have a GLN configured"))
-        company_gln = self._get_person_gln(self.company_partner_id, _(COMPANY_GLN_MISSING))
+        partner_gln = self._get_person_gln(self.source_partner_id, _("Partner needs to have a GLN configured"))
+        company_gln = self._get_person_gln(self.target_partner_id, _(COMPANY_GLN_MISSING))
         if len(self.begleitschein_lines) == 0:
             raise UserError(_("You need at least one product with a waste code"))
 
@@ -95,20 +104,24 @@ class Begleitschein(models.Model):
     def start_transport(self):
         if self.state != 'new':
             raise UserError(_("You already started a transport."))
+        if not self.target_site.gtin:
+            raise UserError(_("You need to define a target site."))
+        if not self.source_site.gtin:
+            raise UserError(_("You need to define a source site."))
 
-        partner_gln = self._get_person_gln(self.partner_id, _("Partner needs to have a GLN configured"))
-        company_gln = self._get_person_gln(self.company_partner_id, _(COMPANY_GLN_MISSING))
+        partner_gln = self._get_person_gln(self.source_partner_id, _("Partner needs to have a GLN configured"))
+        company_gln = self._get_person_gln(self.target_partner_id, _(COMPANY_GLN_MISSING))
         transport_mean = TransportMean("Strasse", "9008390100059")
         organizations = [Organisation(partner_gln, "handover"),
                          Organisation(company_gln, "takeover")]
         planned_waypoints = [PlannedWaypoint(datetime.now(), datetime.now(), "pickup_site", "handover", True, False),
                              PlannedWaypoint(datetime.now(), datetime.now(), "dropoff_site", "takeover", False, False)]
-        local_units = [LocalUnit("pickup_site", "9008390004500", "9008390109199"),
-                       LocalUnit("dropoff_site", "9008390004494", "9008390109199")]
-
+        local_units = [LocalUnit("pickup_site", self.source_site.gtin, "9008390109199"),
+                       LocalUnit("dropoff_site", self.target_site.gtin, "9008390109199")]
 
         self._get_begleitschein_message_service().start_transport(transport_mean, self, partner_gln, company_gln,
-                                                                  organizations,local_units,self._get_shipment(), planned_waypoints,self.name)
+                                                                  organizations, local_units, self._get_shipment(),
+                                                                  planned_waypoints, self.name)
 
         self.state = 'in_transport'
 
@@ -116,8 +129,8 @@ class Begleitschein(models.Model):
         if self.state != 'in_transport':
             raise UserError(_("Can not finish a begleitschein, that is still in transport"))
 
-        partner_gln = self._get_person_gln(self.partner_id, _("Partner needs to have a GLN configured"))
-        company_gln = self._get_person_gln(self.company_partner_id, _(COMPANY_GLN_MISSING))
+        partner_gln = self._get_person_gln(self.source_partner_id, _("Partner needs to have a GLN configured"))
+        company_gln = self._get_person_gln(self.target_partner_id, _(COMPANY_GLN_MISSING))
         transport_mean = TransportMean("Strasse", "9008390100059")
 
         organizations = [Organisation(partner_gln, "handover"), Organisation(company_gln, "takeover")]
@@ -138,7 +151,7 @@ class Begleitschein(models.Model):
         edm_last_transaction_uuid = config_params.get_param(
             'waste_management.edm_last_transaction_uuid') or "00000000-0000-0000-0000-000000000000"
 
-        company_gln = self._get_person_gln(self.company_partner_id, _(COMPANY_GLN_MISSING))
+        company_gln = self._get_person_gln(self.target_partner_id, _(COMPANY_GLN_MISSING))
         respone = self._get_begleitschein_message_service().pull_news(company_gln, edm_last_transaction_uuid)
         for line in respone["changes"]:
             if line["state"] == 'NEW':
@@ -149,8 +162,8 @@ class Begleitschein(models.Model):
                     [("name", "=", begleitschein["takeover_gln"])])
                 new_begleitschein = self.env['waste.begleitschein'].create({
                     'name': f"{takeover_partner.partner_id.name} {begleitschein['name']}",
-                    'partner_id': takeover_partner.partner_id.id,
-                    'company_partner_id': handover_partner.partner_id.id,
+                    'source_partner_id': takeover_partner.partner_id.id,
+                    'target_partner_id': handover_partner.partner_id.id,
                     'business_case_uuid': begleitschein["business_case_uuid"],
                     'begleitschein_lines': [(0, 0, {
                         'product_qty': l["quantity"],

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Waste Registry",
+    'name': "Waste Processing Registry",
     'summary': """
         Adds a model to manage different types of waste processing cites""",
     'description': """

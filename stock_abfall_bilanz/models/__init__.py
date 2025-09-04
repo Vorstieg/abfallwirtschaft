@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
 
-from . import waste_move
 from . import waste_bilanz
-from . import core_data
+from . import waste_move

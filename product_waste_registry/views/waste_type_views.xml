@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Tree View (List View) -->
         <record id="view_waste_type_tree" model="ir.ui.view">
             <field name="name">waste.type.list</field>
             <field name="model">waste.type</field>
@@ -18,7 +17,6 @@
             </field>
         </record>
 
-        <!-- Form View -->
         <record id="view_waste_type_form" model="ir.ui.view">
             <field name="name">waste.type.form</field>
             <field name="model">waste.type</field>
@@ -44,7 +42,6 @@
             </field>
         </record>
 
-        <!-- Search View -->
         <record id="view_waste_type_search" model="ir.ui.view">
             <field name="name">waste.type.search</field>
             <field name="model">waste.type</field>
@@ -57,7 +54,6 @@
         </record>
 
 
-        <!-- Action to open the views -->
         <record id="action_waste_type" model="ir.actions.act_window">
             <field name="name">Waste Types</field>
             <field name="type">ir.actions.act_window</field>
@@ -70,18 +66,5 @@
                 </p>
             </field>
         </record>
-
-        <!-- Menu Items -->
-        <menuitem
-                id="menu_product_waste_registry_root"
-                name="Waste Registry"
-                sequence="20"/>
-
-        <menuitem
-                id="menu_waste_type"
-                name="Waste Types"
-                parent="menu_product_waste_registry_root"
-                action="action_waste_type"
-                sequence="10"/>
     </data>
 </odoo>
