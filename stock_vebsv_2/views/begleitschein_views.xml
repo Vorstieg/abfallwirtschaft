@@ -76,7 +76,7 @@
         <field name="name">waste.begleitschein.kanban</field>
         <field name="model">waste.begleitschein</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="state">
+            <kanban default_group_by="state" create="false" records_draggable="false">
                 <field name="state"/>
                 <templates>
                     <t t-name="card">

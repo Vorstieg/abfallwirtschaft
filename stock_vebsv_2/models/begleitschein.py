@@ -23,7 +23,7 @@ class Begleitschein(models.Model):
     purchase_order_id = fields.Many2one(
         'purchase.order', 'Purchase Order', index=True, ondelete='set null')
 
-    name = fields.Char(string='Begleitschein Ref', required=True, readonly=True, copy=False)
+    name = fields.Char(string='Begleitschein Ref', required=True, copy=False)
 
     source_partner_id = fields.Many2one('res.partner', string='Target', required=True, change_default=True,
                                         tracking=True)
@@ -51,7 +51,7 @@ class Begleitschein(models.Model):
         ('in_transport', 'In Transport'),
         ('done', 'Done'),
         ('canceled', 'Canceled'),
-    ], string='Status', default='new')
+    ], string='Status', default='new', readonly=True)
 
     total_product_qty = fields.Float(
         string='Total Product Quantity',
@@ -104,6 +104,10 @@ class Begleitschein(models.Model):
     def start_transport(self):
         if self.state != 'new':
             raise UserError(_("You already started a transport."))
+        if not self.target_site.gtin:
+            raise UserError(_("You need to define a target site."))
+        if not self.source_site.gtin:
+            raise UserError(_("You need to define a source site."))
 
         partner_gln = self._get_person_gln(self.source_partner_id, _("Partner needs to have a GLN configured"))
         company_gln = self._get_person_gln(self.target_partner_id, _(COMPANY_GLN_MISSING))
@@ -157,7 +161,7 @@ class Begleitschein(models.Model):
                 takeover_partner = self.env["res.partner.id_number"].search(
                     [("name", "=", begleitschein["takeover_gln"])])
                 new_begleitschein = self.env['waste.begleitschein'].create({
-                    'name': f"{takeover_partner.source_partner_id.name} {begleitschein['name']}",
+                    'name': f"{takeover_partner.partner_id.name} {begleitschein['name']}",
                     'source_partner_id': takeover_partner.partner_id.id,
                     'target_partner_id': handover_partner.partner_id.id,
                     'business_case_uuid': begleitschein["business_case_uuid"],

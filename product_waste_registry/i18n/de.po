@@ -24,8 +24,8 @@ msgstr "Abfallarten"
 
 #. module: product_waste_registry
 #: model:ir.ui.menu,name:product_waste_registry.menu_product_waste_registry_root
-msgid "Waste Registry"
-msgstr "Abfallverzeichnis"
+msgid "Waste Management"
+msgstr "Abfallmanagement"
 
 #. module: product_waste_registry
 #: model:ir.model.fields,field_description:product_waste_registry.field_waste_type__note

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <!-- Action Window for Waste Quantification Type -->
-        <!-- This action defines what happens when you click on the menu item.
-             It links to the 'waste.quantification.type' model and specifies
-             which views (tree and form) are available. -->
         <record id="action_waste_quantification_type" model="ir.actions.act_window">
             <field name="name">Waste Quantification Types</field>
             <field name="res_model">waste.quantification.type</field>
@@ -30,9 +26,6 @@
             </field>
         </record>
 
-        <!-- Form View for Waste Quantification Type -->
-        <!-- This defines the detailed view for a single record, allowing
-             users to create or edit a Waste Quantification Type. -->
         <record id="view_waste_quantification_type_form" model="ir.ui.view">
             <field name="name">waste.quantification.type.form</field>
             <field name="model">waste.quantification.type</field>
@@ -48,13 +41,5 @@
                 </form>
             </field>
         </record>
-
-        <menuitem
-            id="menu_waste_quantification_type"
-            name="Waste Quantification Types"
-            parent="menu_waste_balance_core_data"
-            action="action_waste_quantification_type"
-            sequence="20"/>
-
     </data>
 </odoo>

@@ -66,18 +66,5 @@
                 </p>
             </field>
         </record>
-
-        <menuitem id="menu_product_waste_registry_root"
-                  name="Waste Registry"
-                  sequence="20"/>
-        <menuitem id="menu_waste_management_configuration"
-                  name="Configuration"
-                  parent="menu_product_waste_registry_root"
-                  sequence="100"/>
-        <menuitem id="menu_waste_type"
-                  name="Waste Types"
-                  parent="menu_waste_management_configuration"
-                  action="action_waste_type"
-                  sequence="30"/>
     </data>
 </odoo>

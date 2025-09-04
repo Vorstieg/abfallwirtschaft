@@ -184,12 +184,13 @@ class BegleitscheinMessageService():
 
 
 class BegleitscheinMessageServiceMock(BegleitscheinMessageService):
-
     def create_begleitschein(self, organisations: List[Organisation], shipment: Shipment, belgeitschein, partner_gln,
-                             company_gln, planned_waypoints, message_name):
+                             company_gln):
         return
 
-    def start_transport(self, transport_mean, belgeitschein, partner_gln, company_gln):
+    def start_transport(self, transport_mean, belgeitschein, partner_gln, company_gln,
+                        organisations: List[Organisation], local_units: List[LocalUnit], shipment: Shipment,
+                        planned_waypoints: List[PlannedWaypoint], message_name):
         return
 
     def end_transport(self, transport_mean, belgeitschein, partner_gln, company_gln, organisations: List[Organisation],
