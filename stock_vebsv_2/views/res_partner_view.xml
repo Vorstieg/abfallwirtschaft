@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_partner_form_vebsv" model="ir.ui.view">
+            <field name="name">res.partner.form.vebsv</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='contact_addresses']" position="after">
+                    <page string="Waste management" name="waste_management">
+                        <group>
+                            <field name="enable_sms_solution"/>
+                            <field name="sms_solution_phone_number" invisible="not enable_sms_solution"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

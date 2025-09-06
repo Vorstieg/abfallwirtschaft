@@ -190,7 +190,7 @@ def _create_type_c_event(waypoint: PlannedWaypoint, shipment_item: ShipmentItem,
     waypoint_type = TYPE_ID_LOADING_WAYPOINT if waypoint.loading_waypoint else TYPE_ID_UNLOADING_WAYPOINT
     return {
         'TypeID': _create_type_id(COLLECTION_ID_WAYPOINT_TYPE, waypoint_type),
-        'DateTime': waypoint.start_date,
+        'DateTime': waypoint.period.start_date,
         'Object': shipment_item.parse_transfer(),
         'AssociatedObjectReferenceID': _create_vebsv_id_reference(vebsv_id),
         'AssociatedObjectDocumentScopeReferenceID': [

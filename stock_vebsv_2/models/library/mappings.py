@@ -164,19 +164,72 @@ class ShipmentItem:
 
 
 @dataclass()
+class Period:
+    start_date: datetime
+    end_date: datetime
+
+    def parse(self):
+        return {
+            'StartDate': self.start_date.date().isoformat(),
+            'EndDate': self.end_date.date().isoformat(),
+            'StartTime': self.start_date.time().isoformat(),
+            'EndTime': self.end_date.time().isoformat(),
+        }
+
+
+@dataclass()
+class PlannedWaypoint:
+    period: Period
+    location_internal_id: str
+    party_internal_id: str
+    loading_waypoint: bool = False
+    transshipment_waypoint: bool = False
+
+    def parse(self):
+        return {
+            'Period': self.period.parse(),
+            'SiteLocalUnitReferenceID': self.location_internal_id,
+            'PartyReferenceID': self.party_internal_id,
+            'LoadingWaypoint': self.loading_waypoint,
+            'TransshipmentWaypoint': self.transshipment_waypoint,
+        }
+
+    def parse_pick_up_service(self):
+        return {
+            'PickUpSiteService': {
+                'Period': self.period.parse(),
+                'SiteLocalUnitReferenceID': self.location_internal_id,
+                'PartyReferenceID': self.party_internal_id,
+            }}
+
+    def parse_drop_of_service(self):
+        return {
+            'DropOffSiteService': {
+                'Period': self.period.parse(),
+                'SiteLocalUnitReferenceID': self.location_internal_id,
+                'PartyReferenceID': self.party_internal_id,
+            }}
+
+
+@dataclass()
 class Shipment:
     shipment_uuid: uuid.UUID
     internal_id: str
     shipment_items: List[ShipmentItem]
+    pickup_site_service: PlannedWaypoint
+    drop_of_site_service: PlannedWaypoint
 
-    def parse(self):
+    def parse(self, sms_solution):
         return {
             'UUID': self.shipment_uuid,
             'PredeterminedScopeAssignmentID': self.internal_id,
             'ShipmentItem': list(map(lambda x: x.parse(), self.shipment_items)),
+            **(self.pickup_site_service.parse_pick_up_service() if sms_solution else {}),
+            **(self.pickup_site_service.parse_drop_of_service() if sms_solution else {}),
             'HandOverPartyReferenceID': "handover",
             'TakeOverPartyReferenceID': "takeover",
         }
+
     def parse_message_uebernahme(self):
         return {
             'UUID': self.shipment_uuid,
@@ -189,30 +242,6 @@ class Shipment:
             'UUID': self.shipment_uuid,
             'DocumentScopeAssignmentID': self.internal_id,
             'ShipmentItem': list(map(lambda x: x.parse_message_transport(), self.shipment_items))
-        }
-
-
-@dataclass()
-class PlannedWaypoint:
-    start_date: datetime
-    end_date: datetime
-    location_internal_id: str
-    party_internal_id: str
-    loading_waypoint: bool
-    transshipment_waypoint: bool
-
-    def parse(self):
-        return {
-            'Period': {
-                'StartDate': self.start_date.date().isoformat(),
-                'EndDate': self.end_date.date().isoformat(),
-                'StartTime': self.start_date.time().isoformat(),
-                'EndTime': self.end_date.time().isoformat(),
-            },
-            'SiteLocalUnitReferenceID': self.location_internal_id,
-            'PartyReferenceID': self.party_internal_id,
-            'LoadingWaypoint': self.loading_waypoint,
-            'TransshipmentWaypoint': self.transshipment_waypoint,
         }
 
 

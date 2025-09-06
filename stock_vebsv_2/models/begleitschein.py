@@ -76,26 +76,36 @@ class Begleitschein(models.Model):
             record.total_product_qty = sum(record.begleitschein_lines.mapped('product_qty'))
 
     def start_begleitschein(self):
-        partner_gln = self._get_person_gln(self.source_partner_id, _("Partner needs to have a GLN configured"))
-        company_gln = self._get_person_gln(self.target_partner_id, _(COMPANY_GLN_MISSING))
+        source_partner_gln = self._get_person_gln(self.source_partner_id, _("Partner needs to have a GLN configured"))
+        target_partner_gln = self._get_person_gln(self.target_partner_id, _(COMPANY_GLN_MISSING))
+        sms_telephone_number = self.source_partner_id.sms_solution_phone_number if self.source_partner_id.enable_sms_solution else False
 
-        if partner_gln == company_gln:
+        if source_partner_gln == target_partner_gln:
             raise UserError(_("Handover and takeover party cannot be the same."))
+
         if len(self.begleitschein_lines) == 0:
             raise UserError(_("You need at least one product with a waste code"))
+        if self.target_partner_id.enable_sms_solution and not sms_telephone_number:
+            raise UserError(_("If the sms solution is active, the partner needs to have a phone number configured"))
 
         for line in self.begleitschein_lines:
             if line.product_id.waste_type_id.dangerous:
                 line.vebsv_id = self._get_begleitschein_transfer_service().request_vebsv_id()
-        organizations = [Organisation(partner_gln, "handover"),
-                         Organisation(company_gln, "takeover")]
-        self._get_begleitschein_message_service().create_begleitschein(organizations, self._get_shipment(), self,
-                                                                       partner_gln, company_gln)
+        organizations = [Organisation(source_partner_gln, "handover"),
+                         Organisation(target_partner_gln, "takeover")]
+        local_units = [LocalUnit("pickup_site", self.source_site.gtin, "9008390109199"),
+                       LocalUnit("dropoff_site", self.target_site.gtin, "9008390109199")]
+
+        self._get_begleitschein_message_service().create_begleitschein(organizations, local_units, self._get_shipment(),
+                                                                       self,
+                                                                       source_partner_gln, target_partner_gln,
+                                                                       sms_telephone_number)
 
     def _get_shipment(self):
         shipment_items = [line.get_shipment_item(index + 1) for index, line in enumerate(self.begleitschein_lines)]
-        shipment = Shipment(self.shipment_uuid, self.name, shipment_items)
-        return shipment
+        return Shipment(self.shipment_uuid, self.name, shipment_items,
+                        PlannedWaypoint(Period(datetime.now(), datetime.now()), "pickup_site", "handover"),
+                        PlannedWaypoint(Period(datetime.now(), datetime.now()), "dropoff_site", "takeover"))
 
     def start_transport(self):
         if self.state != 'new':
@@ -110,8 +120,9 @@ class Begleitschein(models.Model):
         transport_mean = TransportMean("Strasse", "9008390100059")
         organizations = [Organisation(partner_gln, "handover"),
                          Organisation(company_gln, "takeover")]
-        planned_waypoints = [PlannedWaypoint(datetime.now(), datetime.now(), "pickup_site", "handover", True, False),
-                             PlannedWaypoint(datetime.now(), datetime.now(), "dropoff_site", "takeover", False, False)]
+        planned_waypoints = [
+            PlannedWaypoint(Period(datetime.now(), datetime.now()), "pickup_site", "handover", True, False),
+            PlannedWaypoint(Period(datetime.now(), datetime.now()), "dropoff_site", "takeover", False, False)]
         local_units = [LocalUnit("pickup_site", self.source_site.gtin, "9008390109199"),
                        LocalUnit("dropoff_site", self.target_site.gtin, "9008390109199")]
 
@@ -142,7 +153,7 @@ class Begleitschein(models.Model):
 
         organizations = [Organisation(partner_gln, "handover"), Organisation(company_gln, "takeover")]
 
-        self._get_begleitschein_message_service().end_transport(transport_mean, self, partner_gln, company_gln,
+        self._get_begleitschein_message_service().end_transport(self, partner_gln, company_gln,
                                                                 organizations,
                                                                 self._get_shipment())
 
@@ -176,8 +187,9 @@ class Begleitschein(models.Model):
                     [("name", "=", begleitschein["handover_gln"])])
                 takeover_partner = self.env["res.partner.id_number"].search(
                     [("name", "=", begleitschein["takeover_gln"])])
+                sanitised_partner_name = takeover_partner.partner_id.name.replace('\\', '').replace('/', '').replace(' ', '_')
                 new_begleitschein = self.env['waste.begleitschein'].create({
-                    'name': f"{takeover_partner.partner_id.name.replace('\\', '').replace('/', '').replace(' ', '_')}_{begleitschein['name']}",
+                    'name': f"{sanitised_partner_name}_{begleitschein['name']}",
                     'source_partner_id': takeover_partner.partner_id.id,
                     'target_partner_id': handover_partner.partner_id.id,
                     'business_case_uuid': begleitschein["business_case_uuid"],
