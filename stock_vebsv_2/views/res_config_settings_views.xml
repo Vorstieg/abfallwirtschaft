@@ -11,11 +11,17 @@
                     <app data-string="Waste Management" string="Waste Management" name="waste_management"
                          groups="base.group_system">
                         <block title="EDM User Data" name="waste_management">
-                            <setting string="EDM Username" id="edm_user_data">
-                                <field name="edm_username"/>
-                            </setting>
-                            <setting string="EDM Application Key" id="edm_user_data">
-                                <field name="edm_secret"/>
+                            <setting>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label for="edm_username" class="col-lg-3 o_light_label"/>
+                                        <field name="edm_username" class="oe_inline"/>
+                                    </div>
+                                    <div class="row mt16">
+                                        <label for="edm_secret" class="col-lg-3 o_light_label"/>
+                                        <field name="edm_secret" class="oe_inline"/>
+                                    </div>
+                                </div>
                             </setting>
                             <setting string="Send Begleitscheine, that don't require reporting"
                                      id="edm_begleitschein_settings">

@@ -53,7 +53,7 @@ class BegleitscheinMessageService():
                        belgeitschein.business_case_uuid, partner_gln, company_gln,
                        MessageType.EMPFANGSBESTAETIGUNGS_MESSAGE)
 
-        message_envelope = create_ug_best_message(shipment)
+        message_envelope = create_un_best_message(shipment)
 
         share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.shipment_uuid,
                        belgeitschein.business_case_uuid, partner_gln, company_gln,
@@ -165,6 +165,7 @@ class BegleitscheinMessageService():
         shipment = data['MessageData']['Shipment']
         begleitschein_lines = [
             {'abfallart': item['WasteTypeID']['_value_1'],
+             'vebsv_id': item['ConsignmentNoteReferenceID']['_value_1'] if item['ConsignmentNoteReferenceID'] else None,
              'pop': item['ContainsPersistentOrganicPollutant'],
              'quantity': item['NetPropertyStatement']['ValueAssignmentStatement']['NumericValue']['_value_1']
              }

@@ -4,9 +4,12 @@ import os
 from odoo import models, fields, _, api
 from odoo.exceptions import UserError
 
+from .library.transfer.begleitschein_transfer_service import BegleitscheinTransferService
 from .library.auth import Auth
-from .library.mappings import *
 from .library.message.begleitschein_message_service import BegleitscheinMessageService
+from .library.mappings import *
+
+_logger = logging.getLogger(__name__)
 
 COMPANY_GLN_MISSING = "You need to have a GLN configured for your company"
 
@@ -42,9 +45,9 @@ class Begleitschein(models.Model):
         string="Begleitschein Lines",
         copy=True, auto_join=True)
 
-    shipment_uuid = fields.Char('Shipment UUID', default=uuid.uuid4())
-    business_case_uuid = fields.Char('Business Case UUID', default=uuid.uuid4())
-    transport_uuid = fields.Char('Transport UUID', default=uuid.uuid4(), )
+    shipment_uuid = fields.Char('Shipment UUID', default=lambda x: uuid.uuid4())
+    business_case_uuid = fields.Char('Business Case UUID', default=lambda x: uuid.uuid4())
+    transport_uuid = fields.Char('Transport UUID', default=lambda x: uuid.uuid4())
 
     state = fields.Selection([
         ('new', 'New'),
@@ -75,29 +78,22 @@ class Begleitschein(models.Model):
     def start_begleitschein(self):
         partner_gln = self._get_person_gln(self.source_partner_id, _("Partner needs to have a GLN configured"))
         company_gln = self._get_person_gln(self.target_partner_id, _(COMPANY_GLN_MISSING))
+
+        if partner_gln == company_gln:
+            raise UserError(_("Handover and takeover party cannot be the same."))
         if len(self.begleitschein_lines) == 0:
             raise UserError(_("You need at least one product with a waste code"))
 
+        for line in self.begleitschein_lines:
+            if line.product_id.waste_type_id.dangerous:
+                line.vebsv_id = self._get_begleitschein_transfer_service().request_vebsv_id()
         organizations = [Organisation(partner_gln, "handover"),
                          Organisation(company_gln, "takeover")]
-
         self._get_begleitschein_message_service().create_begleitschein(organizations, self._get_shipment(), self,
                                                                        partner_gln, company_gln)
 
     def _get_shipment(self):
-        shipment_items = [ShipmentItem(
-            uuid.uuid4(),
-            index + 1,
-            line.product_id.waste_type_id.gtin,
-            'None',
-            line.product_id.waste_type_id.name,
-            False,
-            NetProperty("9008390104439",
-                        line.product_qty,
-                        "9008390100028"
-                        )
-        ) for index, line in enumerate(self.begleitschein_lines)
-        ]
+        shipment_items = [line.get_shipment_item(index + 1) for index, line in enumerate(self.begleitschein_lines)]
         shipment = Shipment(self.shipment_uuid, self.name, shipment_items)
         return shipment
 
@@ -123,6 +119,17 @@ class Begleitschein(models.Model):
                                                                   organizations, local_units, self._get_shipment(),
                                                                   planned_waypoints, self.name)
 
+        for begleitschein_line in self.begleitschein_lines:
+            if begleitschein_line.product_id.waste_type_id.dangerous:
+                self._get_begleitschein_transfer_service().declare_transport(
+                    organizations,
+                    local_units,
+                    begleitschein_line.get_shipment_item(),
+                    begleitschein_line.vebsv_id,
+                    self.transport_uuid,
+                    transport_mean,
+                    planned_waypoints)
+
         self.state = 'in_transport'
 
     def end_transport(self):
@@ -138,6 +145,15 @@ class Begleitschein(models.Model):
         self._get_begleitschein_message_service().end_transport(transport_mean, self, partner_gln, company_gln,
                                                                 organizations,
                                                                 self._get_shipment())
+
+        local_units = [LocalUnit("dropoff_site", "9008390004494", "9008390109199")]
+        for begleitschein_line in self.begleitschein_lines:
+            if begleitschein_line.product_id.waste_type_id.dangerous:
+                self._get_begleitschein_transfer_service().declare_takeover(
+                    organizations,
+                    local_units,
+                    begleitschein_line.get_shipment_item(),
+                    begleitschein_line.vebsv_id)
 
         self.state = 'done'
 
@@ -161,13 +177,14 @@ class Begleitschein(models.Model):
                 takeover_partner = self.env["res.partner.id_number"].search(
                     [("name", "=", begleitschein["takeover_gln"])])
                 new_begleitschein = self.env['waste.begleitschein'].create({
-                    'name': f"{takeover_partner.partner_id.name} {begleitschein['name']}",
+                    'name': f"{takeover_partner.partner_id.name.replace('\\', '').replace('/', '').replace(' ', '_')}_{begleitschein['name']}",
                     'source_partner_id': takeover_partner.partner_id.id,
                     'target_partner_id': handover_partner.partner_id.id,
                     'business_case_uuid': begleitschein["business_case_uuid"],
                     'begleitschein_lines': [(0, 0, {
                         'product_qty': l["quantity"],
                         'contains_pop': l["pop"],
+                        'vebsv_id': l["vebsv_id"],
                         'abfallart': self.env['waste.type'].search([("gtin", "=", l["abfallart"])]).id,
                     }) for l in begleitschein["begleitschein_lines"]],
                 })
@@ -175,12 +192,45 @@ class Begleitschein(models.Model):
                     body=line["message"],
                     subtype_xmlid='mail.mt_note'
                 )
+                # TODO will be handled by follow-up ticket
+                local_units = [LocalUnit("pickup_site", "9008390004494", "9008390109199")]
+                partner_gln = self._get_person_gln(new_begleitschein.source_partner_id,
+                                                   _("Partner needs to have a GLN configured"))
+                company_gln = self._get_person_gln(new_begleitschein.target_partner_id, _(COMPANY_GLN_MISSING))
+                organisations = [Organisation(company_gln, "handover"),
+                                 Organisation(partner_gln, "takeover")]
+
+                for begleitschein_line in new_begleitschein.begleitschein_lines:
+                    if begleitschein_line.abfallart.dangerous:
+                        self._get_begleitschein_transfer_service().declare_begleitschein(
+                            organisations,
+                            local_units,
+                            begleitschein_line.get_shipment_item(),
+                            begleitschein_line.vebsv_id)
             elif line["state"] == 'INFO':
                 for begleitschein in (self.env['waste.begleitschein']
                         .search([("business_case_uuid", "=", line["begleitschein"]["business_case_uuid"])])):
                     begleitschein.message_post(body=line["message"], subtype_xmlid='mail.mt_note')
 
         config_params.set_param('waste_management.edm_last_transaction_uuid', respone["last_transaction_uuid"])
+
+    def _get_begleitschein_transfer_service(self):
+        config_params = self.env['ir.config_parameter'].sudo()
+
+        edm_username = config_params.get_param('waste_management.edm_username')
+        edm_secret = config_params.get_param('waste_management.edm_secret')
+
+        connector_id = os.getenv('CONNECTOR_ID')
+        connector_key = os.getenv('CONNECTOR_KEY')
+
+        if not edm_username or not edm_secret:
+            raise UserError(_("You need to configure edm username and secret."))
+        if not connector_id or not connector_key:
+            raise UserError(_("You need to configure connector id and connector key."))
+
+        auth = Auth(edm_username, edm_secret, connector_id, connector_key,
+                    config_params.get_param('waste_management.edm_db_uuid'))
+        return BegleitscheinTransferService(auth)
 
     def _get_begleitschein_message_service(self):
         config_params = self.env['ir.config_parameter'].sudo()
@@ -221,3 +271,21 @@ class BegleitscheinLine(models.Model):
 
     begleitschein_id = fields.Many2one(
         'waste.begleitschein', 'Begleitschein', index=True, ondelete='set null')
+
+    vebsv_id = fields.Char(
+        string="VEBSV ID", store=True, readonly=False, required=False)
+
+    def get_shipment_item(self, line_item_number=0):
+        return ShipmentItem(
+            uuid.uuid4(),
+            line_item_number,
+            self.abfallart.gtin,
+            'None',
+            self.abfallart.name,
+            self.vebsv_id,
+            False,
+            NetProperty("9008390104439",
+                        self.product_qty,
+                        "9008390100028"
+                        )
+        )

@@ -1,33 +1,21 @@
 import logging
 import os
 from enum import Enum
-from lxml import etree
 
 import requests
 import zeep.xsd
-from zeep import Client, Settings, xsd, Plugin
+from zeep import Client, Settings, xsd
 from zeep.loader import load_external
 from zeep.transports import Transport
 
 from ..auth import Auth
 from ..mappings import *
+from ..zeep_pluggins import ZeepLoggingPlugin
 
 _logger = logging.getLogger(__name__)
 
 INTERFACE_VERSION = '1.09'
 CONNECTOR_VERSION = '1.00'
-
-
-class MyLoggingPlugin(Plugin):
-
-    def ingress(self, envelope, http_headers, operation):
-        _logger.info(etree.tostring(envelope, pretty_print=False))
-        return envelope, http_headers
-
-    def egress(self, envelope, http_headers, operation, binding_options):
-        _logger.info(etree.tostring(envelope, pretty_print=False))
-        return envelope, http_headers
-
 
 WSDL_URL = "https://edmdemo.umweltbundesamt.at/messaging-ws/MessagingService?wsdl"
 base_path = os.path.dirname(os.path.abspath(__file__))
@@ -36,7 +24,7 @@ session = requests.Session()
 settings = Settings(strict=False)
 transport = Transport(session=session)
 
-client = Client(wsdl=WSDL_URL, settings=settings, transport=transport, plugins=[MyLoggingPlugin()])
+client = Client(wsdl=WSDL_URL, settings=settings, transport=transport, plugins=[ZeepLoggingPlugin()])
 
 
 class MessageType(Enum):
@@ -77,7 +65,7 @@ def create_ug_un_message(organisations: List[Organisation], shipment: Shipment):
     }))
 
 
-def create_ug_best_message(shipment: Shipment):
+def create_un_best_message(shipment: Shipment):
     MessageEnvelope = load_message_envelope("/open_MessageFormatC.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'MessageData': {
