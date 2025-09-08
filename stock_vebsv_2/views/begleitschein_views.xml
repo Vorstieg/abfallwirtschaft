@@ -120,25 +120,25 @@
     </record>
 
     <record model="ir.ui.view" id="view_begleitschein_modal_form">
-    <field name="name">begleitschein.modal.form</field>
-    <field name="model">begleitschein.modal</field>
-    <field name="arch" type="xml">
-        <form string="Create Begleitschein">
-            <sheet>
-                <group>
-                    <field name="source_partner_id" readonly="true"/>
-                    <field name="target_partner_id" readonly="true"/>
-                    <field name="source_site" domain="[('partner_id', '=', source_partner_id)]"/>
-                    <field name="target_site" domain="[('partner_id', '=', target_partner_id)]"/>
-                </group>
-                <footer>
-                    <button string="Cancel" class="btn-secondary" special="cancel"/>
-                    <button string="Confirm" type="object" name="create_begleitschein_action" class="btn-primary"/>
-                </footer>
-            </sheet>
-        </form>
-    </field>
-</record>
+        <field name="name">begleitschein.modal.form</field>
+        <field name="model">begleitschein.modal</field>
+        <field name="arch" type="xml">
+            <form string="Create Begleitschein">
+                <sheet>
+                    <group>
+                        <field name="source_partner_id" readonly="true"/>
+                        <field name="target_partner_id" readonly="true"/>
+                        <field name="source_site" domain="[('partner_id', '=', source_partner_id)]"/>
+                        <field name="target_site" domain="[('partner_id', '=', target_partner_id)]"/>
+                    </group>
+                    <footer>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                        <button string="Confirm" type="object" name="create_begleitschein_action" class="btn-primary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
     <menuitem
             id="menu_waste_begleitschein_list"

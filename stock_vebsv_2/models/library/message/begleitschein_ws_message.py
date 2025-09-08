@@ -4,7 +4,6 @@ from enum import Enum
 
 import requests
 import zeep.xsd
-from sympy import false
 from zeep import Client, Settings, xsd
 from zeep.loader import load_external
 from zeep.transports import Transport

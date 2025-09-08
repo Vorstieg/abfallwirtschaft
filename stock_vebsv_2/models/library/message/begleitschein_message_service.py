@@ -162,7 +162,6 @@ class BegleitscheinMessageService():
         org_data = {
             org['DocumentScopeAssignmentID']: org['ID'][0]['_value_1']
             for org in data['ListedData']['Organization']
-            if org['DocumentScopeAssignmentID'] in ['handover', 'takeover'] and org['ID']
         }
         shipment = data['MessageData']['Shipment']
         begleitschein_lines = [
@@ -173,10 +172,12 @@ class BegleitscheinMessageService():
              }
             for item in shipment['ShipmentItem']
         ]
+        take_over_reference = shipment['TakeOverPartyReferenceID']['_value_1']
+        hand_over_reference = shipment['HandOverPartyReferenceID']['_value_1']
 
         return {
-            'handover_gln': org_data['handover'],
-            'takeover_gln': org_data['takeover'],
+            'handover_gln': org_data[hand_over_reference],
+            'takeover_gln': org_data[take_over_reference],
             'business_case_uuid':
                 document["AuthenticatedDocument"]["DocumentUQ"]["DocumentHeader"]["ContextUUIDReference"][
                     "ContextUUID"],
