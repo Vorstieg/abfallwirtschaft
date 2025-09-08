@@ -47,6 +47,7 @@
                                     <field name="abfallart"/>
                                     <field name="product_qty"/>
                                     <field name="contains_pop"/>
+                                    <field name="vebsv_id"/>
                                     <field name="product_id"/>
                                 </list>
                             </field>

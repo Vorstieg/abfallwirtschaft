@@ -104,6 +104,7 @@ class ShipmentItem:
     waste_type_gtin: str
     waste_contamination_id: str
     waste_type_description: str
+    vebsv_id: str
     contains_pop: bool
     netProperty: NetProperty
 
@@ -121,7 +122,7 @@ class ShipmentItem:
             #     '_value_1': self.waste_contamination_id  # Optional Spez 77
             # },
             'NetPropertyStatement': self.netProperty.parse(),
-            # 'ConsignmentNoteReferenceID' : ''              # ID from first call, not relevant if no "meldepflichtige Abälle"
+            **({'ConsignmentNoteReferenceID': self.vebsv_id} if self.vebsv_id else {}),
             # 'DangerousGoodsDescription':  # ADR information
             'ContainsPersistentOrganicPollutant': self.contains_pop
         }
@@ -172,7 +173,7 @@ class Shipment:
         return {
             'UUID': self.shipment_uuid,
             'PredeterminedScopeAssignmentID': self.internal_id,
-            'ShipmentItem': [list(map(lambda x: x.parse(), self.shipment_items))],
+            'ShipmentItem': list(map(lambda x: x.parse(), self.shipment_items)),
             'HandOverPartyReferenceID': "handover",
             'TakeOverPartyReferenceID': "takeover",
         }
@@ -187,7 +188,7 @@ class Shipment:
         return {
             'UUID': self.shipment_uuid,
             'DocumentScopeAssignmentID': self.internal_id,
-            'ShipmentItem': [list(map(lambda x: x.parse_message_transport(), self.shipment_items))]
+            'ShipmentItem': list(map(lambda x: x.parse_message_transport(), self.shipment_items))
         }
 
 
