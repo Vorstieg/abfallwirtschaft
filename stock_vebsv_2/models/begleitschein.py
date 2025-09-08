@@ -154,7 +154,6 @@ class Begleitschein(models.Model):
         organizations = [Organisation(partner_gln, "handover"), Organisation(company_gln, "takeover")]
 
         self._get_begleitschein_message_service().end_transport(self, partner_gln, company_gln,
-                                                                organizations,
                                                                 self._get_shipment())
 
         local_units = [LocalUnit("dropoff_site", "9008390004494", "9008390109199")]
@@ -187,7 +186,8 @@ class Begleitschein(models.Model):
                     [("name", "=", begleitschein["handover_gln"])])
                 takeover_partner = self.env["res.partner.id_number"].search(
                     [("name", "=", begleitschein["takeover_gln"])])
-                sanitised_partner_name = takeover_partner.partner_id.name.replace('\\', '').replace('/', '').replace(' ', '_')
+                sanitised_partner_name = takeover_partner.partner_id.name.replace('\\', '').replace('/', '').replace(
+                    ' ', '_')
                 new_begleitschein = self.env['waste.begleitschein'].create({
                     'name': f"{sanitised_partner_name}_{begleitschein['name']}",
                     'source_partner_id': takeover_partner.partner_id.id,
