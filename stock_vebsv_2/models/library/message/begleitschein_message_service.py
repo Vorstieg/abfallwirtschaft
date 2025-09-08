@@ -13,18 +13,18 @@ class BegleitscheinMessageService():
     def __init__(self, auth):
         self.auth = auth
 
-    def create_begleitschein(self, organisations: List[Organisation], shipment: Shipment, belgeitschein, partner_gln,
-                             company_gln):
-        message_envelope = create_ug_un_message(organisations, shipment)
+    def create_begleitschein(self, organisations: List[Organisation], local_units: List[LocalUnit], shipment: Shipment, belgeitschein, partner_gln,
+                             company_gln, sms_telephone_number):
+        message_envelope = create_ug_un_message(organisations, local_units, shipment, sms_telephone_number)
 
         share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.shipment_uuid,
                        belgeitschein.business_case_uuid, partner_gln, company_gln,
-                       MessageType.UEBERGABE_UEBERNAHME_MESSAGE)
+                       MessageType.UEBERGABE_UEBERNAHME_MESSAGE, sms_telephone_number)
 
-    def start_transport(self, transport_mean, belgeitschein, partner_gln, company_gln, organisations:List[Organisation],
-                        local_units: List[LocalUnit], shipment: Shipment, planned_waypoints: List[PlannedWaypoint], message_name):
-
-        transport_mean = TransportMean("Strasse", "9008390100059")
+    def start_transport(self, transport_mean, belgeitschein, partner_gln, company_gln,
+                        organisations: List[Organisation],
+                        local_units: List[LocalUnit], shipment: Shipment, planned_waypoints: List[PlannedWaypoint],
+                        message_name):
 
         message_envelope = create_tr_message(organisations, local_units, shipment, belgeitschein.transport_uuid,
                                              message_name + "transport",
@@ -39,8 +39,7 @@ class BegleitscheinMessageService():
         share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.transport_uuid,
                        belgeitschein.business_case_uuid, partner_gln, company_gln, MessageType.TRANSPORTSTART_MESSAGE)
 
-    def end_transport(self, transport_mean, belgeitschein, partner_gln, company_gln, organisations: List[Organisation],
-                      shipment: Shipment):
+    def end_transport(self, belgeitschein, partner_gln, company_gln, shipment: Shipment):
         message_envelope = create_tr_end_message(belgeitschein.transport_uuid, datetime.now())
 
         share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.transport_uuid,
@@ -135,6 +134,9 @@ class BegleitscheinMessageService():
                     _logger.warning(document)
                 except Exception as e:
                     _logger.warning(e)
+            elif update["BackwardSharingEvent"]:
+                last_transaction_uuid = update["BackwardSharingEvent"]['TransactionUUID']
+                _logger.info(f"recived backward sharing event for {last_transaction_uuid}")
             else:
                 _logger.info(f"recived unknown update{update}")
 
@@ -182,21 +184,3 @@ class BegleitscheinMessageService():
             'name': shipment['PredeterminedScopeAssignmentID']['_value_1'],
             'begleitschein_lines': begleitschein_lines
         }
-
-
-class BegleitscheinMessageServiceMock(BegleitscheinMessageService):
-    def create_begleitschein(self, organisations: List[Organisation], shipment: Shipment, belgeitschein, partner_gln,
-                             company_gln):
-        return
-
-    def start_transport(self, transport_mean, belgeitschein, partner_gln, company_gln,
-                        organisations: List[Organisation], local_units: List[LocalUnit], shipment: Shipment,
-                        planned_waypoints: List[PlannedWaypoint], message_name):
-        return
-
-    def end_transport(self, transport_mean, belgeitschein, partner_gln, company_gln, organisations: List[Organisation],
-                      shipment: Shipment):
-        return
-
-    def cancel_begleitschein(self):
-        return

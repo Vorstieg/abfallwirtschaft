@@ -4,6 +4,7 @@ from enum import Enum
 
 import requests
 import zeep.xsd
+from sympy import false
 from zeep import Client, Settings, xsd
 from zeep.loader import load_external
 from zeep.transports import Transport
@@ -53,14 +54,15 @@ def load_message_xsd(xsd_file):
 
 
 # Übergabe-/Übernahme-Message
-def create_ug_un_message(organisations: List[Organisation], shipment: Shipment):
+def create_ug_un_message(organisations: List[Organisation], local_unit: List[LocalUnit], shipment: Shipment, sms_solution=False):
     MessageEnvelope = load_message_envelope("/open_MessageFormatC.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'ListedData': {
-            'Organization': list(map(lambda x: x.parse(), organisations))
+            'Organization': list(map(lambda x: x.parse(), organisations)),
+            'LocalUnit': list(map(lambda x: x.parse(), local_unit))
         },
         'MessageData': {
-            'Shipment': shipment.parse()
+            'Shipment': shipment.parse(sms_solution)
         }
     }))
 
@@ -75,7 +77,8 @@ def create_un_best_message(shipment: Shipment):
 
 
 # Transport Message
-def create_tr_message(organisations: List[Organisation], local_unit: List[LocalUnit], shipment: Shipment, transport_uuid,
+def create_tr_message(organisations: List[Organisation], local_unit: List[LocalUnit], shipment: Shipment,
+                      transport_uuid,
                       internal_id, planned_waypoint: List[PlannedWaypoint], transport_mean: TransportMean):
     MessageEnvelope = load_message_envelope("/open_MessageFormatD.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
@@ -132,9 +135,8 @@ def create_tr_end_message(transport_uuid, actual_time: datetime):
 
 
 def share_document(auth: Auth, transaction_uuid, message_envelope, object_uuid, context_uuid, recipient_gln,
-                   sender_gln, documentTypeId: MessageType):
+                   sender_gln, documentTypeId: MessageType, sms_telephone_number=False):
     """
-
     :param auth:
     :param transaction_uuid:
     :param message_envelope:
@@ -164,7 +166,8 @@ def share_document(auth: Auth, transaction_uuid, message_envelope, object_uuid, 
             'TransactionPurposeCategoryID': {
                 'collectionID': '2976',
                 '_value_1': 'request'  # two possible values: request and inform
-            }
+            },
+           **({'TelephoneCommunicationNetworkEndpointID': sms_telephone_number} if sms_telephone_number else {}),
         },
         'AuthenticatedDocument': {
             'DocumentUQ': {
