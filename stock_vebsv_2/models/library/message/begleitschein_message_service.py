@@ -146,7 +146,7 @@ class BegleitscheinMessageService():
                     'message': "Received UpdateSignalEvent"
                 })
             else:
-                _logger.info(f"received unknown update{update}")
+                _logger.info(f"recived unknown update{update}")
 
         return {
             'last_transaction_uuid': last_transaction_uuid,
