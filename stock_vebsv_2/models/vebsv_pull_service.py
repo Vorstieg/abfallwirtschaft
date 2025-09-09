@@ -22,9 +22,12 @@ class VebsvPullService(models.TransientModel):
         companies = self.env['res.company'].search([])
         for company in companies:
             if company.partner_id.id_numbers:
-                self.pull_changes_for_company(company)
+                # This assumes that the first id_number is the GLN
+                # TODO: A more robust implementation might require a specific type of id_number
+                gln = company.partner_id.id_numbers[0].display_name
+                self.pull_changes_for_company(gln)
 
-    def pull_changes_for_company(self, company):
+    def pull_changes_for_company(self, company_gln):
         config_params = self.env['ir.config_parameter'].sudo()
         edm_last_transaction_uuid = config_params.get_param(
             'waste_management.edm_last_transaction_uuid') or "00000000-0000-0000-0000-000000000000"
