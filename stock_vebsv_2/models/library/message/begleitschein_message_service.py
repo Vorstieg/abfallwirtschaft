@@ -137,8 +137,16 @@ class BegleitscheinMessageService():
             elif update["BackwardSharingEvent"]:
                 last_transaction_uuid = update["BackwardSharingEvent"]['TransactionUUID']
                 _logger.info(f"recived backward sharing event for {last_transaction_uuid}")
+            elif update["UpdateSignalEvent"]:
+                last_transaction_uuid = update["UpdateSignalEvent"]['TransactionUUID']
+                changes.append({
+                    'state': 'UPDATE_SIGNAL',
+                    'event_type': update["UpdateSignalEvent"]['TriggerEventTypeID']['_value_1'],
+                    'vebsv_id': update["UpdateSignalEvent"]['AffectedObjectID'],
+                    'message': "Received UpdateSignalEvent"
+                })
             else:
-                _logger.info(f"recived unknown update{update}")
+                _logger.info(f"received unknown update{update}")
 
         return {
             'last_transaction_uuid': last_transaction_uuid,
