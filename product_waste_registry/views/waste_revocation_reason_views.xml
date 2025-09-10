@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_revocation_reason_tree" model="ir.ui.view">
+            <field name="name">waste.revocation.reason.list</field>
+            <field name="model">waste.revocation.reason</field>
+            <field name="arch" type="xml">
+                <list string="Waste Types">
+                    <field name="gtin"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_waste_type_form" model="ir.ui.view">
+            <field name="name">waste.revocation.reason.form</field>
+            <field name="model">waste.revocation.reason</field>
+            <field name="arch" type="xml">
+                <form string="Waste Revocation Reason">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" placeholder="Falsche Angaben"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="gtin"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_revocation_reason_type_search" model="ir.ui.view">
+            <field name="name">waste.revocation.reason.search</field>
+            <field name="model">waste.revocation.reason</field>
+            <field name="arch" type="xml">
+                <search string="Search Waste Type">
+                    <field name="name" string="Waste Revocation Reason"/>
+                    <field name="description" string="Description"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_revocation_reason_type" model="ir.actions.act_window">
+            <field name="name">Waste Revocation Reasons</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">waste.revocation.reason</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_revocation_reason_type_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new revocation reason.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

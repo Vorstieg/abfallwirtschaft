@@ -135,22 +135,27 @@ def create_tr_end_message(transport_uuid, actual_time: datetime):
 
 
 def share_document(auth: Auth, transaction_uuid, message_envelope, object_uuid, context_uuid, recipients: List[Recipient],
-                   sender_gln: str, document_type_id: MessageType):
+                   sender_gln: str, document_type_id: MessageType, begleitschein, message_suffix: str = ""):
     """
     :param auth:
     :param transaction_uuid:
     :param message_envelope:
     :param object_uuid: for ug_un and ug_best_message ShipmentUUID, for transport related message, TransportMovementUUID
     :param context_uuid:
-    :param recipient_glns: List of all recipients
+    :param recipients: List of all recipients
     :param sender_gln:
     :param document_type_id:
+    :param begleitschein:
+    :param message_suffix:
     :return:
     """
     CONTEXT_TYPE_ID = '9008390117408'  # Abholauftrag, Transportauftrag, Entsorgungsauftrag
 
-    DOCUMENT_UUID = uuid.uuid4()  # Unique uuid for each document; when updating document, a new uuid is needed
-    VERSION_BRAKCET_UUID = uuid.uuid4()  # Unique uuid for each document, needed for updating documents
+    DOCUMENT_UUID = uuid.uuid4()
+    version_bracket_uuid = str(uuid.uuid4())
+    version_sequence_number = 0
+
+    begleitschein.add_request_identifier(document_type_id, message_suffix, version_bracket_uuid)
 
     session.headers.update({
         'Authorization': auth.message_auth_header(f"{transaction_uuid}\n{DOCUMENT_UUID}",
@@ -161,8 +166,7 @@ def share_document(auth: Auth, transaction_uuid, message_envelope, object_uuid, 
         'ConnectorVersionID': CONNECTOR_VERSION,
         'TransactionUUID': transaction_uuid,
         'InterfaceVersionID': "1.10",
-        'Recipient': [recipient.parse() for recipient in recipients]
-        ,
+        'Recipient': [recipient.parse() for recipient in recipients],
         'AuthenticatedDocument': {
             'DocumentUQ': {
                 'DocumentHeader': {
@@ -171,8 +175,8 @@ def share_document(auth: Auth, transaction_uuid, message_envelope, object_uuid, 
                         '_value_1': document_type_id.value
                     },
                     'DocumentUUID': DOCUMENT_UUID,
-                    'VersionBracketUUID': VERSION_BRAKCET_UUID,
-                    'VersionSequenceNumber': "0",
+                    'VersionBracketUUID': version_bracket_uuid,
+                    'VersionSequenceNumber': version_sequence_number,
                     'DocumentOriginPartyID': sender_gln,
                     'ObjectUUID': object_uuid,
                     'ContextUUIDReference': {
@@ -192,6 +196,35 @@ def share_document(auth: Auth, transaction_uuid, message_envelope, object_uuid, 
     }
     _logger.info(f"Share document request for type {document_type_id} for business case {context_uuid}")
     return client.service.ShareDocument(**request_data)
+
+
+def share_document_cancellation(auth: Auth, transaction_uuid, version_bracket_uuid, recipients, sender_gln, reason):
+    user_string = f"{transaction_uuid}\n{version_bracket_uuid}"
+    connector_string = f"{transaction_uuid}\n{version_bracket_uuid}\nShareDocumentCancellation"
+
+    session.headers.update({
+        'Authorization': auth.message_auth_header(user_string, connector_string),
+    })
+
+    request_data = {
+        'ConnectorVersionID': CONNECTOR_VERSION,
+        'TransactionUUID': transaction_uuid,
+        'InterfaceVersionID': "1.10",
+        'Recipient': [recipient.parse() for recipient in recipients],
+        'AuthenticatedCancellation': {
+            'DocumentUQ': {
+                'VersionBracketUUID': version_bracket_uuid,
+                'ChangeReasonID': {
+                    'collectionID': '7521',
+                    '_value_1': reason.gtin
+                },
+                'DocumentOriginPartyID': sender_gln
+            }
+        }
+    }
+
+    _logger.info(f"Share document cancellation request for version bracket {version_bracket_uuid}")
+    return client.service.ShareDocumentCancellation(**request_data)
 
 
 def query_update(auth, last_message_uuid):

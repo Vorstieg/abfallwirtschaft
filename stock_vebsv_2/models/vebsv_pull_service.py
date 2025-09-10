@@ -6,7 +6,6 @@ from odoo.exceptions import UserError
 
 from .library.auth import Auth
 from .library.message.begleitschein_message_service import BegleitscheinMessageService
-from .library.mappings import *
 from .library.transfer.begleitschein_ws_transfer import TransferMessageType
 
 _logger = logging.getLogger(__name__)
@@ -22,12 +21,9 @@ class VebsvPullService(models.TransientModel):
         companies = self.env['res.company'].search([])
         for company in companies:
             if company.partner_id.id_numbers:
-                # This assumes that the first id_number is the GLN
-                # TODO: A more robust implementation might require a specific type of id_number
-                gln = company.partner_id.id_numbers[0].display_name
-                self.pull_changes_for_company(gln)
+                self.pull_changes_for_company(company)
 
-    def pull_changes_for_company(self, company_gln):
+    def pull_changes_for_company(self, company):
         config_params = self.env['ir.config_parameter'].sudo()
         edm_last_transaction_uuid = config_params.get_param(
             'waste_management.edm_last_transaction_uuid') or "00000000-0000-0000-0000-000000000000"
@@ -56,10 +52,10 @@ class VebsvPullService(models.TransientModel):
                     'name': f"{sanitised_takeover_party}_{begleitschein['name']}",
                     'source_partner_id': handover_partner.partner_id.id,
                     'target_partner_id': takeover_partner.partner_id.id,
-                    'business_case_uuid': begleitschein["business_case_uuid"],
                     'company_id': company.id,
+                    'organizing_partner_id': organizing_partner_id.partner_id.id,
+                    'business_case_uuid': begleitschein["business_case_uuid"],
                     'state': 'declared',
-                    'organizing_partner_id': organizing_partner_id,
                     'begleitschein_lines': self._create_begleitschein_lines(begleitschein["begleitschein_lines"]),
                 })
                 new_begleitschein.message_post(

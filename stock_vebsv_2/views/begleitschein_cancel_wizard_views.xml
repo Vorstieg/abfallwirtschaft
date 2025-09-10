@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_begleitschein_cancel_wizard_form" model="ir.ui.view">
+        <field name="name">begleitschein.cancel.wizard.form</field>
+        <field name="model">begleitschein.cancel.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cancel Begleitschein">
+                <group>
+                    <field name="begleitschein_id" readonly="1"/>
+                    <field name="revocation_reason_id"/>
+                </group>
+                <p>Are you sure you want to cancel this Begleitschein?</p>
+                <footer>
+                    <button string="Confirm Cancellation" name="action_cancel_begleitschein" type="object" class="btn-danger"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

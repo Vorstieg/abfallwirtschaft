@@ -21,8 +21,8 @@
                             invisible="state != 'declared' or self_is_main_organizer"/>
                     <button name="end_transport" type="object" string="End Transport" class="oe_highlight"
                              invisible="state not in ['in_transport', 'transport_complete']"/>
-                    <button name="cancel_begleitschein" type="object" string="Cancel Transport" class="oe_secondary"
-                            invisible="state == 'canceled'"/>
+                    <button name="cancel_begleitschein" type="object" string="Cancel" class="oe_secondary"
+                            invisible="not is_cancel_button_visible"/>
                 </header>
                 <sheet>
                     <field name="self_is_main_organizer" invisible="1"/>
