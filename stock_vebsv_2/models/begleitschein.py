@@ -20,6 +20,8 @@ class Begleitschein(models.Model):
     _name = "waste.begleitschein"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+    self_is_main_organizer = fields.Boolean(string="Self is Main Organizer", default=True)
+
     stock_picking_id = fields.Many2one(
         'stock.picking', 'Stock Picking', index=True, ondelete='set null')
 
@@ -28,9 +30,9 @@ class Begleitschein(models.Model):
 
     name = fields.Char(string='Begleitschein Ref', required=True, copy=False)
 
-    source_partner_id = fields.Many2one('res.partner', string='Target', required=True, change_default=True,
+    source_partner_id = fields.Many2one('res.partner', string='Source Partner', required=True, change_default=True,
                                         tracking=True)
-    target_partner_id = fields.Many2one('res.partner', string='Company', required=True, change_default=True,
+    target_partner_id = fields.Many2one('res.partner', string='Target Patner', required=True, change_default=True,
                                         tracking=True)
 
     source_installation = fields.Many2one('waste.treatment.installation', string='Source Installation')
@@ -51,6 +53,7 @@ class Begleitschein(models.Model):
 
     state = fields.Selection([
         ('new', 'New'),
+        ('confirmed', 'Confirmed'),
         ('in_transport', 'In Transport'),
         ('done', 'Done'),
         ('canceled', 'Canceled'),
@@ -88,8 +91,10 @@ class Begleitschein(models.Model):
         if self.target_partner_id.enable_sms_solution and not sms_telephone_number:
             raise UserError(_("If the sms solution is active, the partner needs to have a phone number configured"))
 
+        has_dangerous_waste = False
         for line in self.begleitschein_lines:
             if line.product_id.waste_type_id.dangerous:
+                has_dangerous_waste = True
                 line.vebsv_id = self._get_begleitschein_transfer_service().request_vebsv_id()
         organizations = [Organisation(source_partner_gln, "handover"),
                          Organisation(target_partner_gln, "takeover")]
@@ -100,6 +105,8 @@ class Begleitschein(models.Model):
                                                                        self,
                                                                        source_partner_gln, target_partner_gln,
                                                                        sms_telephone_number)
+        if not has_dangerous_waste:
+            self.state = 'confirmed'
 
     def _get_shipment(self):
         shipment_items = [line.get_shipment_item(index + 1) for index, line in enumerate(self.begleitschein_lines)]
@@ -108,8 +115,8 @@ class Begleitschein(models.Model):
                         PlannedWaypoint(Period(datetime.now(), datetime.now()), "dropoff_site", "takeover"))
 
     def start_transport(self):
-        if self.state != 'new':
-            raise UserError(_("You already started a transport."))
+        if self.state != 'confirmed':
+            raise UserError(_("You can only start transport for a confirmed begleitschein."))
         if not self.target_site.gtin:
             raise UserError(_("You need to define a target site."))
         if not self.source_site.gtin:
@@ -172,59 +179,25 @@ class Begleitschein(models.Model):
 
         self.state = 'canceled'
 
-    def pull_changes(self):
-        config_params = self.env['ir.config_parameter'].sudo()
-        edm_last_transaction_uuid = config_params.get_param(
-            'waste_management.edm_last_transaction_uuid') or "00000000-0000-0000-0000-000000000000"
+    def declare_begleitschein(self):
+        if not self.source_site.gtin:
+            raise UserError(_("You need to define a source site."))
 
+        local_units = [LocalUnit("pickup_site", self.source_site.gtin, "9008390109199")]
+        partner_gln = self._get_person_gln(self.source_partner_id,
+                                           _("Partner needs to have a GLN configured"))
         company_gln = self._get_person_gln(self.target_partner_id, _(COMPANY_GLN_MISSING))
-        respone = self._get_begleitschein_message_service().pull_news(company_gln, edm_last_transaction_uuid)
-        for line in respone["changes"]:
-            if line["state"] == 'NEW':
-                begleitschein = line["begleitschein"]
-                handover_partner = self.env["res.partner.id_number"].search(
-                    [("name", "=", begleitschein["handover_gln"])])
-                takeover_partner = self.env["res.partner.id_number"].search(
-                    [("name", "=", begleitschein["takeover_gln"])])
-                sanitised_partner_name = takeover_partner.partner_id.name.replace('\\', '').replace('/', '').replace(
-                    ' ', '_')
-                new_begleitschein = self.env['waste.begleitschein'].create({
-                    'name': f"{sanitised_partner_name}_{begleitschein['name']}",
-                    'source_partner_id': takeover_partner.partner_id.id,
-                    'target_partner_id': handover_partner.partner_id.id,
-                    'business_case_uuid': begleitschein["business_case_uuid"],
-                    'begleitschein_lines': [(0, 0, {
-                        'product_qty': l["quantity"],
-                        'contains_pop': l["pop"],
-                        'vebsv_id': l["vebsv_id"],
-                        'abfallart': self.env['waste.type'].search([("gtin", "=", l["abfallart"])]).id,
-                    }) for l in begleitschein["begleitschein_lines"]],
-                })
-                new_begleitschein.message_post(
-                    body=line["message"],
-                    subtype_xmlid='mail.mt_note'
-                )
-                # TODO will be handled by follow-up ticket
-                local_units = [LocalUnit("pickup_site", "9008390004494", "9008390109199")]
-                partner_gln = self._get_person_gln(new_begleitschein.source_partner_id,
-                                                   _("Partner needs to have a GLN configured"))
-                company_gln = self._get_person_gln(new_begleitschein.target_partner_id, _(COMPANY_GLN_MISSING))
-                organisations = [Organisation(company_gln, "handover"),
-                                 Organisation(partner_gln, "takeover")]
+        organisations = [Organisation(partner_gln, "handover"),
+                         Organisation(company_gln, "takeover")]
 
-                for begleitschein_line in new_begleitschein.begleitschein_lines:
-                    if begleitschein_line.abfallart.dangerous:
-                        self._get_begleitschein_transfer_service().declare_begleitschein(
-                            organisations,
-                            local_units,
-                            begleitschein_line.get_shipment_item(),
-                            begleitschein_line.vebsv_id)
-            elif line["state"] == 'INFO':
-                for begleitschein in (self.env['waste.begleitschein']
-                        .search([("business_case_uuid", "=", line["begleitschein"]["business_case_uuid"])])):
-                    begleitschein.message_post(body=line["message"], subtype_xmlid='mail.mt_note')
-
-        config_params.set_param('waste_management.edm_last_transaction_uuid', respone["last_transaction_uuid"])
+        for begleitschein_line in self.begleitschein_lines:
+            if begleitschein_line.abfallart.dangerous:
+                self._get_begleitschein_transfer_service().declare_handover(
+                    organisations,
+                    local_units,
+                    begleitschein_line.get_shipment_item(),
+                    begleitschein_line.vebsv_id)
+        self.state = 'confirmed'
 
     def _get_begleitschein_transfer_service(self):
         config_params = self.env['ir.config_parameter'].sudo()
@@ -296,8 +269,5 @@ class BegleitscheinLine(models.Model):
             self.abfallart.name,
             self.vebsv_id,
             False,
-            NetProperty("9008390104439",
-                        self.product_qty,
-                        "9008390100028"
-                        )
+            NetProperty("9008390104439", self.product_qty, "9008390100028")
         )

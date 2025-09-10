@@ -12,7 +12,6 @@ from ..auth import Auth
 from typing import List
 from ..mappings import Organisation, LocalUnit, ShipmentItem, TransportMean, PlannedWaypoint
 
-
 class BegleitscheinTransferService:
     auth: Auth
 
@@ -23,8 +22,8 @@ class BegleitscheinTransferService:
         response = request_waste_transfer_id(self.auth, uuid.uuid4())
         return response.WasteTransferID
 
-    def declare_begleitschein(self, organisations: List[Organisation], local_units: List[LocalUnit],
-                              shipment_item: ShipmentItem, vebsv_id: str):
+    def declare_handover(self, organisations: List[Organisation], local_units: List[LocalUnit],
+                         shipment_item: ShipmentItem, vebsv_id: str):
         message = create_handover_declaration_message(organisations, local_units, shipment_item, vebsv_id)
         share_document(self.auth, uuid.uuid4(), message)
 

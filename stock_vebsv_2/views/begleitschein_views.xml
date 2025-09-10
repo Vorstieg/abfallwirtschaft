@@ -12,14 +12,15 @@
         <field name="arch" type="xml">
             <form string="Waste Begleitschein">
                 <header>
-                    <field name="state" widget="statusbar" nolabel="1"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,confirmed,in_transport,done" nolabel="1"/>
                     <button name="start_transport" type="object" string="Start Transport" class="oe_highlight"
-                            invisible="state != 'new'"/>
+                            invisible="state != 'confirmed'"/>
+                    <button name="declare_begleitschein" type="object" string="Confirm Handover" class="oe_highlight"
+                            invisible="state != 'new' or self_is_main_organizer"/>
                     <button name="end_transport" type="object" string="End Transport" class="oe_highlight"
                             invisible="state != 'in_transport'"/>
                     <button name="cancel_begleitschein" type="object" string="Cancel Transport" class="oe_secondary"
                             invisible="state == 'canceled'"/>
-                    <button name="pull_changes" type="object" string="Fetch Updates" class="oe_secondary"/>
                 </header>
                 <sheet>
                     <div class="oe_title">

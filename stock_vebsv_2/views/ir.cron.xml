@@ -2,9 +2,9 @@
 <odoo>
     <record id="edm_vebsv_polling" model="ir.cron">
         <field name="name">VEBSV Message Web Service Polling</field>
-        <field name="model_id" ref="model_waste_begleitschein"/>
+        <field name="model_id" ref="model_waste_vebsv_pull_service"/>
         <field name="state">code</field>
-        <field name="code">model.pull_changes()</field>
+        <field name="code">model.pull_all_changes()</field>
         <field name='interval_number'>15</field>
         <field name='interval_type'>minutes</field>
         <field name="user_id" ref="base.user_root"/>
