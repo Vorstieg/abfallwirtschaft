@@ -9,7 +9,8 @@ from ..auth import Auth
 from ..mappings import Organisation, LocalUnit, ShipmentItem, TransportMean, PlannedWaypoint
 from ..zeep_pluggins import ZeepLoggingPlugin
 
-class MessageType(Enum):
+
+class TransferMessageType(Enum):
     HANDOVER_DECLARATION = '9008390116289'
     TRANSPORT_DECLARATION = '9008390116272'
     TRANSPORT_START_DECLARATION = '9008390116326'
@@ -42,6 +43,7 @@ ROLE_ID_TAKEOVER_PARTY = '9008390104712'
 ROLE_ID_PICKUP_SITE = '9008390108338'
 ROLE_ID_DROPOFF_SITE = '9008390108345'
 ROLE_ID_TRANSPORTEUR = '9008390116906'
+ROLE_ID_DROPSHIP = '9008390117231'
 ROLE_ID_VERANLASSER = '9008390116913'
 ROLE_ID_TRANSPORT_EVENT = '9008390104576'
 ROLE_ID_PARTY_IN_TRANSPORT = '9008390104583'
@@ -53,6 +55,7 @@ TYPE_ID_PHYSICAL_EVENT = '9008390116371'
 TYPE_ID_LOADING_WAYPOINT = '9008390116395'
 TYPE_ID_UNLOADING_WAYPOINT = '9008390116401'
 TYPE_ID_DOCUMENT_CREATION = '9008390106594'
+TYPE_ID_STRECKENGESCHAEFTS_MELDUNG = '9008390132197'
 
 # Object Designations & Type Names
 OBJECT_DESIGNATION_PHYSICAL = 'Physisch'
@@ -61,6 +64,7 @@ OBJECT_DESIGNATION_DOCUMENT_CREATION = 'Dokumenterstellung'
 OBJECT_TYPE_NAME_UNTERNEHMEN = 'Unternehmen'
 OBJECT_TYPE_NAME_STANDORT = 'Standort'
 OBJECT_TYPE_NAME_EINZELTRANSPORT = 'Einzeltransport'
+OBJECT_TYPE_STRECKENGESCHAEFTS_MELDUNG = 'Streckengeschäftsmeldung'
 
 
 def request_waste_transfer_id(auth: Auth, transaction_uuid: str):
@@ -84,7 +88,27 @@ def create_handover_declaration_message(organisations: List[Organisation], local
     ]
     type_a_event = _create_type_a_event(shipment_item, vebsv_id, scope_refs)
     environmental_data = {'TypeAEvent': type_a_event}
-    return _build_environmental_data_instance(MessageType.HANDOVER_DECLARATION.value, listed_data, environmental_data,
+    return _build_environmental_data_instance(TransferMessageType.HANDOVER_DECLARATION.value, listed_data, environmental_data,
+                                              "handover")
+
+
+def create_dropship_declaration_message(organisations: List[Organisation], vebsv_id: str):
+    listed_data = _create_listed_data(organisations, [])
+    scope_refs = [
+        _create_scope_reference(ROLE_ID_HANDOVER_PARTY, OBJECT_TYPE_NAME_UNTERNEHMEN, 'handover'),
+        _create_scope_reference(ROLE_ID_TAKEOVER_PARTY, OBJECT_TYPE_NAME_UNTERNEHMEN, 'takeover'),
+        (_create_scope_reference(ROLE_ID_DROPSHIP, OBJECT_TYPE_NAME_UNTERNEHMEN, organisation.role)
+         for organisation in organisations if "dropship" in organisation)
+    ]
+    type_a_event = {
+        'TypeID': _create_type_id(COLLECTION_ID_DOCUMENT_TYPE, TYPE_ID_STRECKENGESCHAEFTS_MELDUNG,
+                                  OBJECT_TYPE_STRECKENGESCHAEFTS_MELDUNG),
+        'Date': datetime.now().date().isoformat(),
+        'AssociatedObjectReferenceID': _create_vebsv_id_reference(vebsv_id),
+        'AssociatedObjectDocumentScopeReferenceID': scope_refs,
+    }
+    environmental_data = {'TypeAEvent': type_a_event}
+    return _build_environmental_data_instance(TransferMessageType.HANDOVER_DECLARATION.value, listed_data, environmental_data,
                                               "handover")
 
 
@@ -95,11 +119,12 @@ def create_transport_declaration_message(organisations: List[Organisation], loca
     scope_refs_b = [
         _create_scope_reference(ROLE_ID_TRANSPORTEUR, OBJECT_TYPE_NAME_UNTERNEHMEN, 'takeover'),
         _create_scope_reference(ROLE_ID_VERANLASSER, OBJECT_TYPE_NAME_UNTERNEHMEN, 'takeover')
+        # TODO: this has to be whoever is transport organizer
     ]
     type_b_event = _create_type_b_event(transport_mean, transport_uuid, scope_refs_b)
     type_c_events = [_create_type_c_event(wp, shipment_item, vebsv_id) for wp in planned_waypoints]
     environmental_data = {'TypeBEvent': type_b_event, 'TypeCEvent': type_c_events}
-    return _build_environmental_data_instance(MessageType.TRANSPORT_DECLARATION.value, listed_data, environmental_data,
+    return _build_environmental_data_instance(TransferMessageType.TRANSPORT_DECLARATION.value, listed_data, environmental_data,
                                               "takeover")
 
 
@@ -112,7 +137,7 @@ def create_transport_start_message(organisations: List[Organisation], local_unit
     type_b_event = _create_type_b_event(transport_mean, transport_uuid, scope_ref_b)
     type_c_event = _create_type_c_event(waypoint, shipment_item, vebsv_id)
     environmental_data = {'TypeBEvent': type_b_event, 'TypeCEvent': type_c_event}
-    return _build_environmental_data_instance(MessageType.TRANSPORT_START_DECLARATION.value, listed_data,
+    return _build_environmental_data_instance(TransferMessageType.TRANSPORT_START_DECLARATION.value, listed_data,
                                               environmental_data, "takeover")
 
 
@@ -127,7 +152,7 @@ def create_takeover_message(organisations: List[Organisation], local_units: List
     ]
     type_a_event = _create_type_a_event(shipment_item, vebsv_id, scope_refs, reason)
     environmental_data = {'TypeAEvent': type_a_event}
-    return _build_environmental_data_instance(MessageType.TAKEOVER_DECLARATION.value, listed_data, environmental_data,
+    return _build_environmental_data_instance(TransferMessageType.TAKEOVER_DECLARATION.value, listed_data, environmental_data,
                                               "takeover")
 
 
