@@ -11,7 +11,7 @@ class VEBSVService():
         self.message_service = BegleitscheinMessageService(auth)
         self.transfer_service = BegleitscheinTransferService(auth)
 
-    def declare_begleitschein(self, begleitschein: VebsvBegleitschein):
+    def confirm_begleitschein(self, begleitschein: VebsvBegleitschein):
         for begleitschein_line in begleitschein.begleitschein_lines:
             if begleitschein_line.requires_reporting():
                 self.transfer_service.declare_handover(
