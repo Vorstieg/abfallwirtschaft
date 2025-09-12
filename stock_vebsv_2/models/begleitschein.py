@@ -52,13 +52,14 @@ class Begleitschein(models.Model, VebsvBegleitschein):
     transport_uuid = fields.Char('Transport UUID', default=lambda x: uuid.uuid4())
 
     state = fields.Selection([
-        ('new', 'New'),
+        ('draft', 'Draft'),
+        ('declared', 'Declared'),
         ('confirmed', 'Confirmed'),
         ('in_transport', 'In transport'),
         ('transport_complete', 'Transport complete'),
         ('done', 'Done'),
         ('canceled', 'Canceled'),
-    ], string='Status', default='new', readonly=True)
+    ], string='Status', default='draft', readonly=True)
 
     company_id = fields.Many2one('res.company', 'Company', required=True)
 
@@ -81,6 +82,14 @@ class Begleitschein(models.Model, VebsvBegleitschein):
         for record in self:
             record.total_product_qty = sum(record.begleitschein_lines.mapped('product_qty'))
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        begleitschein = super().create(vals_list)
+
+        if not begleitschein.company_id:
+            begleitschein.company_id = self.env.user.company_id
+        return begleitschein
+
     def start_begleitschein(self):
         source_partner_gln = self.source_partner_id.get_person_gln()
         target_partner_gln = self.target_partner_id.get_person_gln()
@@ -99,6 +108,8 @@ class Begleitschein(models.Model, VebsvBegleitschein):
 
         if not has_dangerous_waste:
             self.state = 'confirmed'
+        else:
+            self.state = 'declared'
 
     def _get_shipment(self):
         shipment_items = [line.get_shipment_item(index + 1) for index, line in enumerate(self.begleitschein_lines)]
@@ -130,10 +141,10 @@ class Begleitschein(models.Model, VebsvBegleitschein):
 
         self.state = 'canceled'
 
-    def declare_begleitschein(self):
+    def confirm_begleitschein(self):
         if not self.source_site.gtin:
             raise UserError(_("You need to define a source site."))
-        self._get_unified_service().declare_begleitschein(self)
+        self._get_unified_service().confirm_begleitschein(self)
 
         self.state = 'confirmed'
 
