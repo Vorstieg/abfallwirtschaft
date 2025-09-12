@@ -30,11 +30,20 @@ class StockPicking(models.Model):
         if not self._get_waste_products():
             raise UserError(_("You need waste products to create a Begleitschein"))
 
-        source_sites = self.env['waste.treatment.site'].search([('partner_id', '=', self.partner_id.id)])
-        target_sites = self.env['waste.treatment.site'].search([('partner_id', '=', self.company_id.partner_id.id)])
+        if self.picking_type_code == 'outgoing':
+            source_partner, target_partner = self.company_id.partner_id, self.partner_id
+        elif self.picking_type_code == 'incoming':
+            source_partner, target_partner = self.partner_id, self.company_id.partner_id
+        elif self.picking_type_code == 'dropship':
+            source_partner, target_partner = self.purchase_id.partner_id, self.purchase_id.dest_address_id
+        else:
+            raise UserError(_("This picking type is not supported."))
+
+        source_sites = self.env['waste.treatment.site'].search([('partner_id', '=', source_partner.id)])
+        target_sites = self.env['waste.treatment.site'].search([('partner_id', '=', target_partner.id)])
 
         if len(source_sites) == 1 and len(target_sites) == 1:
-            self.create_begleitschein(source_sites, target_sites)
+            self.create_begleitschein(source_partner, target_partner, source_sites, target_sites)
         else:
             return {'type': 'ir.actions.act_window',
                     'name': _('Begleitschein'),
@@ -42,8 +51,10 @@ class StockPicking(models.Model):
                     'target': 'new',
                     'view_mode': 'form',
                     'context': {'default_stock_picking_id': self.id,
-                                'default_source_partner_id': self.partner_id.id,
-                                'default_target_partner_id': self.company_id.partner_id.id},
+                                'default_source_partner_id': source_partner.id,
+                                'default_target_partner_id': target_partner.id,
+                                **({'default_source_site': source_sites.id} if len(source_sites) == 1 else {}),
+                                **({'default_target_site': target_sites.id} if len(target_sites) == 1 else {})}
                     }
 
     def _get_waste_products(self):
@@ -51,14 +62,17 @@ class StockPicking(models.Model):
             lambda l: l.product_id.waste_type_id
         )
 
-    def create_begleitschein(self, source_site, target_site):
-        belgeitschein = self.env['waste.begleitschein'].create({
-            'name': self.name.replace("/", "_") + '_Belgeitschein',
+    def create_begleitschein(self, source_partner, target_partner, source_site, target_site):
+
+        begleitschein = self.env['waste.begleitschein'].create({
+            'name': self.name.replace("/", "_") + '_Begleitschein',
             'stock_picking_id': self.id,
-            'source_partner_id': self.partner_id.id,
-            'target_partner_id': self.company_id.partner_id.id,
+            'source_partner_id': source_partner.id,
+            'target_partner_id': target_partner.id,
             'source_site': source_site.id,
             'target_site': target_site.id,
+            'company_id': self.company_id.id,
+            'transport_partner_id': self.company_id.id,
             'begleitschein_lines': [(0, 0, {
                 'product_id': l.product_id.id,
                 'abfallart': l.product_id.waste_type_id.id,
@@ -66,7 +80,10 @@ class StockPicking(models.Model):
             }) for l in self._get_waste_products()],
         })
 
-        belgeitschein.start_begleitschein()
+        if self.picking_type_code == 'dropship':
+            begleitschein.dropship_partner_id = self.company_id.partner_id.id
+
+        begleitschein.start_begleitschein()
 
     def action_view_begleitscheine(self):
         self.ensure_one()

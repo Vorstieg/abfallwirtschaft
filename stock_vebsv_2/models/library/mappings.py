@@ -260,3 +260,19 @@ class TransportMean:
                 '_value_1': self.gtin,
             },
         }
+
+
+@dataclass()
+class Recipient:
+    gln: str
+    sms_telephone_number: str = False
+
+    def parse(self):
+        return {
+            'RecipientID': self.gln,
+            'TransactionPurposeCategoryID': {
+                'collectionID': '2976',
+                '_value_1': 'request'  # two possible values: request and inform
+            },
+            **({'TelephoneCommunicationNetworkEndpointID': self.sms_telephone_number} if self.sms_telephone_number else {}),
+        }

@@ -15,4 +15,4 @@ class BegleitscheinModal(models.TransientModel):
     target_site = fields.Many2one('waste.treatment.site', string='Target Installation', required=True)
 
     def create_begleitschein_action(self):
-        self.stock_picking_id.create_begleitschein(self.source_site, self.target_site)
+        self.stock_picking_id.create_begleitschein(self.source_partner_id, self.target_partner_id, self.source_site, self.target_site)

@@ -1,8 +1,9 @@
 import logging
 
-from zeep.exceptions import XMLParseError
+from zeep.exceptions import XMLParseError, Fault
 
 from .begleitschein_ws_message import *
+from ..vebsv_begleitschein import VebsvBegleitschein
 
 _logger = logging.getLogger(__name__)
 
@@ -13,50 +14,72 @@ class BegleitscheinMessageService():
     def __init__(self, auth):
         self.auth = auth
 
-    def create_begleitschein(self, organisations: List[Organisation], local_units: List[LocalUnit], shipment: Shipment, belgeitschein, partner_gln,
-                             company_gln, sms_telephone_number):
-        message_envelope = create_ug_un_message(organisations, local_units, shipment, sms_telephone_number)
+    def create_begleitschein(self, local_units: List[LocalUnit], shipment: Shipment,
+                             begleitschein: VebsvBegleitschein, sms_telephone_number):
+        if begleitschein.is_dropshipping_with_two_legs():
+            self._ug_un_message(begleitschein, local_units, shipment, sms_telephone_number, True)
+            self._ug_un_message(begleitschein, local_units, shipment, False, False)
 
-        share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.shipment_uuid,
-                       belgeitschein.business_case_uuid, partner_gln, company_gln,
-                       MessageType.UEBERGABE_UEBERNAHME_MESSAGE, sms_telephone_number)
+        else:
+            self._ug_un_message(begleitschein, local_units, shipment, sms_telephone_number)
 
-    def start_transport(self, transport_mean, belgeitschein, partner_gln, company_gln,
-                        organisations: List[Organisation],
-                        local_units: List[LocalUnit], shipment: Shipment, planned_waypoints: List[PlannedWaypoint],
-                        message_name):
+    def _ug_un_message(self, begleitschein, local_units, shipment, sms_telephone_number, first_leg=True):
+        message_envelope = create_ug_un_message(begleitschein.selected_organisations(first_leg), local_units, shipment,
+                                                sms_telephone_number)
+        share_document(self.auth, uuid.uuid4(), message_envelope, begleitschein.shipment_uuid,
+                       begleitschein.business_case_uuid,
+                       begleitschein.restricted_recipient_glns(sms_telephone_number, first_leg),
+                       begleitschein.sender_gln(),
+                       MessageType.UEBERGABE_UEBERNAHME_MESSAGE)
 
-        message_envelope = create_tr_message(organisations, local_units, shipment, belgeitschein.transport_uuid,
+    def start_transport(self, transport_mean, begleitschein: VebsvBegleitschein,
+                        shipment: Shipment, message_name):
+        if begleitschein.is_dropshipping_with_two_legs():
+            self._declare_transport(begleitschein, message_name, shipment,
+                                    transport_mean, True, carrier_reference="takeover")
+            self._declare_transport(begleitschein, message_name, shipment,
+                                    transport_mean, False, carrier_reference="handover")
+        else:
+            self._declare_transport(begleitschein, message_name, shipment,
+                                    transport_mean)
+
+        message_envelope = create_tr_st_message(begleitschein.transport_uuid, transport_mean, datetime.now())
+        share_document(self.auth, uuid.uuid4(), message_envelope, begleitschein.transport_uuid,
+                       begleitschein.business_case_uuid, begleitschein.all_recipient_glns(), begleitschein.sender_gln(),
+                       MessageType.TRANSPORTSTART_MESSAGE)
+
+    def _declare_transport(self, begleitschein, message_name, shipment,
+                           transport_mean, first_leg=True, carrier_reference="takeover"):
+        message_envelope = create_tr_message(begleitschein.selected_organisations(first_leg),
+                                             begleitschein.selected_local_units(first_leg), shipment,
+                                             begleitschein.transport_uuid,
                                              message_name + "transport",
-                                             planned_waypoints, transport_mean)
+                                             begleitschein.selected_waypoints(first_leg), transport_mean,
+                                             carrier_reference)
+        share_document(self.auth, uuid.uuid4(), message_envelope, begleitschein.transport_uuid,
+                       begleitschein.business_case_uuid, begleitschein.restricted_recipient_glns(source_leg=first_leg),
+                       begleitschein.sender_gln(),
+                       MessageType.TRANSPORT_MESSAGE)
 
-        share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.transport_uuid,
-                       belgeitschein.business_case_uuid, partner_gln,
-                       company_gln, MessageType.TRANSPORT_MESSAGE)
+    def end_transport(self, begleitschein: VebsvBegleitschein, shipment: Shipment):
+        if begleitschein.is_transporteur():
+            message_envelope = create_tr_end_message(begleitschein.transport_uuid, datetime.now())
+            share_document(self.auth, uuid.uuid4(), message_envelope, begleitschein.transport_uuid,
+                           begleitschein.business_case_uuid, begleitschein.all_recipient_glns(),
+                           begleitschein.sender_gln(),
+                           MessageType.TRANSPORTABSCHLUSS_MESSAGE)
 
-        message_envelope = create_tr_st_message(belgeitschein.transport_uuid, transport_mean, datetime.now())
-
-        share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.transport_uuid,
-                       belgeitschein.business_case_uuid, partner_gln, company_gln, MessageType.TRANSPORTSTART_MESSAGE)
-
-    def end_transport(self, belgeitschein, partner_gln, company_gln, shipment: Shipment):
-        message_envelope = create_tr_end_message(belgeitschein.transport_uuid, datetime.now())
-
-        share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.transport_uuid,
-                       belgeitschein.business_case_uuid, partner_gln, company_gln,
-                       MessageType.TRANSPORTABSCHLUSS_MESSAGE)
-
-        message_envelope = create_tr_end_message(belgeitschein.transport_uuid, datetime.now())
-
-        share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.transport_uuid,
-                       belgeitschein.business_case_uuid, partner_gln, company_gln,
-                       MessageType.EMPFANGSBESTAETIGUNGS_MESSAGE)
-
-        message_envelope = create_un_best_message(shipment)
-
-        share_document(self.auth, uuid.uuid4(), message_envelope, belgeitschein.shipment_uuid,
-                       belgeitschein.business_case_uuid, partner_gln, company_gln,
-                       MessageType.UEBERNAHMEBESTAETIGUNGS_MESSAGE)
+        if begleitschein.is_target():
+            message_envelope = create_tr_end_message(begleitschein.transport_uuid, datetime.now())
+            share_document(self.auth, uuid.uuid4(), message_envelope, begleitschein.transport_uuid,
+                           begleitschein.business_case_uuid, begleitschein.restricted_recipient_glns(),
+                           begleitschein.sender_gln(),
+                           MessageType.EMPFANGSBESTAETIGUNGS_MESSAGE)
+            message_envelope = create_un_best_message(shipment)
+            share_document(self.auth, uuid.uuid4(), message_envelope, begleitschein.shipment_uuid,
+                           begleitschein.business_case_uuid, begleitschein.restricted_recipient_glns(),
+                           begleitschein.sender_gln(),
+                           MessageType.UEBERNAHMEBESTAETIGUNGS_MESSAGE)
 
     def cancel_begleitschein(self):
         # TODO: implement cancellation
@@ -75,7 +98,12 @@ class BegleitscheinMessageService():
             if update["ForwardSharingEvent"]:
                 last_transaction_uuid = update["ForwardSharingEvent"]['TransactionUUID']
                 if any(party["RecipientID"] == own_gln for party in update["ForwardSharingEvent"]["SharedToParty"]):
-                    document = retrieve_document(self.auth, last_transaction_uuid)
+                    try:
+                        document = retrieve_document(self.auth, last_transaction_uuid)
+                    except Fault as fault:
+                        _logger.error(f"Error while fetching document{last_transaction_uuid}: {fault.message}")
+                        continue
+
                     documentType = document["AuthenticatedDocument"]["DocumentUQ"]["DocumentHeader"]["DocumentTypeID"][
                         "_value_1"]
                     business_case_id = \
@@ -101,25 +129,28 @@ class BegleitscheinMessageService():
                         })
                     elif documentType == MessageType.TRANSPORTSTART_MESSAGE.value:
                         changes.append({
-                            'state': 'INFO',
+                            'state': 'UPDATE',
                             'begleitschein': {
                                 'business_case_uuid': business_case_id,
+                                'state': 'in_transport'
                             },
                             'message': "Recived transport start message"
                         })
                     elif documentType == MessageType.TRANSPORTABSCHLUSS_MESSAGE.value:
                         changes.append({
-                            'state': 'INFO',
+                            'state': 'UPDATE',
                             'begleitschein': {
                                 'business_case_uuid': business_case_id,
+                                'state': 'transport_complete'
                             },
                             'message': "Recived transport abschluss message"
                         })
                     elif documentType == MessageType.UEBERNAHMEBESTAETIGUNGS_MESSAGE.value:
                         changes.append({
-                            'state': 'INFO',
+                            'state': 'UPDATE',
                             'begleitschein': {
                                 'business_case_uuid': business_case_id,
+                                'state': 'done'
                             },
                             'message': "Übernahme bestätigungs message"
                         })
@@ -129,11 +160,7 @@ class BegleitscheinMessageService():
                 _logger.warning(document)
             elif update["ProcessingEvent"]:
                 last_transaction_uuid = update["ProcessingEvent"]['TransactionUUID']
-                try:
-                    document = retrieve_document_validation_result(self.auth, last_transaction_uuid)
-                    _logger.warning(document)
-                except Exception as e:
-                    _logger.warning(e)
+                _logger.warning(update["ProcessingEvent"]["StatusDescription"]["_value_1"])
             elif update["BackwardSharingEvent"]:
                 last_transaction_uuid = update["BackwardSharingEvent"]['TransactionUUID']
                 _logger.info(f"recived backward sharing event for {last_transaction_uuid}")

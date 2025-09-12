@@ -53,7 +53,8 @@ def load_message_xsd(xsd_file):
 
 
 # Übergabe-/Übernahme-Message
-def create_ug_un_message(organisations: List[Organisation], local_unit: List[LocalUnit], shipment: Shipment, sms_solution=False):
+def create_ug_un_message(organisations: List[Organisation], local_unit: List[LocalUnit], shipment: Shipment,
+                         sms_solution=False):
     MessageEnvelope = load_message_envelope("/open_MessageFormatC.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'ListedData': {
@@ -78,7 +79,7 @@ def create_un_best_message(shipment: Shipment):
 # Transport Message
 def create_tr_message(organisations: List[Organisation], local_unit: List[LocalUnit], shipment: Shipment,
                       transport_uuid,
-                      internal_id, planned_waypoint: List[PlannedWaypoint], transport_mean: TransportMean):
+                      internal_id, planned_waypoint: List[PlannedWaypoint], transport_mean: TransportMean, carrier_reference:str):
     MessageEnvelope = load_message_envelope("/open_MessageFormatD.xsd")
     return zeep.xsd.AnyObject(MessageEnvelope, MessageEnvelope(**{
         'ListedData': {
@@ -95,7 +96,7 @@ def create_tr_message(organisations: List[Organisation], local_unit: List[LocalU
                 'TransportItem': [
                     list(map(lambda x: x.parse_message_transport_item(), shipment.shipment_items))
                 ],
-                'CarrierPartyReferenceID': 'takeover'
+                'CarrierPartyReferenceID': carrier_reference
             }
         }
     }))
@@ -133,17 +134,17 @@ def create_tr_end_message(transport_uuid, actual_time: datetime):
     }))
 
 
-def share_document(auth: Auth, transaction_uuid, message_envelope, object_uuid, context_uuid, recipient_gln,
-                   sender_gln, documentTypeId: MessageType, sms_telephone_number=False):
+def share_document(auth: Auth, transaction_uuid, message_envelope, object_uuid, context_uuid, recipients: List[Recipient],
+                   sender_gln: str, document_type_id: MessageType):
     """
     :param auth:
     :param transaction_uuid:
     :param message_envelope:
     :param object_uuid: for ug_un and ug_best_message ShipmentUUID, for transport related message, TransportMovementUUID
     :param context_uuid:
-    :param recipient_gln:
+    :param recipient_glns: List of all recipients
     :param sender_gln:
-    :param documentTypeId:
+    :param document_type_id:
     :return:
     """
     CONTEXT_TYPE_ID = '9008390117408'  # Abholauftrag, Transportauftrag, Entsorgungsauftrag
@@ -160,20 +161,14 @@ def share_document(auth: Auth, transaction_uuid, message_envelope, object_uuid, 
         'ConnectorVersionID': CONNECTOR_VERSION,
         'TransactionUUID': transaction_uuid,
         'InterfaceVersionID': "1.10",
-        'Recipient': {
-            'RecipientID': recipient_gln,
-            'TransactionPurposeCategoryID': {
-                'collectionID': '2976',
-                '_value_1': 'request'  # two possible values: request and inform
-            },
-           **({'TelephoneCommunicationNetworkEndpointID': sms_telephone_number} if sms_telephone_number else {}),
-        },
+        'Recipient': [recipient.parse() for recipient in recipients]
+        ,
         'AuthenticatedDocument': {
             'DocumentUQ': {
                 'DocumentHeader': {
                     'DocumentTypeID': {
                         'collectionID': '2551',
-                        '_value_1': documentTypeId.value
+                        '_value_1': document_type_id.value
                     },
                     'DocumentUUID': DOCUMENT_UUID,
                     'VersionBracketUUID': VERSION_BRAKCET_UUID,
@@ -195,7 +190,7 @@ def share_document(auth: Auth, transaction_uuid, message_envelope, object_uuid, 
         }
 
     }
-    _logger.info(f"Share document request for type {documentTypeId} for business case {context_uuid}")
+    _logger.info(f"Share document request for type {document_type_id} for business case {context_uuid}")
     return client.service.ShareDocument(**request_data)
 
 
