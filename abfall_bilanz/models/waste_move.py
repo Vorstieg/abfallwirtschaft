@@ -3,7 +3,7 @@ from odoo import models, fields, _
 class WasteMove(models.Model):
     _name = "waste.move"
 
-    move_id = fields.Integer(string='Sequence of moves ', index=True)
+    name = fields.Char(string='Waste Move',)
 
     transport_type = fields.Many2one('waste.transport.type', string='Transport Type')
     recipient_partner = fields.Many2one('res.partner', string='Recipient Partner')
@@ -11,8 +11,10 @@ class WasteMove(models.Model):
 
     recipient_installation = fields.Many2one('waste.treatment.installation', string='Recipient Installation')
     origin_installation = fields.Many2one('waste.treatment.installation', string='Origin Installation')
+    recipient_site = fields.Many2one('waste.treatment.site', string='Recipient Site')
+    origin_site = fields.Many2one('waste.treatment.site', string='Origin Site')
 
-    product = fields.Many2one('product.product', string='Connected Product')
+    abfallart = fields.Many2one('waste.type', "Abfallart")
     amount = fields.Float(string='Transferred amount')
 
     date = fields.Datetime(string='Date', default=fields.Datetime.now)
@@ -28,3 +30,5 @@ class WasteMove(models.Model):
                 'view_mode': 'form',
                 'view_type': 'form',
                 'context': {'default_user_id': self.id}, }
+    def approve_move(self):
+        self.state = 'approved'

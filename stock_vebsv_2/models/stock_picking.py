@@ -48,7 +48,7 @@ class StockPicking(models.Model):
             return {'type': 'ir.actions.act_window',
                     'name': _('Begleitschein'),
                     'res_model': 'begleitschein.modal',
-                    'target': 'draft',
+                    'target': 'new',
                     'view_mode': 'form',
                     'context': {'default_stock_picking_id': self.id,
                                 'default_source_partner_id': source_partner.id,

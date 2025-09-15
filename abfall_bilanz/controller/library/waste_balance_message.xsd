@@ -1,0 +1,1097 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	BALANCE v2.15 (Jahresabfallbilanzen-XML-Format)
+
+	Copyright (C) 2025 Environment Agency Austria
+	Contact: edm-helpdesk@umweltbundesamt.at
+
+	Commissioned by the Austrian Federal Ministry of Environment (BMK)
+
+	Licensed under the EUPL, Version 1.2 or – as soon they will be approved
+	by the European Commission – subsequent versions of the EUPL (the "Licence");
+
+	You may not use this work except in compliance with the Licence.
+
+	You may obtain a copy of the Licence at: http://joinup.ec.europa.eu/software/page/eupl
+
+	Unless required by applicable law or agreed to in writing, work distributed under the licence is distributed
+	on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+	See the Licence for the specific language governing permissions and limitations under the Licence.
+-->
+<xs:schema xmlns="http://edm.gv.at/schema/WasteBalanceInterfaceV2" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://edm.gv.at/schema/WasteBalanceInterfaceV2" version="2.15">
+	<xs:element name="WasteHandlingNotification" type="WasteHandlingNotificationType"/>
+	<xs:element name="MessageValidationContext" type="MessageValidationContextType"/>
+	<xs:simpleType name="AddressLineTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="AddressType">
+		<xs:sequence>
+			<xs:element name="CityName" type="CityNameTextType" minOccurs="0"/>
+			<xs:element name="Postcode" type="PostcodeCodeType" minOccurs="0"/>
+			<xs:element name="StreetName" type="StreetNameTextType" minOccurs="0"/>
+			<xs:element name="BlockName" type="BlockNameTextType" minOccurs="0"/>
+			<xs:element name="BuildingName" type="BuildingNameTextType" minOccurs="0"/>
+			<xs:element name="BuildingNumber" type="BuildingNumberTextType" minOccurs="0"/>
+			<xs:element name="StaircaseNumber" type="StaircaseNumberTextType" minOccurs="0"/>
+			<xs:element name="FloorIdentification" type="FloorIdentificationTextType" minOccurs="0"/>
+			<xs:element name="RoomIdentification" type="RoomIdentificationTextType" minOccurs="0"/>
+			<xs:element name="PostOfficeBox" type="PostOfficeBoxTextType" minOccurs="0"/>
+			<xs:element name="CityID" type="CityIdentifierType" minOccurs="0"/>
+			<xs:element name="CitySubDivisionName" type="CitySubDivisionNameTextType" minOccurs="0"/>
+			<xs:element name="CountrySubDivisionID" type="CountrySubDivisionIdentifierType" minOccurs="0"/>
+			<xs:element name="DistrictCountrySubDivisionID" type="DistrictIdentifierType" minOccurs="0"/>
+			<xs:element name="CountryID" type="CountryIdentifierType"/>
+			<xs:element name="LineOne" type="AddressLineTextType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AreaNumberCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BatchIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="BatchType">
+		<xs:sequence>
+			<xs:element name="ID" type="BatchIdentifierType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BlockNameTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BuildingNameTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BuildingNumberTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CadastralRegisterMunicipalityIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CadastralRegisterPlotIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CalculationMethodTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CityIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CityNameTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="45"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CitySubDivisionNameTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CodeListElementType">
+		<xs:sequence>
+			<xs:element name="ID" type="xs:string"/>
+			<xs:element name="DomainCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="ValidityStartDate" type="DateContentType" minOccurs="0"/>
+			<xs:element name="ValidityEndDate" type="DateContentType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeListType">
+		<xs:sequence>
+			<xs:element name="NumericID" type="xs:string"/>
+			<xs:element name="ListElement" type="CodeListElementType" minOccurs="0" maxOccurs="4096"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CollectionTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CompleteNumberTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="48"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CompostDestinationMaterialType">
+		<xs:sequence>
+			<xs:element name="TakeOverParty" type="PartyType" minOccurs="0"/>
+			<xs:element name="SpecifiedLocation" type="MaterialLocationType" minOccurs="0"/>
+			<xs:element name="UsagePhysicalProcess" type="CompostUsePhysicalProcessType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CompostMaterialType">
+		<xs:sequence>
+			<xs:element name="ClassificationCode" type="CompostTypeCodeType"/>
+			<xs:element name="QualityClassificationCode" type="CompostQualityCodeType"/>
+			<xs:element name="Description" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="MassMeasurement" type="SimpleMassMeasurementType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CompostQualityCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CompostTransportMovementType">
+		<xs:sequence>
+			<xs:element name="Description" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="MovementPeriod" type="ReducedPeriodType" minOccurs="0"/>
+			<xs:element name="CompostTakeOverMovedMaterial" type="CompostDestinationMaterialType"/>
+			<xs:element name="MovedMaterial" type="CompostMaterialType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CompostTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CompostUsePhysicalProcessType">
+		<xs:sequence>
+			<xs:element name="TypeCode" type="CompostUseTypeCodeType"/>
+			<xs:element name="Description" type="LongDescriptionTextType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CompostUseTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ContactPersonType">
+		<xs:sequence>
+			<xs:element name="Title" type="PersonTitleTextType" minOccurs="0"/>
+			<xs:element name="GivenName" type="GivenNameTextType"/>
+			<xs:element name="MiddleName" type="MiddleNameTextType" minOccurs="0"/>
+			<xs:element name="FamilyNamePrefix" type="FamilyNamePrefixTextType" minOccurs="0"/>
+			<xs:element name="FamilyName" type="FamilyNameTextType"/>
+			<xs:element name="NameSuffix" type="NameSuffixTextType" minOccurs="0"/>
+			<xs:element name="GenderCode" type="GenderCodeType" minOccurs="0"/>
+			<xs:element name="TelephoneCommunication" type="TelecommunicationCommunicationType" minOccurs="0"/>
+			<xs:element name="FaxCommunication" type="TelecommunicationCommunicationType" minOccurs="0"/>
+			<xs:element name="EmailURICommunication" type="EmailCommunicationType" minOccurs="0"/>
+			<xs:element name="WebsiteURICommunication" type="WebsiteCommunicationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactType">
+		<xs:sequence>
+			<xs:element name="TelephoneCommunication" type="TelecommunicationCommunicationType" minOccurs="0"/>
+			<xs:element name="FaxCommunication" type="TelecommunicationCommunicationType" minOccurs="0"/>
+			<xs:element name="EmailURICommunication" type="EmailCommunicationType" minOccurs="0"/>
+			<xs:element name="WebsiteURICommunication" type="WebsiteCommunicationType" minOccurs="0"/>
+			<xs:element name="SpecifiedPerson" type="ContactPersonType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContaminationMaterialType">
+		<xs:sequence>
+			<xs:element name="ClassificationCode" type="ContaminationTypeCodeType"/>
+			<xs:element name="Description" type="LongDescriptionTextType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ContaminationTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryNumberCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountrySubDivisionIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DateContentType">
+		<xs:restriction base="xs:date">
+			<xs:pattern value="\-?\d+\-\d\d\-\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DateType">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="DescriptionContentType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DescriptionTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DistrictIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EconomicActivityTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="EmailCommunicationType">
+		<xs:sequence>
+			<xs:element name="EmailURI" type="EmailURIIdentifierType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="EmailURIIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ExtensionNumberTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ExtensiveDescriptionTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="65535"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FamilyNamePrefixTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FamilyNameTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FloorIdentificationTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="7"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GenderCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="GeneratedWasteTakeOverType">
+		<xs:sequence>
+			<xs:element name="HandOverParty" type="PartyType" minOccurs="0"/>
+			<xs:element name="SpecifiedLocation" type="MaterialLocationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="GivenNameTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GLNIdentifierContentType">
+		<xs:restriction base="xs:token">
+			<xs:length value="13"/>
+			<xs:pattern value="[0-9]{13}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="IdentifiedPartyType">
+		<xs:sequence>
+			<xs:element name="ID" type="PartyIdentifierType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IdentifierType">
+		<xs:simpleContent>
+			<xs:extension base="Token64">
+				<xs:attribute name="collectionID" type="SimpleToken" use="optional"/>
+				<xs:attribute name="objectDesignation" type="NormalizedString256" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="IndicatorContentType">
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="IndicatorType">
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="InstallationBufferTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InstallationIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="InstallationType">
+		<xs:sequence>
+			<xs:element name="ID" type="InstallationIdentifierType" minOccurs="0"/>
+			<xs:element name="Name" type="LongNameTextType" minOccurs="0"/>
+			<xs:element name="TypeCode" type="InstallationTypeCodeType" minOccurs="0"/>
+			<xs:element name="BufferTypeCode" type="InstallationBufferTypeCodeType" minOccurs="0"/>
+			<xs:element name="BusinessClassificationCode" type="PRTREconomicActivityTypeCodeType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Location" type="MobileInstallationOperationLocationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="InstallationTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LocalNumberTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LocationTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LongDescriptionTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1024"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LongNameTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="120"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MassCalculationGuidelineDocumentIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MassMeasureContent">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="25"/>
+			<xs:fractionDigits value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MassMeasurementGuidelineDocumentIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MassMeasurementType">
+		<xs:sequence>
+			<xs:element name="QuantificationTypeCode" type="QuantificationTypeCodeType"/>
+			<xs:element name="MethodDescription" type="DescriptionTextType" minOccurs="0"/>
+			<xs:element name="MeasurementMethodTypeCode" type="MeasurementMethodTypeCodeType" minOccurs="0"/>
+			<xs:element name="CalculationMethodTypeCode" type="CalculationMethodTypeCodeType" minOccurs="0"/>
+			<xs:element name="MeasurementGuidelineDocumentID" type="MassMeasurementGuidelineDocumentIdentifierType" minOccurs="0"/>
+			<xs:element name="CalculationGuidelineDocumentID" type="MassCalculationGuidelineDocumentIdentifierType" minOccurs="0"/>
+			<xs:element name="DeterminedMeasure" type="MassMeasureType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MassMeasureType">
+		<xs:simpleContent>
+			<xs:extension base="MassMeasureContent">
+				<xs:attribute name="unitCode" type="MassUnitIdentifierContent" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="MassRatioMeasureContent">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="8"/>
+			<xs:fractionDigits value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MassRatioMeasureType">
+		<xs:simpleContent>
+			<xs:extension base="MassRatioMeasureContent">
+				<xs:attribute name="unitCode" type="PercentUnitIdentifierContent" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="MassUnitIdentifierContent">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="KGM"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MaterialLocationType">
+		<xs:sequence>
+			<xs:element name="TypeCode" type="LocationTypeCodeType" minOccurs="0"/>
+			<xs:element name="Description" type="DescriptionTextType" minOccurs="0"/>
+			<xs:element name="PostalAddress" type="AddressType" minOccurs="0"/>
+			<xs:element name="LandArea" type="PlotAreaType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="SpecifiedInstallation" type="InstallationType" minOccurs="0"/>
+			<xs:element name="SpecifiedOperatingSite" type="OperatingSiteType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="MeasurementMethodTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MessageValidationContextType">
+		<xs:sequence>
+			<xs:element ref="WasteHandlingNotification"/>
+			<xs:element name="ValidationNodeName" type="ShortNameContentType" minOccurs="0"/>
+			<xs:element name="ValidationNodeIndividualData" type="ValidationNodeIndividualDataType" minOccurs="0"/>
+			<xs:element name="ValidationNodeReferenceData" type="ValidationNodeReferenceDataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="MiddleNameTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MobileInstallationOperationLocationType">
+		<xs:sequence>
+			<xs:element name="Installation" type="StationaryInstallationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MovementReclassifiedMaterialType">
+		<xs:sequence>
+			<xs:element name="ReclassificationReasonTypeCode" type="ReclassificationReasonTypeCodeType" minOccurs="0"/>
+			<xs:element name="ReclassificationReasonDescription" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="PreliminaryClassificationCode" type="WasteTypeCodeType"/>
+			<xs:element name="PreliminaryContaminationMaterial" type="ContaminationMaterialType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ReclassificationDocumentID" type="IdentifierType" minOccurs="0" maxOccurs="4"/>
+			<xs:element name="Description" type="LongDescriptionTextType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="MovementTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NameContentType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="120"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NameSuffixTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NormalizedString256">
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="NotificationType">
+		<xs:sequence>
+			<xs:element name="TypeCode" type="NotificationTypeCodeType"/>
+			<xs:element name="ObligatedParty" type="IdentifiedPartyType"/>
+			<xs:element name="CoveredPeriod" type="PeriodType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="NotificationTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OperatingSiteIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="OperatingSiteType">
+		<xs:sequence>
+			<xs:element name="ID" type="OperatingSiteIdentifierType" minOccurs="0"/>
+			<xs:element name="Name" type="LongNameTextType" minOccurs="0"/>
+			<xs:element name="BusinessClassificationCode" type="PRTREconomicActivityTypeCodeType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationType">
+		<xs:sequence>
+			<xs:element name="Name" type="LongNameTextType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PartyIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PartyType">
+		<xs:sequence>
+			<xs:element name="ID" type="PartyIdentifierType" minOccurs="0"/>
+			<xs:element name="TypeCode" type="PartyTypeCodeType" minOccurs="0"/>
+			<xs:element name="BusinessTypeCode" type="EconomicActivityTypeCodeType" minOccurs="0"/>
+			<xs:element name="SpecifiedOrganization" type="OrganizationType" minOccurs="0"/>
+			<xs:element name="SpecifiedPerson" type="PersonType" minOccurs="0"/>
+			<xs:element name="DefinedContact" type="ContactType" minOccurs="0"/>
+			<xs:element name="OfficeAddress" type="AddressType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PartyTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PercentUnitIdentifierContent">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="P1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PeriodType">
+		<xs:sequence>
+			<xs:element name="StartDate" type="DateType"/>
+			<xs:element name="EndDate" type="DateType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PersonTitleTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PersonType">
+		<xs:sequence>
+			<xs:element name="Title" type="PersonTitleTextType" minOccurs="0"/>
+			<xs:element name="GivenName" type="GivenNameTextType"/>
+			<xs:element name="MiddleName" type="MiddleNameTextType" minOccurs="0"/>
+			<xs:element name="FamilyNamePrefix" type="FamilyNamePrefixTextType" minOccurs="0"/>
+			<xs:element name="FamilyName" type="FamilyNameTextType"/>
+			<xs:element name="NameSuffix" type="NameSuffixTextType" minOccurs="0"/>
+			<xs:element name="GenderCode" type="GenderCodeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PredeterminedScopeReferenceIdentifierType">
+		<xs:simpleContent>
+			<xs:extension base="Token64"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PlotAreaType">
+		<xs:sequence>
+			<xs:element name="CadastralRegisterMunicipalityID" type="CadastralRegisterMunicipalityIdentifierType"/>
+			<xs:element name="CadastralRegisterPlotID" type="CadastralRegisterPlotIdentifierType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PostcodeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PostOfficeBoxTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PRTREconomicActivityTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="QuantificationTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReclassificationReasonTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ReclassifiedWasteMaterialType">
+		<xs:sequence>
+			<xs:element name="ReclassificationReasonTypeCode" type="ReclassificationReasonTypeCodeType" minOccurs="0"/>
+			<xs:element name="ReclassificationReasonDescription" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="ReclassificationDocumentID" type="IdentifierType" minOccurs="0" maxOccurs="4"/>
+			<xs:element name="Description" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="ClassificationCode" type="WasteTypeCodeType" minOccurs="0"/>
+			<xs:element name="PreliminaryClassificationCode" type="WasteTypeCodeType" minOccurs="0"/>
+			<xs:element name="ReportingDate" type="DateType" minOccurs="0"/>
+			<xs:element name="MassMeasurement" type="SimpleMassMeasurementType"/>
+			<xs:element name="SpecifiedLocation" type="MaterialLocationType" minOccurs="0"/>
+			<xs:element name="ContaminationMaterial" type="ContaminationMaterialType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PreliminaryContaminationMaterial" type="ContaminationMaterialType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReducedPeriodType">
+		<xs:sequence>
+			<xs:element name="StartDate" type="DateType"/>
+			<xs:element name="EndDate" type="DateType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RegisteredEconomicOperatorType">
+		<xs:sequence>
+			<xs:element name="PartyPublicAdminGLNID" type="GLNIdentifierContentType" minOccurs="0"/>
+			<xs:element name="PartyEDMGLNID" type="GLNIdentifierContentType" minOccurs="0"/>
+			<xs:element name="PartyPrivateGLNID" type="GLNIdentifierContentType" minOccurs="0"/>
+			<xs:element name="PartyName" type="NameContentType"/>
+			<xs:element name="PartyAddressText" type="DescriptionContentType" minOccurs="0"/>
+			<xs:element name="ProperRegistrationIndicator" type="IndicatorContentType" minOccurs="0"/>
+			<xs:element name="BusinessSuspensionPeriod" type="RegistrationPeriodType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RegisteredInstallationStateType">
+		<xs:sequence>
+			<xs:element name="StateID" type="xs:string" minOccurs="0"/>
+			<xs:element name="StartDate" type="DateContentType" minOccurs="0"/>
+			<xs:element name="EndDate" type="DateContentType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RegisteredInstallationType">
+		<xs:sequence>
+			<xs:element name="InstallationEDMGLNID" type="GLNIdentifierContentType"/>
+			<xs:element name="InstallationPrivateGLNID" type="GLNIdentifierContentType" minOccurs="0"/>
+			<xs:element name="InstallationName" type="NameContentType"/>
+			<xs:element name="TypeID" type="xs:string" minOccurs="0" maxOccurs="16"/>
+			<xs:element name="ClassID" type="xs:string" minOccurs="0"/>
+			<xs:element name="ReportingID" type="xs:string" minOccurs="0"/>
+			<xs:element name="SiteGLNID" type="GLNIdentifierContentType" minOccurs="0"/>
+			<xs:element name="OperatorPartyEDMGLNID" type="GLNIdentifierContentType" minOccurs="0"/>
+			<xs:element name="Transfer" type="RegistrationTransferType" minOccurs="0" maxOccurs="16"/>
+			<xs:element name="SummaryState" type="RegisteredInstallationStateType" minOccurs="0" maxOccurs="16"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RegisteredSiteType">
+		<xs:sequence>
+			<xs:element name="SiteEDMGLNID" type="GLNIdentifierContentType"/>
+			<xs:element name="SitePrivateGLNID" type="GLNIdentifierContentType" minOccurs="0"/>
+			<xs:element name="SiteName" type="NameContentType"/>
+			<xs:element name="SiteAddressText" type="DescriptionContentType" minOccurs="0"/>
+			<xs:element name="OperatorPartyEDMGLNID" type="GLNIdentifierContentType" minOccurs="0"/>
+			<xs:element name="Transfer" type="RegistrationTransferType" minOccurs="0" maxOccurs="16"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RegistrationPeriodType">
+		<xs:sequence>
+			<xs:element name="StartDate" type="DateContentType" minOccurs="0"/>
+			<xs:element name="EndDate" type="DateContentType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RegistrationTransferType">
+		<xs:sequence>
+			<xs:element name="TypeID" type="xs:string" minOccurs="0"/>
+			<xs:element name="StartDate" type="DateContentType" minOccurs="0"/>
+			<xs:element name="EndDate" type="DateContentType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RegistrationWasteHandlingNotificationEntryType">
+		<xs:choice>
+			<xs:element name="StorageStateInstallation" type="StorageStateInstallationType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="RegistrationWasteHandlingNotificationType">
+		<xs:sequence>
+			<xs:element name="RegistrationNotification" type="NotificationType"/>
+			<xs:element name="RegistrationWasteHandlingNotificationEntry" type="RegistrationWasteHandlingNotificationEntryType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RemainingCapacityInstallationType">
+		<xs:sequence>
+			<xs:element name="ID" type="InstallationIdentifierType"/>
+			<xs:element name="ReportingDate" type="DateType"/>
+			<xs:element name="RemainingCapacityMeasure" type="VolumeMeasureType" minOccurs="0"/>
+			<xs:element name="ApprovedRemainingCapacityMeasure" type="VolumeMeasureType" minOccurs="0"/>
+			<xs:element name="PhysicalRemainingCapacityMeasure" type="VolumeMeasureType" minOccurs="0"/>
+			<xs:element name="Description" type="LongDescriptionTextType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="RoomIdentificationTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="7"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ShortNameContentType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="SimpleMassMeasurementType">
+		<xs:sequence>
+			<xs:element name="QuantificationTypeCode" type="QuantificationTypeCodeType"/>
+			<xs:element name="DeterminedMeasure" type="MassMeasureType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SimpleToken">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+			<xs:pattern value="[a-zA-Z0-9][a-zA-Z0-9_]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="SinglePeriodWasteHandlingNotificationType">
+		<xs:sequence>
+			<xs:element name="CoveredPeriod" type="PeriodType" minOccurs="0"/>
+			<xs:element name="SpecifiedWasteProducerMaterial" type="GeneratedWasteTakeOverType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="SpecifiedWasteHandlingNotificationEntry" type="WasteHandlingNotificationEntryType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SingleTransportMovementType">
+		<xs:sequence>
+			<xs:element name="ModeCode" type="TransportModeCodeType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="CarrierParty" type="PartyType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="StaircaseNumberTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="7"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="StationaryInstallationType">
+		<xs:sequence>
+			<xs:element name="ID" type="InstallationIdentifierType" minOccurs="0"/>
+			<xs:element name="Name" type="LongNameTextType" minOccurs="0"/>
+			<xs:element name="TypeCode" type="InstallationTypeCodeType" minOccurs="0"/>
+			<xs:element name="BusinessClassificationCode" type="PRTREconomicActivityTypeCodeType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StorageCorrectionInstallationType">
+		<xs:sequence>
+			<xs:element name="ID" type="InstallationIdentifierType"/>
+			<xs:element name="BufferTypeCode" type="InstallationBufferTypeCodeType" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="SpecifiedOperatingSite" type="OperatingSiteType"/>
+				<xs:element name="PostalAddress" type="AddressType"/>
+				<xs:element name="LandArea" type="PlotAreaType" maxOccurs="unbounded"/>
+			</xs:choice>
+			<xs:element name="Description" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="ReportingDate" type="DateType" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="AddedMaterial" type="StoredWasteMaterialType"/>
+				<xs:element name="RemovedMaterial" type="StoredWasteMaterialType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="StorageReasonCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="StorageStateInstallationType">
+		<xs:sequence>
+			<xs:element name="ID" type="InstallationIdentifierType"/>
+			<xs:element name="BufferTypeCode" type="InstallationBufferTypeCodeType" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="SpecifiedOperatingSite" type="OperatingSiteType"/>
+				<xs:element name="PostalAddress" type="AddressType"/>
+				<xs:element name="LandArea" type="PlotAreaType" maxOccurs="unbounded"/>
+			</xs:choice>
+			<xs:element name="Description" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="ReportingDate" type="DateType"/>
+			<xs:element name="StoredMaterial" type="StoredWasteMaterialType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StoredWasteMaterialType">
+		<xs:sequence>
+			<xs:element name="ClassificationCode" type="WasteTypeCodeType" minOccurs="0"/>
+			<xs:element name="Description" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="MassMeasurement" type="SimpleMassMeasurementType"/>
+			<xs:element name="ContaminationMaterial" type="ContaminationMaterialType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="StreetNameTextType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="46"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="TelecommunicationCommunicationType">
+		<xs:sequence>
+			<xs:element name="CountryNumberCode" type="CountryNumberCodeType" minOccurs="0"/>
+			<xs:element name="AreaNumberCode" type="AreaNumberCodeType" minOccurs="0"/>
+			<xs:element name="LocalNumber" type="LocalNumberTextType" minOccurs="0"/>
+			<xs:element name="ExtensionNumber" type="ExtensionNumberTextType" minOccurs="0"/>
+			<xs:element name="CompleteNumber" type="CompleteNumberTextType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Token64">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TransportModeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VerificationResultCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VersionIdentifierType">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+			<xs:pattern value="\d+\.\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ValidationNodeIndividualDataRegistrationType">
+		<xs:sequence>
+			<xs:element name="Party" type="RegisteredEconomicOperatorType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Site" type="RegisteredSiteType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Installation" type="RegisteredInstallationType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ValidationNodeIndividualDataType">
+		<xs:sequence>
+			<xs:element name="Registration" type="ValidationNodeIndividualDataRegistrationType" minOccurs="0"/>
+			<xs:element name="PrecedingPeriodNotification" type="RegistrationWasteHandlingNotificationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ValidationNodeReferenceDataType">
+		<xs:sequence>
+			<xs:element name="WasteTypeList" type="WasteTypeListType" minOccurs="0"/>
+			<xs:element name="OtherCodeList" type="CodeListType" minOccurs="0" maxOccurs="64"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="VolumeMeasureContent">
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="25"/>
+			<xs:fractionDigits value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="VolumeMeasureType">
+		<xs:simpleContent>
+			<xs:extension base="VolumeMeasureContent">
+				<xs:attribute name="unitCode" type="VolumeUnitIdentifierContent" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="VolumeUnitIdentifierContent">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MTQ"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="WasteDestinationMaterialType">
+		<xs:sequence>
+			<xs:element name="TakeOverParty" type="PartyType" minOccurs="0"/>
+			<xs:element name="SpecifiedLocation" type="MaterialLocationType" minOccurs="0"/>
+			<xs:element name="DesignatedTreatmentPhysicalProcess" type="WasteRecoveryDisposalPhysicalProcessType" minOccurs="0"/>
+			<xs:element name="Batch" type="BatchType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WasteFinalWhereaboutMaterialType">
+		<xs:sequence>
+			<xs:element name="TreatmentParty" type="PartyType" minOccurs="0"/>
+			<xs:element name="SpecifiedLocation" type="MaterialLocationType" minOccurs="0"/>
+			<xs:element name="DesignatedTreatmentPhysicalProcess" type="WasteRecoveryDisposalPhysicalProcessType" minOccurs="0"/>
+			<xs:element name="Batch" type="BatchType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WasteFractionMaterialType">
+		<xs:sequence>
+			<xs:element name="MassRatioMeasure" type="MassRatioMeasureType"/>
+			<xs:element name="OwnerParty" type="PartyType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WasteGenerationMaterialType">
+		<xs:sequence>
+			<xs:element name="CollectionTypeCode" type="CollectionTypeCodeType" minOccurs="0"/>
+			<xs:element name="CollectionDescription" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="ProductionParty" type="PartyType" minOccurs="0"/>
+			<xs:element name="SpecifiedLocation" type="MaterialLocationType" minOccurs="0"/>
+			<xs:element name="ProductionOriginPhysicalProcess" type="WasteOriginPhysicalProcessType" minOccurs="0"/>
+			<xs:element name="Batch" type="BatchType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WasteHandlingNotificationEntryType">
+		<xs:choice>
+			<xs:element name="WasteMaterialMovement" type="WasteTransportMovementType"/>
+			<xs:element name="StorageStateInstallation" type="StorageStateInstallationType"/>
+			<xs:element name="StorageCorrectionInstallation" type="StorageCorrectionInstallationType"/>
+			<xs:element name="WasteReclassificationMaterial" type="ReclassifiedWasteMaterialType"/>
+			<xs:element name="RemainingCapacityInstallation" type="RemainingCapacityInstallationType"/>
+			<xs:element name="CompostHandOverMaterialMovement" type="CompostTransportMovementType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="WasteHandlingNotificationType">
+		<xs:sequence>
+			<xs:element name="CreationSoftwareInterfaceVersionID" type="VersionIdentifierType" minOccurs="0"/>
+			<xs:element name="CreationSoftwareName" type="ShortNameContentType" minOccurs="0"/>
+			<xs:element name="CreationSoftwareVersionID" type="PredeterminedScopeReferenceIdentifierType" minOccurs="0"/>
+			<xs:element name="SpecifiedNotification" type="NotificationType"/>
+			<xs:element name="SpecifiedSinglePeriodWasteHandlingNotification" type="SinglePeriodWasteHandlingNotificationType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WasteMaterialType">
+		<xs:sequence>
+			<xs:element name="PreliminaryClassificationWasteMaterial" type="MovementReclassifiedMaterialType" minOccurs="0"/>
+			<xs:element name="ClassificationCode" type="WasteTypeCodeType"/>
+			<xs:element name="Description" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="VerificationResultCode" type="VerificationResultCodeType" minOccurs="0"/>
+			<xs:element name="VerificationResultDescription" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="VerificationDocumentID" type="DocumentIdentifierType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="CharacterizationDocumentID" type="DocumentIdentifierType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="MassMeasurement" type="MassMeasurementType"/>
+			<xs:element name="ContaminationMaterial" type="ContaminationMaterialType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="FractionMaterial" type="WasteFractionMaterialType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="WasteMovementIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="WasteOriginMaterialType">
+		<xs:sequence>
+			<xs:element name="CollectionTypeCode" type="CollectionTypeCodeType" minOccurs="0"/>
+			<xs:element name="CollectionDescription" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="HandOverParty" type="PartyType" minOccurs="0"/>
+			<xs:element name="SpecifiedLocation" type="MaterialLocationType" minOccurs="0"/>
+			<xs:element name="OriginPhysicalProcess" type="WasteOriginPhysicalProcessType" minOccurs="0"/>
+			<xs:element name="Batch" type="BatchType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WasteOriginPhysicalProcessType">
+		<xs:sequence>
+			<xs:element name="TypeCode" type="WasteOriginProcessTypeCodeType" minOccurs="0"/>
+			<xs:element name="Description" type="ExtensiveDescriptionTextType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="WasteOriginProcessTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="WasteRecoveryDisposalPhysicalProcessType">
+		<xs:sequence>
+			<xs:element name="TypeCode" type="WasteRecoveryDisposalTypeCodeType" minOccurs="0"/>
+			<xs:element name="Description" type="ExtensiveDescriptionTextType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="WasteRecoveryDisposalTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="WasteTransportMovementType">
+		<xs:sequence>
+			<xs:element name="ID" type="WasteMovementIdentifierType" minOccurs="0"/>
+			<xs:element name="TypeCode" type="MovementTypeCodeType"/>
+			<xs:element name="Description" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="StorageReasonCode" type="StorageReasonCodeType" minOccurs="0"/>
+			<xs:element name="StorageReasonDescription" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="PhysicalMovementCommissionedIndicator" type="IndicatorType" minOccurs="0"/>
+			<xs:element name="RejectionIndicator" type="IndicatorType" minOccurs="0"/>
+			<xs:element name="RejectionReasonDescription" type="LongDescriptionTextType" minOccurs="0"/>
+			<xs:element name="PrecedingMaterialMovementID" type="WasteMovementIdentifierType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="MovementPeriod" type="ReducedPeriodType" minOccurs="0"/>
+			<xs:element name="WasteProductionMovedMaterial" type="WasteGenerationMaterialType" minOccurs="0"/>
+			<xs:element name="WasteHandOverMovedMaterial" type="WasteOriginMaterialType"/>
+			<xs:element name="WasteTakeOverMovedMaterial" type="WasteDestinationMaterialType"/>
+			<xs:element name="FinalWhereaboutMovedMaterial" type="WasteFinalWhereaboutMaterialType" minOccurs="0"/>
+			<xs:element name="MovedMaterial" type="WasteMaterialType"/>
+			<xs:element name="SectionTransportMovement" type="SingleTransportMovementType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="WasteTypeCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="WasteTypeListType">
+		<xs:sequence>
+			<xs:element name="ListElement" type="WasteTypeListElementType" minOccurs="0" maxOccurs="4096"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WasteTypeListElementType">
+		<xs:sequence>
+			<xs:element name="GTINCode" type="WasteTypeCodeType"/>
+			<xs:element name="DomainCode" type="xs:string"/>
+			<xs:element name="Name" type="xs:string"/>
+			<xs:element name="ValidityStartDate" type="DateContentType" minOccurs="0"/>
+			<xs:element name="ValidityEndDate" type="DateContentType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WebsiteCommunicationType">
+		<xs:sequence>
+			<xs:element name="WebsiteURI" type="WebsiteURIIdentifierType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="WebsiteURIIdentifierType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

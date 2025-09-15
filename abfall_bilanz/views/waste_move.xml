@@ -1,44 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Form View for waste.move -->
-        <!-- This view defines the layout for a single record, with fields grouped for clarity. -->
         <record id="waste_move_view_form" model="ir.ui.view">
             <field name="name">waste.move.form</field>
             <field name="model">waste.move</field>
             <field name="arch" type="xml">
                 <form string="Waste Move">
                     <header>
-                        <button string="Bilanz Exportieren" name="action_show_dialog" type="object" class="btn-primary"/>
+                        <button string="Approve Move" name="approve_move" type="object"
+                                class="btn-primary" invisible="state != 'new'"/>
+                        <button string="Bilanz Exportieren" name="action_show_dialog" type="object"
+                                class="btn-primary"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
-                            <label for="move_id" string="Receipt Sequence" class="oe_edit_only"/>
+                            <label for="name" class="oe_edit_only"/>
                             <h1>
-                                <field name="move_id"/>
+                                <field name="name"/>
                             </h1>
                         </div>
                         <group>
                             <group>
-                                <!-- Grouping fields for the origin of the waste. -->
                                 <field name="origin_partner"/>
                                 <field name="origin_installation"/>
                             </group>
                             <group>
-                                <!-- Grouping fields for the destination of the waste. -->
                                 <field name="recipient_partner"/>
                                 <field name="recipient_installation"/>
                             </group>
                         </group>
                         <group>
                             <group>
-                                <!-- Grouping product and amount details. -->
-                                <field name="product"/>
+                                <field name="abfallart"/>
                                 <field name="amount"/>
                             </group>
                             <group>
-                                <!-- Other key details like transport type and date. -->
                                 <field name="transport_type"/>
                                 <field name="date"/>
                             </group>
@@ -48,18 +45,17 @@
             </field>
         </record>
 
-        <!-- list View for waste.move -->
-        <!-- This view defines the columns for the list view, showing key information at a glance. -->
+
         <record id="waste_move_view_list" model="ir.ui.view">
             <field name="name">waste.move.list</field>
             <field name="model">waste.move</field>
             <field name="arch" type="xml">
                 <list string="Waste Moves">
-                    <field name="move_id"/>
+                    <field name="name"/>
                     <field name="date"/>
                     <field name="origin_partner"/>
                     <field name="recipient_partner"/>
-                    <field name="product"/>
+                    <field name="abfallart"/>
                     <field name="amount"/>
                     <field name="state"/>
                 </list>
@@ -92,12 +88,11 @@
                 </form>
             </field>
         </record>
-
         <menuitem id="waste_move_menu_moves"
-                  name="Waste Moves"
-                  parent="menu_waste_balance_core_data"
+                  name="Abfallbilanz"
+                  parent="product_waste_registry.menu_product_waste_registry_root"
                   action="waste_move_action"
-                  sequence="60"
+                  sequence="20"
         />
     </data>
 </odoo>
