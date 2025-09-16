@@ -17,7 +17,6 @@
 
     'depends': ['base', 'stock','product_waste_registry','product_waste_anlagenverzeichnis'],
     'data': [
-        "views/waste_transport_views.xml",
         'security/ir.model.access.csv',
         "views/waste_move.xml",
     ],
