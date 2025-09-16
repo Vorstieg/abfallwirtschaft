@@ -11,7 +11,6 @@ from .library.transfer.begleitschein_ws_transfer import TransferMessageType
 
 _logger = logging.getLogger(__name__)
 
-
 COMPANY_GLN_MISSING = "You need to have a GLN configured for your company"
 
 
@@ -40,19 +39,24 @@ class VebsvPullService(models.TransientModel):
                     [("name", "=", begleitschein["handover_gln"])])
                 takeover_partner = self.env["res.partner.id_number"].search(
                     [("name", "=", begleitschein["takeover_gln"])])
+                organizing_partner_id = self.env["res.partner.id_number"].search(
+                    [("name", "=", begleitschein["organizing_partner_gln"])])
 
                 if not takeover_partner or not handover_partner:
-                    _logger.error("Partner not fount") # TODO: If a partner is not found, a new one should be created. The details can be fetched after the ZAREG ticket
+                    _logger.error(
+                        "Partner not fount")  # TODO: If a partner is not found, a new one should be created. The details can be fetched after the ZAREG ticket
                     continue
 
-                sanitised_takeover_party = takeover_partner.partner_id.name.replace('\\', '').replace('/', '').replace(' ', '_')
+                sanitised_takeover_party = takeover_partner.partner_id.name.replace('\\', '').replace('/', '').replace(
+                    ' ', '_')
                 new_begleitschein = self.env['waste.begleitschein'].create({
                     'name': f"{sanitised_takeover_party}_{begleitschein['name']}",
                     'source_partner_id': handover_partner.partner_id.id,
                     'target_partner_id': takeover_partner.partner_id.id,
                     'business_case_uuid': begleitschein["business_case_uuid"],
                     'company_id': company.id,
-                    'self_is_main_organizer': False,
+                    'state': 'declared',
+                    'organizing_partner_id': organizing_partner_id,
                     'begleitschein_lines': self._create_begleitschein_lines(begleitschein["begleitschein_lines"]),
                 })
                 new_begleitschein.message_post(
@@ -81,7 +85,8 @@ class VebsvPullService(models.TransientModel):
                     state_to_set = 'done'
 
                 if state_to_set:
-                    begleitschein_line = self.env["waste.begleitschein.line"].search([("vebsv_id", "=", line["vebsv_id"])], limit=1)
+                    begleitschein_line = self.env["waste.begleitschein.line"].search(
+                        [("vebsv_id", "=", line["vebsv_id"])], limit=1)
                     if begleitschein_line:
                         begleitschein_line.begleitschein_id.state = state_to_set
 

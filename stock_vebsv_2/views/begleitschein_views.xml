@@ -36,6 +36,8 @@
                             <field name="stock_picking_id"/>
                             <field name="source_partner_id" options="{'no_create': True, 'no_open': True}"/>
                             <field name="target_partner_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="transport_partner_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="dropship_partner_id" options="{'no_create': True, 'no_open': True}"/>
                         </group>
                         <group>
                             <field name="source_site" domain="[('partner_id', '=', source_partner_id)]"/>

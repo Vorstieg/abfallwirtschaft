@@ -19,8 +19,6 @@ class Begleitschein(models.Model, VebsvBegleitschein):
     _name = "waste.begleitschein"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    self_is_main_organizer = fields.Boolean(string="Self is Main Organizer", default=True)
-
     stock_picking_id = fields.Many2one(
         'stock.picking', 'Stock Picking', index=True, ondelete='set null')
 
@@ -30,6 +28,7 @@ class Begleitschein(models.Model, VebsvBegleitschein):
                                         tracking=True)
     target_partner_id = fields.Many2one('res.partner', string='Target Partner', required=True, change_default=True,
                                         tracking=True)
+    organizing_partner_id = fields.Many2one('res.partner', string='Organizing Partner')
     # When implementing drop-shipping with multiple partners, this needs to change to a many2many
     dropship_partner_id = fields.Many2one('res.partner', string='Dropship Partner')
     company_partner_id = fields.Many2one('res.partner', string="Company Partner", related='company_id.partner_id',
@@ -68,6 +67,8 @@ class Begleitschein(models.Model, VebsvBegleitschein):
         compute='_compute_total_product_qty',
         store=True,
     )
+    self_is_main_organizer = fields.Boolean(string="Self is Main Organizer", compute='_compute_self_is_main_organizer',
+                                            store=True)
 
     @api.onchange('source_site')
     def _onchange_source_site(self):
@@ -82,12 +83,20 @@ class Begleitschein(models.Model, VebsvBegleitschein):
         for record in self:
             record.total_product_qty = sum(record.begleitschein_lines.mapped('product_qty'))
 
+    def _compute_self_is_main_organizer(self):
+        for record in self:
+            record.self_is_main_organizer = record.organizing_partner_id == record.company_partner_id
+
     @api.model_create_multi
     def create(self, vals_list):
         begleitschein = super().create(vals_list)
 
         if not begleitschein.company_id:
             begleitschein.company_id = self.env.user.company_id
+        if not begleitschein.organizing_partner_id:
+            begleitschein.organizing_partner_id = self.env.user.company_id.partner_id
+        if not begleitschein.transport_partner_id:
+            begleitschein.transport_partner_id = self.env.user.company_id.partner_id
         return begleitschein
 
     def start_begleitschein(self):
@@ -104,14 +113,15 @@ class Begleitschein(models.Model, VebsvBegleitschein):
         if self.target_partner_id.enable_sms_solution and not sms_telephone_number:
             raise UserError(_("If the sms solution is active, the partner needs to have a phone number configured"))
 
-        has_dangerous_waste = self._get_unified_service().start_begleitschein(self, sms_telephone_number)
+        has_dangerous_waste = self._get_unified_service().start_begleitschein(self, self.company_partner_id,
+                                                                              sms_telephone_number)
 
         if not has_dangerous_waste:
             self.state = 'confirmed'
         else:
             self.state = 'declared'
 
-    def _get_shipment(self):
+    def get_shipment(self):
         shipment_items = [line.get_shipment_item(index + 1) for index, line in enumerate(self.begleitschein_lines)]
         return Shipment(self.shipment_uuid, self.name, shipment_items,
                         PlannedWaypoint(Period(datetime.now(), datetime.now()), "pickup_site", "handover"),
@@ -125,14 +135,14 @@ class Begleitschein(models.Model, VebsvBegleitschein):
         if not self.source_site.gtin:
             raise UserError(_("You need to define a source site."))
 
-        self._get_unified_service().start_transport(self, self.name)
+        self._get_unified_service().start_transport(self, self.company_partner_id, self.name)
         self.state = 'in_transport'
 
     def end_transport(self):
         if self.state != 'in_transport' and self.state != 'transport_complete':
             raise UserError(_("Can not finish a begleitschein, that is still in transport"))
 
-        self._get_unified_service().end_transport(self)
+        self._get_unified_service().end_transport(self, self.company_partner_id)
 
         self.state = 'done'
 
