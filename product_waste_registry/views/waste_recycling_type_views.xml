@@ -20,9 +20,9 @@
             <field name="model">waste.recycling.type</field>
             <field name="arch" type="xml">
                 <list string="Waste Recycling Types">
+                    <field name="name"/>
                     <field name="gtin"/>
                     <field name="rdp_code"/>
-                    <field name="description"/>
                 </list>
             </field>
         </record>
@@ -39,7 +39,7 @@
                                 <field name="rdp_code"/>
                             </group>
                             <group>
-                                <field name="description"/>
+                                <field name="name"/>
                                 <field name="detailed_description"/>
                             </group>
                         </group>
@@ -53,9 +53,9 @@
             <field name="model">waste.recycling.type</field>
             <field name="arch" type="xml">
                 <search string="Search Waste Recycling Types">
+                    <field name="name" string="Name"/>
                     <field name="gtin" string="GTIN"/>
                     <field name="rdp_code" string="R/D/P Code"/>
-                    <field name="description" string="Description"/>
                 </search>
             </field>
         </record>
@@ -65,9 +65,9 @@
             <field name="model">waste.origin.type</field>
             <field name="arch" type="xml">
                 <list string="Waste Origin Types">
+                    <field name="name"/>
                     <field name="gtin"/>
                     <field name="rdp_code"/>
-                    <field name="description"/>
                     <field name="detailed_description"/>
                 </list>
             </field>
@@ -81,9 +81,9 @@
                     <sheet>
                         <group>
                             <group>
+                                <field name="name"/>
                                 <field name="gtin"/>
                                 <field name="rdp_code"/>
-                                <field name="description"/>
                             </group>
                             <group>
                                 <field name="detailed_description"/>

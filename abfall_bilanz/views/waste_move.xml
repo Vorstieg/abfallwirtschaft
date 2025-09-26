@@ -8,7 +8,7 @@
                 <form string="Waste Move">
                     <header>
                         <button string="Approve Move" name="approve_move" type="object"
-                                class="btn-primary" invisible="state != 'new'"/>
+                                class="btn-primary" invisible="state == 'new'"/>
                         <button string="Bilanz Exportieren" name="action_show_dialog" type="object"
                                 class="btn-primary"/>
                         <field name="state" widget="statusbar"/>
@@ -21,19 +21,22 @@
                             </h1>
                         </div>
                         <group>
-                            <group>
+                            <group string="Origin">
                                 <field name="origin_partner"/>
                                 <field name="origin_installation"/>
+                                <field name="origin_type"/>
                             </group>
-                            <group>
+                            <group string="Recipient">
                                 <field name="recipient_partner"/>
                                 <field name="recipient_installation"/>
+                                <field name="recycling_type"/>
                             </group>
                         </group>
                         <group>
-                            <group>
+                            <group string="Waste details">
                                 <field name="abfallart"/>
                                 <field name="amount"/>
+                                <field name="quantification_type"/>
                             </group>
                             <group>
                                 <field name="transport_type"/>
