@@ -1,8 +1,5 @@
-from odoo import api, fields, models
-from odoo.exceptions import UserError
-
-from odoo.addons.stock_vebsv_2.models.library.vebsv_begleitschein import VebsvPartner
-
+from odoo import fields, models, api
+from odoo.exceptions import UserError, ValidationError
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
@@ -11,10 +8,8 @@ class ResPartner(models.Model):
     sms_solution_phone_number = fields.Char(string='Phone number for SMS solution')
 
     def get_person_gln(self):
-        # This assumes that the first id_number is the GLN
-        # TODO: A more robust implementation might require a specific type of id_number
         try:
-            return self.id_numbers.display_name
+            return self.person_gln
         except AttributeError:
             raise UserError(f"User {self.name} has no GLN set")
 

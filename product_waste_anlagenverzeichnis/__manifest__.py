@@ -14,9 +14,10 @@
     'version': '0.1',
     'license': 'LGPL-3',
 
-    'depends': ['base', 'product','product_waste_registry'],
+    'depends': ['product','product_waste_registry'],
     'data': [
         'security/ir.model.access.csv',
         'views/waste_treatment_installation.xml',
+        'views/res_partner_view.xml',
     ],
 }
