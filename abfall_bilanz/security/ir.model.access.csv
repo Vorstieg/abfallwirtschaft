@@ -1,3 +1,9 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_waste_move,Waste Move User Access,model_waste_move,base.group_user,1,1,1,1
 access_waste_bilanz,Waste Balance User Access,model_waste_bilanz,base.group_user,1,1,1,1
+access_reconciliation_site,Reconciliation site,model_reconciliation_site,base.group_user,1,1,1,1
+access_reconciliation_installation,Reconciliation installation,model_reconciliation_installation,base.group_user,1,1,1,1
+access_reconciliation_quantificationtype,Reconciliation quantificationtype,model_reconciliation_quantificationtype,base.group_user,1,1,1,1
+access_reconciliation_origintype,Reconciliation origintype,model_reconciliation_origintype,base.group_user,1,1,1,1
+access_reconciliation_recyclingtype,Reconciliation recyclingtype,model_reconciliation_recyclingtype,base.group_user,1,1,1,1
+access_reconciliation_transporttype,Reconciliation transporttype,model_reconciliation_transporttype,base.group_user,1,1,1,1

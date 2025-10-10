@@ -12,7 +12,6 @@
         <menuitem id="menu_waste_management_core_data"
                   name="Core Data"
                   parent="menu_waste_management_configuration"
-                  action="action_waste_type"
                   sequence="50"/>
         <menuitem id="menu_waste_type"
                   name="Waste Types"

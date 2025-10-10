@@ -1,5 +1,5 @@
 {
-    'name': "Abfallbilanz Begletischein vebsv",
+    'name': "Abfallbilanz Begleitschein vebsv",
     'version': '1.0',
     'summary': 'Glue module to connect abfall_bilanz and stock_vebsv_2.',
     'description': """

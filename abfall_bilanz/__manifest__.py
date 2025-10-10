@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+
 {
     'name': 'Abfallbilanz',
 
@@ -15,9 +17,10 @@
     'version': '0.1',
     'license': 'LGPL-3',
 
-    'depends': ['base', 'stock','product_waste_registry','product_waste_anlagenverzeichnis'],
+    'depends': ['base', 'stock', 'product_waste_registry', 'product_waste_anlagenverzeichnis'],
     'data': [
-        'security/ir.model.access.csv',
         "views/waste_move.xml",
+        "views/reconciliation_views.xml",
+        'security/ir.model.access.csv',
     ],
 }
