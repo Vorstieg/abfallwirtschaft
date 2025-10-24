@@ -18,3 +18,6 @@ class ResPartner(models.Model):
 
     def is_target(self, begleitschein):
         return begleitschein.target_partner_id == self
+
+    def is_source(self, begleitschein):
+        return begleitschein.source_partner_id == self

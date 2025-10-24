@@ -69,10 +69,10 @@ class StockPicking(models.Model):
             'stock_picking_id': self.id,
             'source_partner_id': source_partner.id,
             'target_partner_id': target_partner.id,
-            'source_site': source_site.id,
-            'target_site': target_site.id,
             'company_id': self.company_id.id,
             'transport_partner_id': self.company_id.id,
+            'source_site': source_site.id,
+            'target_site': target_site.id,
             'begleitschein_lines': [(0, 0, {
                 'product_id': l.product_id.id,
                 'abfallart': l.product_id.waste_type_id.id,

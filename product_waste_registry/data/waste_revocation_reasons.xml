@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="revocation_9008390103241" model="waste.revocation.reason">
+            <field name="gtin">9008390103241</field>
+            <field name="name">Falsche Angaben</field>
+            <field name="description">Angaben werden widerrufen, weil sie falsch waren. Dies ist beispielsweise dann der Fall, wenn aufgrund eines Tippfehlers bei einer Zahl das Kommazeichen an der falschen Stelle war.</field>
+        </record>
+        <record id="revocation_9008390103258" model="waste.revocation.reason">
+            <field name="gtin">9008390103258</field>
+            <field name="name">Geänderte Umstände</field>
+            <field name="description">Angaben werden widerrufen, weil sie aufgrund geänderter Umstände nicht mehr zutreffen. Dies ist beispielsweise dann der Fall, wenn ein Transport für einen bestimmten Tag angekündigt wird, dieser dann aber aufgrund der Witterungsbedingungen nicht stattfinden kann oder verschoben werden muss.</field>
+        </record>
+    </data>
+</odoo>

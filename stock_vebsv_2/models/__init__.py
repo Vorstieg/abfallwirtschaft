@@ -7,3 +7,4 @@ from . import stock_picking
 from . import vebsv_pull_service
 from . import res_partner
 from . import begleitschein_modal
+from . import begleitschein_cancel_wizard
