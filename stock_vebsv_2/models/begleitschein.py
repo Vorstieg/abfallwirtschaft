@@ -1,19 +1,19 @@
 import logging
 import os
+import uuid
 
 from odoo import models, fields, _, api
 from odoo.exceptions import UserError
 
 from .library.auth import Auth
-from .library.vebsv_begleitschein import VebsvBegleitscheinLine
 from .library.mappings import *
 from .library.message.begleitschein_message_service import VebsvBegleitschein
+from .library.vebsv_begleitschein import VebsvBegleitscheinLine, MessageRequestType, TransferRequestType
 from .library.vebsv_service import VEBSVService
 
 _logger = logging.getLogger(__name__)
 
 COMPANY_GLN_MISSING = "You need to have a GLN configured for your company"
-
 
 class Begleitschein(models.Model, VebsvBegleitschein):
     _name = "waste.begleitschein"
@@ -44,7 +44,13 @@ class Begleitschein(models.Model, VebsvBegleitschein):
         comodel_name='waste.begleitschein.line',
         inverse_name='begleitschein_id',
         string="Begleitschein Lines",
-        copy=True, auto_join=True)
+        copy=True, auto_join=False)
+
+    request_identifiers = fields.One2many(
+        comodel_name='waste.begleitschein.request.identifier',
+        inverse_name='begleitschein_id',
+        string="Begleitschein Request Identifiers",
+        copy=False, auto_join=False)
 
     shipment_uuid = fields.Char('Shipment UUID', default=lambda x: uuid.uuid4())
     business_case_uuid = fields.Char('Business Case UUID', default=lambda x: uuid.uuid4())
@@ -54,7 +60,7 @@ class Begleitschein(models.Model, VebsvBegleitschein):
         ('draft', 'Draft'),
         ('declared', 'Declared'),
         ('confirmed', 'Confirmed'),
-        ('in_transport', 'In transport'),
+        ('in_transport', 'In Transport'),
         ('transport_complete', 'Transport complete'),
         ('done', 'Done'),
         ('canceled', 'Canceled'),
@@ -70,6 +76,10 @@ class Begleitschein(models.Model, VebsvBegleitschein):
     self_is_main_organizer = fields.Boolean(string="Self is Main Organizer", compute='_compute_self_is_main_organizer',
                                             store=True)
 
+    is_cancel_button_visible = fields.Boolean(string="Cancel Button is visible",
+                                              compute='_compute_is_cancel_button_visible',
+                                              store=True)
+
     @api.onchange('source_site')
     def _onchange_source_site(self):
         self.source_installation = False
@@ -83,9 +93,32 @@ class Begleitschein(models.Model, VebsvBegleitschein):
         for record in self:
             record.total_product_qty = sum(record.begleitschein_lines.mapped('product_qty'))
 
+    @api.depends('organizing_partner_id', 'company_partner_id')
     def _compute_self_is_main_organizer(self):
         for record in self:
             record.self_is_main_organizer = record.organizing_partner_id == record.company_partner_id
+
+    @api.depends('organizing_partner_id', 'company_partner_id', 'state')
+    def _compute_is_cancel_button_visible(self):
+        for record in self:
+            match record.state:
+                case "draft":
+                    record.is_cancel_button_visible = False
+                case "declared":
+                    record.is_cancel_button_visible = record.organizing_partner_id == record.company_partner_id
+                case "confirmed":
+                    record.is_cancel_button_visible = record.company_partner_id.is_source(record)
+                case "in_transport":
+                    record.is_cancel_button_visible = (record.organizing_partner_id == record.company_partner_id
+                                                       or record.company_partner_id.is_carrier(record))
+                case "transport_complete":
+                    record.is_cancel_button_visible = (record.organizing_partner_id == record.company_partner_id
+                                                       or record.company_partner_id.is_carrier(record))
+                case "done":
+                    record.is_cancel_button_visible = (record.company_partner_id.is_target(record)
+                                                       or record.company_partner_id.is_carrier(record))
+                case "canceled":
+                    record.is_cancel_button_visible = record.organizing_partner_id == record.company_partner_id
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -121,11 +154,12 @@ class Begleitschein(models.Model, VebsvBegleitschein):
         else:
             self.state = 'declared'
 
-    def get_shipment(self):
-        shipment_items = [line.get_shipment_item(index + 1) for index, line in enumerate(self.begleitschein_lines)]
-        return Shipment(self.shipment_uuid, self.name, shipment_items,
-                        PlannedWaypoint(Period(datetime.now(), datetime.now()), "pickup_site", "handover"),
-                        PlannedWaypoint(Period(datetime.now(), datetime.now()), "dropoff_site", "takeover"))
+    def confirm_begleitschein(self):
+        if not self.source_site.gtin:
+            raise UserError(_("You need to define a source site."))
+        self._get_unified_service().confirm_begleitschein(self)
+
+        self.state = 'confirmed'
 
     def start_transport(self):
         if self.state != 'confirmed':
@@ -147,16 +181,42 @@ class Begleitschein(models.Model, VebsvBegleitschein):
         self.state = 'done'
 
     def cancel_begleitschein(self):
-        self._get_begleitschein_message_service().cancel_begleitschein()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Cancel Begleitschein'),
+            'res_model': 'begleitschein.cancel.wizard',
+            'target': 'new',
+            'view_mode': 'form',
+            'context': {
+                'default_begleitschein_id': self.id,
+                'default_cancel_state': self.state,
+            },
+        }
 
-        self.state = 'canceled'
+    def action_cancel(self, revocation_reason):
+        self.ensure_one()
+        service = self._get_unified_service()
 
-    def confirm_begleitschein(self):
-        if not self.source_site.gtin:
-            raise UserError(_("You need to define a source site."))
-        self._get_unified_service().confirm_begleitschein(self)
-
-        self.state = 'confirmed'
+        if self.state == 'declared':
+            service.cancel_declared(self, self.company_partner_id, revocation_reason)
+            self.write({
+                'state': 'draft',
+                'shipment_uuid': str(uuid.uuid4()),
+                'business_case_uuid': str(uuid.uuid4()),
+                'transport_uuid': str(uuid.uuid4()),
+            })
+        elif self.state == 'confirmed':
+            service.cancel_confirmed(self, revocation_reason)
+            self.state = 'declared'
+        elif self.state == 'in_transport':
+            service.cancel_in_transport(self, self.company_partner_id, revocation_reason)
+            self.write({
+                'state': 'confirmed',
+                'transport_uuid': str(uuid.uuid4())
+            })
+        elif self.state == 'done':
+            service.cancel_done(self, self.company_partner_id, revocation_reason)
+            self.state = 'in_transport'
 
     def _get_unified_service(self):
         config_params = self.env['ir.config_parameter'].sudo()
@@ -176,6 +236,23 @@ class Begleitschein(models.Model, VebsvBegleitschein):
                     config_params.get_param('waste_management.edm_db_uuid'))
         return VEBSVService(auth)
 
+    def get_shipment(self):
+        shipment_items = [line.get_shipment_item(index + 1) for index, line in enumerate(self.begleitschein_lines)]
+        return Shipment(self.shipment_uuid, self.name, shipment_items,
+                        PlannedWaypoint(Period(datetime.now(), datetime.now()), "pickup_site", "handover"),
+                        PlannedWaypoint(Period(datetime.now(), datetime.now()), "dropoff_site", "takeover"))
+
+    def get_request_identifier(self, message_request_type: MessageRequestType, suffix: str = ""):
+        return self.request_identifiers.filtered(lambda r: r.name == (message_request_type.name + suffix)).uuid
+
+    def add_request_identifier(self, message_request_type: MessageRequestType, suffix: str, uuid: str):
+        name = message_request_type.name + suffix
+        existing = self.request_identifiers.filtered(lambda r: r.name == name)
+        if existing:
+            existing.write({'uuid': uuid})
+        else:
+            self.write({'request_identifiers': [(0, 0, {'name': name, 'uuid': uuid})]})
+
 
 class BegleitscheinLine(models.Model, VebsvBegleitscheinLine):
     _name = "waste.begleitschein.line"
@@ -194,6 +271,26 @@ class BegleitscheinLine(models.Model, VebsvBegleitscheinLine):
     vebsv_id = fields.Char(
         string="VEBSV ID", store=True, readonly=False, required=False)
 
+    request_identifiers = fields.One2many(
+        comodel_name='waste.line.request.identifier',
+        inverse_name='line_id',
+        string="Line Request Identifiers",
+        copy=False, auto_join=False)
+
+    def write_vebsv_id(self, vebsv_id: str):
+        self.vebsv_id = vebsv_id
+
+    def get_request_identifier(self, transfer_request_type: TransferRequestType):
+        return self.request_identifiers.filtered(lambda r: r.name == transfer_request_type.name).uuid
+
+    def add_request_identifier(self, transfer_request_type: TransferRequestType, uuid: str):
+        name = transfer_request_type.name
+        existing = self.request_identifiers.filtered(lambda r: r.name == name)
+        if existing:
+            existing.write({'uuid': uuid})
+        else:
+            self.write({'request_identifiers': [(0, 0, {'name': name, 'uuid': uuid})]})
+
     def get_shipment_item(self, line_item_number=0):
         return ShipmentItem(
             uuid.uuid4(),
@@ -207,4 +304,54 @@ class BegleitscheinLine(models.Model, VebsvBegleitscheinLine):
         )
 
     def requires_reporting(self):
-        return self.product_id.waste_type_id.dangerous or self.contains_pop
+        return self.abfallart.dangerous or self.contains_pop
+
+
+class BegleitscheinRequestIdentifier(models.Model):
+    _name = 'waste.begleitschein.request.identifier'
+    _description = 'Request Identifier'
+
+    begleitschein_id = fields.Many2one(
+        comodel_name='waste.begleitschein',
+        string='Begleitschein',
+        index=True,
+        required=True,
+        ondelete='cascade'
+    )
+
+    name = fields.Char(
+        string='Request Name',
+        required=True,
+        help="The name of request"
+    )
+
+    uuid = fields.Char(
+        string='Request UUID',
+        required=True,
+        help="The uuid to identify the request"
+    )
+
+
+class LineRequestIdentifier(models.Model):
+    _name = 'waste.line.request.identifier'
+    _description = 'Request Identifier'
+
+    line_id = fields.Many2one(
+        comodel_name='waste.begleitschein.line',
+        string='Begleitschein Line',
+        index=True,
+        required=True,
+        ondelete='cascade'
+    )
+
+    name = fields.Char(
+        string='Request Name',
+        required=True,
+        help="The name of request"
+    )
+
+    uuid = fields.Char(
+        string='Request UUID',
+        required=True,
+        help="The uuid to identify the request"
+    )

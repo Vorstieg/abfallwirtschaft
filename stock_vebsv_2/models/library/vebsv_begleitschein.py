@@ -1,7 +1,25 @@
 from datetime import datetime
+from enum import Enum
 from typing import List
 
 from .mappings import Shipment, ShipmentItem, Organisation, LocalUnit, PlannedWaypoint, Period, Recipient, TransportMean
+
+
+class MessageRequestType(Enum):
+    UEBERGABE_UEBERNAHME_MESSAGE = 1
+    TRANSPORT_MESSAGE = 2
+    TRANSPORTSTART_MESSAGE = 3
+    TRANSPORTABSCHLUSS_MESSAGE = 4
+    EMPFANGSBESTAETIGUNGS_MESSAGE = 5
+    UEBERNAHMEBESTAETIGUNGS_MESSAGE = 6
+
+
+class TransferRequestType(Enum):
+    HANDOVER_DECLARATION = 1
+    TRANSPORT_DECLARATION = 2
+    TRANSPORT_START_DECLARATION = 3
+    TAKEOVER_DECLARATION = 4
+    DROPSHIPPING_DECLARATION = 5
 
 
 class VebsvPartner():
@@ -15,13 +33,28 @@ class VebsvSite():
     gtin: str
 
 
+class VebsvRequestIdentifier():
+    name: str
+    uuid: str
+
+
 class VebsvBegleitscheinLine():
     vebsv_id: str
+    request_identifiers: List[VebsvRequestIdentifier]
 
     def requires_reporting(self) -> bool:
         pass
 
     def get_shipment_item(self) -> ShipmentItem:
+        pass
+
+    def write_vebsv_id(self, vebsv_id: str):
+        pass
+
+    def add_request_identifier(self, transfer_request_type: TransferRequestType, uuid: str):
+        pass
+
+    def get_request_identifier(self, transfer_request_type: TransferRequestType) -> str:
         pass
 
 
@@ -37,8 +70,15 @@ class VebsvBegleitschein():
     source_site: VebsvSite
     target_site: VebsvSite
     begleitschein_lines: List[VebsvBegleitscheinLine]
+    request_identifiers: List[VebsvRequestIdentifier]
 
     def get_shipment(self) -> Shipment:
+        pass
+
+    def get_request_identifier(self, message_request_type: MessageRequestType, suffix: str = "") -> str:
+        pass
+
+    def add_request_identifier(self, message_request_type: MessageRequestType, suffix: str, uuid: str):
         pass
 
     def restricted_recipient_glns(self, sender: VebsvPartner, sms_telephone_number: str = False, source_leg=True) -> \
@@ -55,7 +95,9 @@ class VebsvBegleitschein():
         if self.dropship_partner_id and self.dropship_partner_id != sender:
             recipient_list.append(Recipient(self.dropship_partner_id.get_person_gln()))
 
-        if self.transport_partner_id != sender and self.transport_partner_id != self.dropship_partner_id:
+        if (self.transport_partner_id != sender and self.transport_partner_id != self.dropship_partner_id
+                and self.transport_partner_id != self.source_partner_id
+                and self.transport_partner_id != self.target_partner_id):
             recipient_list.append(Recipient(self.transport_partner_id.get_person_gln()))
 
         return recipient_list
@@ -103,24 +145,21 @@ class VebsvBegleitschein():
             return "intermediate"
         return "carrier"
 
-    def selected_local_units(self, source_leg=True) -> List[LocalUnit]:
-        if not self.is_dropshipping_with_two_legs():
-            return [LocalUnit("pickup_site", self.source_site.gtin, "9008390109199"),
-                    LocalUnit("dropoff_site", self.target_site.gtin, "9008390109199")]
-        elif source_leg:
-            return [LocalUnit("pickup_site", self.source_site.gtin, "9008390109199")]
-        else:
-            return [LocalUnit("dropoff_site", self.target_site.gtin, "9008390109199")]
+    def selected_local_units(self, pickup = True, dropoff = True) -> List[LocalUnit]:
+        units = []
+        if pickup:
+            units.append(LocalUnit("pickup_site", self.source_site.gtin, "9008390109199"))
+        if dropoff:
+            units.append(LocalUnit("dropoff_site", self.target_site.gtin, "9008390109199"))
+        return units
 
-    def selected_waypoints(self, source_leg=True) -> List[PlannedWaypoint]:
-        pickup = PlannedWaypoint(Period(datetime.now(), datetime.now()), "pickup_site", "handover", True, False)
-        dropoff = PlannedWaypoint(Period(datetime.now(), datetime.now()), "dropoff_site", "takeover", False, False)
-        if not self.is_dropshipping_with_two_legs():
-            return [pickup, dropoff]
-        elif source_leg:
-            return [pickup]
-        else:
-            return [dropoff]
+    def selected_waypoints(self, pickup = True, dropoff = True) -> List[PlannedWaypoint]:
+        waypoints = []
+        if pickup:
+            waypoints.append(PlannedWaypoint(Period(datetime.now(), datetime.now()), "pickup_site", "handover", True, False))
+        if dropoff:
+            waypoints.append(PlannedWaypoint(Period(datetime.now(), datetime.now()), "dropoff_site", "takeover", False, False))
+        return waypoints
 
     def is_dropshipping_with_two_legs(self) -> bool:
         return self.dropship_partner_id and not (

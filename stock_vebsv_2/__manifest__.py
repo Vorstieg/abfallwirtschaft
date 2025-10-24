@@ -24,5 +24,6 @@
         'views/ir.cron.xml',
         'security/ir.model.access.csv',
         'views/res_partner_view.xml',
+        'views/begleitschein_cancel_wizard_views.xml',
     ],
 }

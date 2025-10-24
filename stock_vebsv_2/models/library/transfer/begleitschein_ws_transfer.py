@@ -2,9 +2,11 @@ from datetime import datetime
 from enum import Enum
 from typing import List, Union
 
+import requests
 from zeep import Client, Settings
 from zeep.transports import Transport
-import requests
+
+from odoo.addons.product_waste_registry.models.core_data.waste_revocation_reason import WasteRevocationReason
 from ..auth import Auth
 from ..mappings import Organisation, LocalUnit, ShipmentItem, TransportMean, PlannedWaypoint
 from ..zeep_pluggins import ZeepLoggingPlugin
@@ -15,6 +17,7 @@ class TransferMessageType(Enum):
     TRANSPORT_DECLARATION = '9008390116272'
     TRANSPORT_START_DECLARATION = '9008390116326'
     TAKEOVER_DECLARATION = '9008390116319'
+    DROPSHIPPING_DECLARATION = '9008390132197'
 
 
 WSDL_URL = "https://edmdemo.umweltbundesamt.at/vebsv-ws/TransferOfWasteService?wsdl"
@@ -108,7 +111,7 @@ def create_dropship_declaration_message(organisations: List[Organisation], vebsv
         'AssociatedObjectDocumentScopeReferenceID': scope_refs,
     }
     environmental_data = {'TypeAEvent': type_a_event}
-    return _build_environmental_data_instance(TransferMessageType.HANDOVER_DECLARATION.value, listed_data, environmental_data,
+    return _build_environmental_data_instance(TransferMessageType.DROPSHIPPING_DECLARATION.value, listed_data, environmental_data,
                                               "handover")
 
 
@@ -128,29 +131,29 @@ def create_transport_declaration_message(organisations: List[Organisation], loca
                                               "takeover")
 
 
-def create_transport_start_message(organisations: List[Organisation], local_unit: LocalUnit,
+def create_transport_start_message(organisations: List[Organisation], local_units: List[LocalUnit],
                                    shipment_item: ShipmentItem,
                                    vebsv_id: str, transport_uuid: str, transport_mean: TransportMean,
-                                   waypoint: PlannedWaypoint):
-    listed_data = _create_listed_data(organisations, [local_unit])
-    scope_ref_b = _create_scope_reference(ROLE_ID_TRANSPORTEUR, OBJECT_TYPE_NAME_UNTERNEHMEN, 'handover')
+                                   waypoints: List[PlannedWaypoint], carrier_reference: str):
+    listed_data = _create_listed_data(organisations, local_units)
+    scope_ref_b = _create_scope_reference(ROLE_ID_TRANSPORTEUR, OBJECT_TYPE_NAME_UNTERNEHMEN, carrier_reference)
     type_b_event = _create_type_b_event(transport_mean, transport_uuid, scope_ref_b)
-    type_c_event = _create_type_c_event(waypoint, shipment_item, vebsv_id)
+    type_c_event = _create_type_c_event(waypoints[0], shipment_item, vebsv_id)
     environmental_data = {'TypeBEvent': type_b_event, 'TypeCEvent': type_c_event}
     return _build_environmental_data_instance(TransferMessageType.TRANSPORT_START_DECLARATION.value, listed_data,
-                                              environmental_data, "takeover")
+                                              environmental_data, carrier_reference)
 
 
 def create_takeover_message(organisations: List[Organisation], local_units: List[LocalUnit],
                             shipment_item: ShipmentItem,
-                            vebsv_id: str, reason: str = None):
+                            vebsv_id: str):
     listed_data = _create_listed_data(organisations, local_units)
     scope_refs = [
         _create_scope_reference(ROLE_ID_HANDOVER_PARTY, OBJECT_TYPE_NAME_UNTERNEHMEN, 'handover'),
         _create_scope_reference(ROLE_ID_TAKEOVER_PARTY, OBJECT_TYPE_NAME_UNTERNEHMEN, 'takeover'),
         _create_scope_reference(ROLE_ID_DROPOFF_SITE, OBJECT_TYPE_NAME_STANDORT, 'dropoff_site'),
     ]
-    type_a_event = _create_type_a_event(shipment_item, vebsv_id, scope_refs, reason)
+    type_a_event = _create_type_a_event(shipment_item, vebsv_id, scope_refs)
     environmental_data = {'TypeAEvent': type_a_event}
     return _build_environmental_data_instance(TransferMessageType.TAKEOVER_DECLARATION.value, listed_data, environmental_data,
                                               "takeover")
@@ -185,7 +188,7 @@ def _create_listed_data(organisations: List[Organisation], local_units: List[Loc
     }
 
 
-def _create_type_a_event(shipment_item: ShipmentItem, vebsv_id: str, scope_refs: List[dict], reason: str = None):
+def _create_type_a_event(shipment_item: ShipmentItem, vebsv_id: str, scope_refs: List[dict]):
     type_a_event = {
         'TypeID': _create_type_id(COLLECTION_ID_EVENT_TYPE_PHYSICAL, TYPE_ID_PHYSICAL_EVENT,
                                   OBJECT_DESIGNATION_PHYSICAL),
@@ -194,8 +197,6 @@ def _create_type_a_event(shipment_item: ShipmentItem, vebsv_id: str, scope_refs:
         'AssociatedObjectReferenceID': _create_vebsv_id_reference(vebsv_id),
         'AssociatedObjectDocumentScopeReferenceID': scope_refs,
     }
-    if reason:
-        type_a_event['DeviatingAssignmentReasonDescription'] = reason
     return type_a_event
 
 
@@ -268,3 +269,19 @@ def share_document(auth: Auth, transaction_uuid: str, environmental_data_instanc
         'EnvironmentalDataInstance': environmental_data_instance,
     }
     return client.service.ShareDocument(**request_data)
+
+def cancel_document(auth: Auth, transaction_uuid: str, document_uuid: str, reason: WasteRevocationReason):
+    session.headers.update({
+        'Authorization': auth.transfer_auth_header(transaction_uuid, "CancelDocument"),
+    })
+    request_data = {
+        'InterfaceVersionID': INTERFACE_VERSION,
+        'ConnectorVersionID': CONNECTOR_VERSION,
+        'TransactionUUID': transaction_uuid,
+        'DocumentUUID': document_uuid,
+        'ChangeReasonID': {
+            'collectionID': '7521',
+            '_value_1': reason.gtin
+        }
+    }
+    return client.service.CancelDocument(**request_data)
