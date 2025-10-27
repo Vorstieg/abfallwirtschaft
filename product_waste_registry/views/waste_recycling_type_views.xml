@@ -101,9 +101,9 @@
             <field name="model">waste.origin.type</field>
             <field name="arch" type="xml">
                 <search string="Search Waste Origin Type">
+                    <field name="name"/>
                     <field name="gtin"/>
                     <field name="rdp_code"/>
-                    <field name="description"/>
                     <field name="detailed_description"/>
                     <field name="notes"/>
                     <field name="hint"/>

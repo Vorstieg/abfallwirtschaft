@@ -51,6 +51,7 @@
                             <field name="begleitschein_lines">
                                 <list string="Begleitschein Lines" editable="bottom">
                                     <field name="abfallart"/>
+                                    <field name="waste_contamination"/>
                                     <field name="product_qty"/>
                                     <field name="contains_pop"/>
                                     <field name="vebsv_id"/>

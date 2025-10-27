@@ -12,7 +12,6 @@ _logger = logging.getLogger(__name__)
 
 COMPANY_GLN_MISSING = "You need to have a GLN configured for your company"
 
-
 class VebsvPullService(models.TransientModel):
     _name = "waste.vebsv.pull.service"
     _description = "VEBSV Pull Service"
@@ -20,7 +19,7 @@ class VebsvPullService(models.TransientModel):
     def pull_all_changes(self):
         companies = self.env['res.company'].search([])
         for company in companies:
-            if company.partner_id.id_numbers:
+            if company.partner_id.get_person_gln():
                 self.pull_changes_for_company(company)
 
     def pull_changes_for_company(self, company):
@@ -34,26 +33,26 @@ class VebsvPullService(models.TransientModel):
         for line in respone["changes"]:
             if line["state"] == 'NEW':
                 begleitschein = line["begleitschein"]
-                handover_partner = self.env["res.partner.id_number"].search(
-                    [("name", "=", begleitschein["handover_gln"])])
-                takeover_partner = self.env["res.partner.id_number"].search(
-                    [("name", "=", begleitschein["takeover_gln"])])
-                organizing_partner_id = self.env["res.partner.id_number"].search(
-                    [("name", "=", begleitschein["organizing_partner_gln"])])
+                handover_partner = self.env["res.partner"].search(
+                    [("person_gln", "=", begleitschein["handover_gln"])])
+                takeover_partner = self.env["res.partner"].search(
+                    [("person_gln", "=", begleitschein["takeover_gln"])])
+                organizing_partner = self.env["res.partner"].search(
+                    [("person_gln", "=", begleitschein["organizing_partner_gln"])])
 
                 if not takeover_partner or not handover_partner:
                     _logger.error(
                         "Partner not fount")  # TODO: If a partner is not found, a new one should be created. The details can be fetched after the ZAREG ticket
                     continue
 
-                sanitised_takeover_party = takeover_partner.partner_id.name.replace('\\', '').replace('/', '').replace(
+                sanitised_takeover_party = takeover_partner.name.replace('\\', '').replace('/', '').replace(
                     ' ', '_')
                 new_begleitschein = self.env['waste.begleitschein'].create({
                     'name': f"{sanitised_takeover_party}_{begleitschein['name']}",
-                    'source_partner_id': handover_partner.partner_id.id,
-                    'target_partner_id': takeover_partner.partner_id.id,
+                    'source_partner_id': handover_partner.id,
+                    'target_partner_id': takeover_partner.id,
                     'company_id': company.id,
-                    'organizing_partner_id': organizing_partner_id.partner_id.id,
+                    'organizing_partner_id': organizing_partner.id,
                     'business_case_uuid': begleitschein["business_case_uuid"],
                     'state': 'declared',
                     'begleitschein_lines': self._create_begleitschein_lines(begleitschein["begleitschein_lines"]),

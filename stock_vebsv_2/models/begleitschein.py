@@ -122,15 +122,15 @@ class Begleitschein(models.Model, VebsvBegleitschein):
 
     @api.model_create_multi
     def create(self, vals_list):
-        begleitschein = super().create(vals_list)
+        for value in vals_list:
+            if not value.get("company_id"):
+                value["company_id"] = self.env.user.company_id.id
+            if not value.get("organizing_partner_id"):
+                value["organizing_partner_id"] = self.env.user.company_id.partner_id.id
+            if not value.get("transport_partner_id"):
+                value["transport_partner_id"] = self.env.user.company_id.partner_id.id
 
-        if not begleitschein.company_id:
-            begleitschein.company_id = self.env.user.company_id
-        if not begleitschein.organizing_partner_id:
-            begleitschein.organizing_partner_id = self.env.user.company_id.partner_id
-        if not begleitschein.transport_partner_id:
-            begleitschein.transport_partner_id = self.env.user.company_id.partner_id
-        return begleitschein
+        return super().create(vals_list)
 
     def start_begleitschein(self):
         source_partner_gln = self.source_partner_id.get_person_gln()
@@ -262,6 +262,7 @@ class BegleitscheinLine(models.Model, VebsvBegleitscheinLine):
         change_default=True, ondelete='restrict', index='btree_not_null')
 
     abfallart = fields.Many2one('waste.type', "Abfallart")
+    waste_contamination = fields.Many2one('waste.contamination.type', "Kontaminationsgruppe")
     product_qty = fields.Float(string="Quantity", default=1.0, required=True)
     contains_pop = fields.Boolean(string="POP", default=False)
 
@@ -296,10 +297,10 @@ class BegleitscheinLine(models.Model, VebsvBegleitscheinLine):
             uuid.uuid4(),
             line_item_number,
             self.abfallart.gtin,
-            'None',
-            self.abfallart.name,
+            self.waste_contamination.gtin,
+            self.abfallart.note,
             self.vebsv_id,
-            False,
+            self.contains_pop,
             NetProperty("9008390104439", self.product_qty, "9008390100028")
         )
 

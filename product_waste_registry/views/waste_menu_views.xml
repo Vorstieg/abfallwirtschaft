@@ -42,5 +42,11 @@
                 parent="menu_waste_management_core_data"
                 action="action_waste_transport_type"
                 sequence="100"/>
+        <menuitem
+                id="menu_waste_contamination_type"
+                name="Waste Contamination Types"
+                parent="menu_waste_management_core_data"
+                action="action_waste_contamination_type"
+                sequence="110"/>
     </data>
 </odoo>

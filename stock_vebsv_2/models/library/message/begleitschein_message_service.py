@@ -123,94 +123,97 @@ class BegleitscheinMessageService:
                                         sender.get_person_gln(), reason)
 
     def pull_news(self, own_gln, last_transaction_uuid):
-        try:
-            result = query_update(self.auth, last_transaction_uuid)
-        except Exception as e:
-            _logger.info("Refresh binding needs to be called")
-            refresh_binding(self.auth)
-            result = query_update(self.auth, last_transaction_uuid)
-
+        more_news = True
         changes = []
-        for update in result["Update"]:
-            if update["ForwardSharingEvent"]:
-                last_transaction_uuid = update["ForwardSharingEvent"]['TransactionUUID']
-                if any(party["RecipientID"] == own_gln for party in update["ForwardSharingEvent"]["SharedToParty"]):
-                    try:
-                        document = retrieve_document(self.auth, last_transaction_uuid)
-                    except Fault as fault:
-                        _logger.error(f"Error while fetching document{last_transaction_uuid}: {fault.message}")
-                        continue
+        while more_news:
+            try:
+                result = query_update(self.auth, last_transaction_uuid)
+            except Exception as e:
+                _logger.info("Refresh binding needs to be called")
+                refresh_binding(self.auth)
+                result = query_update(self.auth, last_transaction_uuid)
 
-                    documentType = document["AuthenticatedDocument"]["DocumentUQ"]["DocumentHeader"]["DocumentTypeID"][
-                        "_value_1"]
-                    business_case_id = \
-                        document["AuthenticatedDocument"]["DocumentUQ"]["DocumentHeader"]["ContextUUIDReference"][
-                            "ContextUUID"]
-                    _logger.info(
-                        f"Message {documentType} found for business case {business_case_id}, with document id {business_case_id}")
-                    if documentType == MessageType.UEBERGABE_UEBERNAHME_MESSAGE.value:
-                        begleitschein = self.process_uebernahme_response(document)
-                        if begleitschein:
+            for update in result["Update"]:
+                if update["ForwardSharingEvent"]:
+                    last_transaction_uuid = update["ForwardSharingEvent"]['TransactionUUID']
+                    if any(party["RecipientID"] == own_gln for party in update["ForwardSharingEvent"]["SharedToParty"]):
+                        try:
+                            document = retrieve_document(self.auth, last_transaction_uuid)
+                        except Fault as fault:
+                            _logger.error(f"Error while fetching document{last_transaction_uuid}: {fault.message}")
+                            continue
+
+                        documentType = document["AuthenticatedDocument"]["DocumentUQ"]["DocumentHeader"]["DocumentTypeID"][
+                            "_value_1"]
+                        business_case_id = \
+                            document["AuthenticatedDocument"]["DocumentUQ"]["DocumentHeader"]["ContextUUIDReference"][
+                                "ContextUUID"]
+                        _logger.info(
+                            f"Message {documentType} found for business case {business_case_id}, with document id {business_case_id}")
+                        if documentType == MessageType.UEBERGABE_UEBERNAHME_MESSAGE.value:
+                            begleitschein = self.process_uebernahme_response(document)
+                            if begleitschein:
+                                changes.append({
+                                    'state': 'NEW',
+                                    'begleitschein': begleitschein,
+                                    'message': "Recived Übergabe Übernahme Message"
+                                })
+                        elif documentType == MessageType.TRANSPORT_MESSAGE.value:
                             changes.append({
-                                'state': 'NEW',
-                                'begleitschein': begleitschein,
-                                'message': "Recived Übergabe Übernahme Message"
+                                'state': 'INFO',
+                                'begleitschein': {
+                                    'business_case_uuid': business_case_id,
+                                },
+                                'message': "Recived transport message"
                             })
-                    elif documentType == MessageType.TRANSPORT_MESSAGE.value:
-                        changes.append({
-                            'state': 'INFO',
-                            'begleitschein': {
-                                'business_case_uuid': business_case_id,
-                            },
-                            'message': "Recived transport message"
-                        })
-                    elif documentType == MessageType.TRANSPORTSTART_MESSAGE.value:
-                        changes.append({
-                            'state': 'UPDATE',
-                            'begleitschein': {
-                                'business_case_uuid': business_case_id,
-                                'state': 'in_transport'
-                            },
-                            'message': "Recived transport start message"
-                        })
-                    elif documentType == MessageType.TRANSPORTABSCHLUSS_MESSAGE.value:
-                        changes.append({
-                            'state': 'UPDATE',
-                            'begleitschein': {
-                                'business_case_uuid': business_case_id,
-                                'state': 'transport_complete'
-                            },
-                            'message': "Recived transport abschluss message"
-                        })
-                    elif documentType == MessageType.UEBERNAHMEBESTAETIGUNGS_MESSAGE.value:
-                        changes.append({
-                            'state': 'UPDATE',
-                            'begleitschein': {
-                                'business_case_uuid': business_case_id,
-                                'state': 'done'
-                            },
-                            'message': "Übernahme bestätigungs message"
-                        })
-            elif update["PostProcessingEvent"]:
-                last_transaction_uuid = update["PostProcessingEvent"]['TransactionUUID']
-                document = retrieve_document_validation_result(self.auth, last_transaction_uuid)
-                _logger.warning(document)
-            elif update["ProcessingEvent"]:
-                last_transaction_uuid = update["ProcessingEvent"]['TransactionUUID']
-                _logger.warning(update["ProcessingEvent"]["StatusDescription"]["_value_1"])
-            elif update["BackwardSharingEvent"]:
-                last_transaction_uuid = update["BackwardSharingEvent"]['TransactionUUID']
-                _logger.info(f"recived backward sharing event for {last_transaction_uuid}")
-            elif update["UpdateSignalEvent"]:
-                last_transaction_uuid = update["UpdateSignalEvent"]['TransactionUUID']
-                changes.append({
-                    'state': 'UPDATE_SIGNAL',
-                    'event_type': update["UpdateSignalEvent"]['TriggerEventTypeID']['_value_1'],
-                    'vebsv_id': update["UpdateSignalEvent"]['AffectedObjectID'],
-                    'message': "Received UpdateSignalEvent"
-                })
-            else:
-                _logger.info(f"received unknown update{update}")
+                        elif documentType == MessageType.TRANSPORTSTART_MESSAGE.value:
+                            changes.append({
+                                'state': 'UPDATE',
+                                'begleitschein': {
+                                    'business_case_uuid': business_case_id,
+                                    'state': 'in_transport'
+                                },
+                                'message': "Recived transport start message"
+                            })
+                        elif documentType == MessageType.TRANSPORTABSCHLUSS_MESSAGE.value:
+                            changes.append({
+                                'state': 'UPDATE',
+                                'begleitschein': {
+                                    'business_case_uuid': business_case_id,
+                                    'state': 'transport_complete'
+                                },
+                                'message': "Recived transport abschluss message"
+                            })
+                        elif documentType == MessageType.UEBERNAHMEBESTAETIGUNGS_MESSAGE.value:
+                            changes.append({
+                                'state': 'UPDATE',
+                                'begleitschein': {
+                                    'business_case_uuid': business_case_id,
+                                    'state': 'done'
+                                },
+                                'message': "Übernahme bestätigungs message"
+                            })
+                elif update["PostProcessingEvent"]:
+                    last_transaction_uuid = update["PostProcessingEvent"]['TransactionUUID']
+                    document = retrieve_document_validation_result(self.auth, last_transaction_uuid)
+                    _logger.warning(document)
+                elif update["ProcessingEvent"]:
+                    last_transaction_uuid = update["ProcessingEvent"]['TransactionUUID']
+                    _logger.warning(update["ProcessingEvent"]["StatusDescription"]["_value_1"])
+                elif update["BackwardSharingEvent"]:
+                    last_transaction_uuid = update["BackwardSharingEvent"]['TransactionUUID']
+                    _logger.info(f"recived backward sharing event for {last_transaction_uuid}")
+                elif update["UpdateSignalEvent"]:
+                    last_transaction_uuid = update["UpdateSignalEvent"]['TransactionUUID']
+                    changes.append({
+                        'state': 'UPDATE_SIGNAL',
+                        'event_type': update["UpdateSignalEvent"]['TriggerEventTypeID']['_value_1'],
+                        'vebsv_id': update["UpdateSignalEvent"]['AffectedObjectID'],
+                        'message': "Received UpdateSignalEvent"
+                    })
+                else:
+                    _logger.info(f"received unknown update{update}")
+            more_news = result["AdditionalUpdatesIndicator"]
 
         return {
             'last_transaction_uuid': last_transaction_uuid,
