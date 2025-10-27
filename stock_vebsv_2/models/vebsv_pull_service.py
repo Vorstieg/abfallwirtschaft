@@ -54,7 +54,7 @@ class VebsvPullService(models.TransientModel):
                     'company_id': company.id,
                     'organizing_partner_id': organizing_partner.id,
                     'business_case_uuid': begleitschein["business_case_uuid"],
-                    'state': 'declared',
+                    'state': '1_declared',
                     'begleitschein_lines': self._create_begleitschein_lines(begleitschein["begleitschein_lines"]),
                 })
                 new_begleitschein.message_post(
@@ -76,11 +76,11 @@ class VebsvPullService(models.TransientModel):
                 # TODO This is mostly temporary, we still need to listen to BackwardSharingEvent for state changes
                 # and decide when exactly which state will be active for whom
                 if event_type == TransferMessageType.HANDOVER_DECLARATION.value:
-                    state_to_set = 'confirmed'
+                    state_to_set = '2_confirmed'
                 elif event_type == TransferMessageType.TRANSPORT_DECLARATION.value:
-                    state_to_set = 'in_transport'
+                    state_to_set = '4_in_transport'
                 elif event_type == TransferMessageType.TAKEOVER_DECLARATION.value:
-                    state_to_set = 'done'
+                    state_to_set = '8_done'
 
                 if state_to_set:
                     begleitschein_line = self.env["waste.begleitschein.line"].search(

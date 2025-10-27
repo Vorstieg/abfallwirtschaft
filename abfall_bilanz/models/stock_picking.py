@@ -51,7 +51,7 @@ class StockPicking(models.Model):
             'amount': move.product_qty,
             'quantification_type': quantification_type.id if quantification_type else None,
             'date': move.date,
-            'state': 'draft',
+            'state': '0_draft',
         }
 
     def get_site(self, partner, side, abfallart):

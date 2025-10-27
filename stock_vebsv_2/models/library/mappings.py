@@ -117,10 +117,6 @@ class ShipmentItem:
                 '_value_1': self.waste_type_gtin
             },
             # 'PredeterminedScopeAssignmentID':              # optional, only used when there is no Schlüsselnummer for the waste
-            'WasteContaminationTypeID': {
-                'collectionID': '7835',
-                '_value_1': self.waste_contamination_id  # Optional Spez 77
-            },
             **({'WasteContaminationTypeID': {
                 'collectionID': '7835',
                 '_value_1': self.waste_contamination_id
