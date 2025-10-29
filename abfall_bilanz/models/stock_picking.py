@@ -51,7 +51,7 @@ class StockPicking(models.Model):
             'amount': move.product_qty,
             'quantification_type': quantification_type.id if quantification_type else None,
             'date': move.date,
-            'state': 'draft',
+            'state': '0_draft',
         }
 
     def get_site(self, partner, side, abfallart):
@@ -97,7 +97,7 @@ class StockPicking(models.Model):
             return rule.recycling_type
 
     def get_transport_type(self, partner_id, side, abfallart):
-        rule = self.env['reconciliation.transporttype'].search([('side', 'in', [side, 'both']),
+        rule = self.env['reconciliation.transport.type'].search([('side', 'in', [side, 'both']),
                                                                 ('partner_id', 'in', [partner_id.id, None]),
                                                                 ('abfallart', 'in', [abfallart.id, None])],
                                                                order='priority asc',

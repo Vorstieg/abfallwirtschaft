@@ -12,15 +12,16 @@
         <field name="arch" type="xml">
             <form string="Waste Begleitschein">
                 <header>
-                    <field name="state" widget="statusbar" statusbar_visible="declared,confirmed,in_transport,done" nolabel="1"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="1_declared,2_confirmed,4_in_transport,8_done" nolabel="1"/>
                     <button name="start_begleitschein" type="object" string="Declare Begleitschein" class="oe_highlight"
-                            invisible="state != 'draft'"/>
+                            invisible="state != '0_draft'"/>
                     <button name="start_transport" type="object" string="Start Transport" class="oe_highlight"
-                            invisible="state != 'confirmed'"/>
+                            invisible="state != '2_confirmed'"/>
                     <button name="confirm_begleitschein" type="object" string="Confirm Handover" class="oe_highlight"
-                            invisible="state != 'declared' or self_is_main_organizer"/>
+                            invisible="state != '1_declared' or self_is_main_organizer"/>
                     <button name="end_transport" type="object" string="End Transport" class="oe_highlight"
-                             invisible="state not in ['in_transport', 'transport_complete']"/>
+                            invisible="state not in ['4_in_transport', '6_transport_complete']"/>
                     <button name="cancel_begleitschein" type="object" string="Cancel" class="oe_secondary"
                             invisible="not is_cancel_button_visible"/>
                 </header>
@@ -51,6 +52,7 @@
                             <field name="begleitschein_lines">
                                 <list string="Begleitschein Lines" editable="bottom">
                                     <field name="abfallart"/>
+                                    <field name="waste_contamination"/>
                                     <field name="product_qty"/>
                                     <field name="contains_pop"/>
                                     <field name="vebsv_id"/>
@@ -72,9 +74,9 @@
         <field name="arch" type="xml">
             <search>
                 <field name="name"/>
-                <filter string="New" name="new" domain="[('state', '=', 'new')]"/>
-                <filter string="In Transport" name="in_transport" domain="[('state', '=', 'in_transport')]"/>
-                <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                <filter string="New" name="new" domain="[('state', '=', '0_draft')]"/>
+                <filter string="In Transport" name="4_in_transport" domain="[('state', '=', 'in_transport')]"/>
+                <filter string="Done" name="done" domain="[('state', '=', '8_done')]"/>
             </search>
         </field>
     </record>
@@ -83,7 +85,7 @@
         <field name="name">waste.begleitschein.kanban</field>
         <field name="model">waste.begleitschein</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="state" create="false" records_draggable="false">
+            <kanban default_group_by="state" quick_create="false" records_draggable="false">
                 <field name="state"/>
                 <templates>
                     <t t-name="card">
@@ -94,6 +96,7 @@
                                 </div>
                                 <div>
                                     <field name="source_site"/>
+                                    <field name="target_site"/>
                                 </div>
                             </div>
                         </div>

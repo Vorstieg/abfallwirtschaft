@@ -1,0 +1,37 @@
+<odoo noupdate="1">
+    <record id="contam_type_9008390101346" model="waste.contamination.type">
+        <field name="gtin">9008390101346</field>
+        <field name="name">Infektiöse Erreger</field>
+    </record>
+
+    <record id="contam_type_9008390101353" model="waste.contamination.type">
+        <field name="gtin">9008390101353</field>
+        <field name="name">Mineralölhaltige Stoffe</field>
+    </record>
+
+    <record id="contam_type_9008390101360" model="waste.contamination.type">
+        <field name="gtin">9008390101360</field>
+        <field name="name">Schwermetallhaltige Stoffe</field>
+    </record>
+
+    <record id="contam_type_9008390101377" model="waste.contamination.type">
+        <field name="gtin">9008390101377</field>
+        <field name="name">Halogenhaltige Kohlenwasserstoffe</field>
+    </record>
+
+    <record id="contam_type_9008390101384" model="waste.contamination.type">
+        <field name="gtin">9008390101384</field>
+        <field name="name">Halogenfreie Kohlenwasserstoffe</field>
+    </record>
+
+    <record id="contam_type_9008390101391" model="waste.contamination.type">
+        <field name="gtin">9008390101391</field>
+        <field name="name">Sonstige anorganische gefährliche Stoffe</field>
+    </record>
+
+    <record id="contam_type_9008390101407" model="waste.contamination.type">
+        <field name="gtin">9008390101407</field>
+        <field name="name">Sonstige organische gefährliche Stoffe</field>
+    </record>
+
+</odoo>

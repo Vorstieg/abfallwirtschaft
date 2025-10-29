@@ -68,7 +68,7 @@ class RecyclingTypeRule(models.Model):
     recycling_type = fields.Many2one('waste.recycling.type', string="Recycling Type", required=True)
 
 class TransportTypeRule(models.Model):
-    _name = 'reconciliation.transporttype'
+    _name = 'reconciliation.transport.type'
     _description = 'Transport type Reconciliation'
 
     name = fields.Char(string='Rule Name', required=True)

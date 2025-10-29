@@ -76,6 +76,7 @@ class StockPicking(models.Model):
             'begleitschein_lines': [(0, 0, {
                 'product_id': l.product_id.id,
                 'abfallart': l.product_id.waste_type_id.id,
+                'waste_contamination': l.product_id.waste_contamination.id,
                 'product_qty': l.quantity,
             }) for l in self._get_waste_products()],
         })

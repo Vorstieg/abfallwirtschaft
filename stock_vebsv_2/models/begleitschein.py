@@ -57,14 +57,14 @@ class Begleitschein(models.Model, VebsvBegleitschein):
     transport_uuid = fields.Char('Transport UUID', default=lambda x: uuid.uuid4())
 
     state = fields.Selection([
-        ('draft', 'Draft'),
-        ('declared', 'Declared'),
-        ('confirmed', 'Confirmed'),
-        ('in_transport', 'In Transport'),
-        ('transport_complete', 'Transport complete'),
-        ('done', 'Done'),
-        ('canceled', 'Canceled'),
-    ], string='Status', default='draft', readonly=True)
+        ('0_draft', 'Draft'),
+        ('1_declared', 'Declared'),
+        ('2_confirmed', 'Confirmed'),
+        ('4_in_transport', 'In Transport'),
+        ('6_transport_complete', 'Transport complete'),
+        ('8_done', 'Done'),
+        ('9_canceled', 'Canceled'),
+    ], string='Status', default='0_draft', readonly=True)
 
     company_id = fields.Many2one('res.company', 'Company', required=True)
 
@@ -102,35 +102,35 @@ class Begleitschein(models.Model, VebsvBegleitschein):
     def _compute_is_cancel_button_visible(self):
         for record in self:
             match record.state:
-                case "draft":
+                case "0_draft":
                     record.is_cancel_button_visible = False
-                case "declared":
+                case "1_declared":
                     record.is_cancel_button_visible = record.organizing_partner_id == record.company_partner_id
-                case "confirmed":
+                case "2_confirmed":
                     record.is_cancel_button_visible = record.company_partner_id.is_source(record)
-                case "in_transport":
+                case "4_in_transport":
                     record.is_cancel_button_visible = (record.organizing_partner_id == record.company_partner_id
                                                        or record.company_partner_id.is_carrier(record))
-                case "transport_complete":
+                case "6_transport_complete":
                     record.is_cancel_button_visible = (record.organizing_partner_id == record.company_partner_id
                                                        or record.company_partner_id.is_carrier(record))
-                case "done":
+                case "8_done":
                     record.is_cancel_button_visible = (record.company_partner_id.is_target(record)
                                                        or record.company_partner_id.is_carrier(record))
-                case "canceled":
+                case "9_canceled":
                     record.is_cancel_button_visible = record.organizing_partner_id == record.company_partner_id
 
     @api.model_create_multi
     def create(self, vals_list):
-        begleitschein = super().create(vals_list)
+        for value in vals_list:
+            if not value.get("company_id"):
+                value["company_id"] = self.env.user.company_id.id
+            if not value.get("organizing_partner_id"):
+                value["organizing_partner_id"] = self.env.user.company_id.partner_id.id
+            if not value.get("transport_partner_id"):
+                value["transport_partner_id"] = self.env.user.company_id.partner_id.id
 
-        if not begleitschein.company_id:
-            begleitschein.company_id = self.env.user.company_id
-        if not begleitschein.organizing_partner_id:
-            begleitschein.organizing_partner_id = self.env.user.company_id.partner_id
-        if not begleitschein.transport_partner_id:
-            begleitschein.transport_partner_id = self.env.user.company_id.partner_id
-        return begleitschein
+        return super().create(vals_list)
 
     def start_begleitschein(self):
         source_partner_gln = self.source_partner_id.get_person_gln()
@@ -150,19 +150,19 @@ class Begleitschein(models.Model, VebsvBegleitschein):
                                                                               sms_telephone_number)
 
         if not has_dangerous_waste:
-            self.state = 'confirmed'
+            self.state = '2_confirmed'
         else:
-            self.state = 'declared'
+            self.state = '1_declared'
 
     def confirm_begleitschein(self):
         if not self.source_site.gtin:
             raise UserError(_("You need to define a source site."))
         self._get_unified_service().confirm_begleitschein(self)
 
-        self.state = 'confirmed'
+        self.state = '2_confirmed'
 
     def start_transport(self):
-        if self.state != 'confirmed':
+        if self.state != '2_confirmed':
             raise UserError(_("You can only start transport for a confirmed begleitschein."))
         if not self.target_site.gtin:
             raise UserError(_("You need to define a target site."))
@@ -170,15 +170,15 @@ class Begleitschein(models.Model, VebsvBegleitschein):
             raise UserError(_("You need to define a source site."))
 
         self._get_unified_service().start_transport(self, self.company_partner_id, self.name)
-        self.state = 'in_transport'
+        self.state = '4_in_transport'
 
     def end_transport(self):
-        if self.state != 'in_transport' and self.state != 'transport_complete':
+        if self.state != '4_in_transport' and self.state != '6_transport_complete':
             raise UserError(_("Can not finish a begleitschein, that is still in transport"))
 
         self._get_unified_service().end_transport(self, self.company_partner_id)
 
-        self.state = 'done'
+        self.state = '8_done'
 
     def cancel_begleitschein(self):
         return {
@@ -197,26 +197,26 @@ class Begleitschein(models.Model, VebsvBegleitschein):
         self.ensure_one()
         service = self._get_unified_service()
 
-        if self.state == 'declared':
+        if self.state == '1_declared':
             service.cancel_declared(self, self.company_partner_id, revocation_reason)
             self.write({
-                'state': 'draft',
+                'state': '0_draft',
                 'shipment_uuid': str(uuid.uuid4()),
                 'business_case_uuid': str(uuid.uuid4()),
                 'transport_uuid': str(uuid.uuid4()),
             })
-        elif self.state == 'confirmed':
+        elif self.state == '2_confirmed':
             service.cancel_confirmed(self, revocation_reason)
-            self.state = 'declared'
-        elif self.state == 'in_transport':
+            self.state = '1_declared'
+        elif self.state == '4_in_transport':
             service.cancel_in_transport(self, self.company_partner_id, revocation_reason)
             self.write({
-                'state': 'confirmed',
+                'state': '2_confirmed',
                 'transport_uuid': str(uuid.uuid4())
             })
-        elif self.state == 'done':
+        elif self.state == '8_done':
             service.cancel_done(self, self.company_partner_id, revocation_reason)
-            self.state = 'in_transport'
+            self.state = '4_in_transport'
 
     def _get_unified_service(self):
         config_params = self.env['ir.config_parameter'].sudo()
@@ -262,6 +262,7 @@ class BegleitscheinLine(models.Model, VebsvBegleitscheinLine):
         change_default=True, ondelete='restrict', index='btree_not_null')
 
     abfallart = fields.Many2one('waste.type', "Abfallart")
+    waste_contamination = fields.Many2one('waste.contamination.type', "Kontaminationsgruppe")
     product_qty = fields.Float(string="Quantity", default=1.0, required=True)
     contains_pop = fields.Boolean(string="POP", default=False)
 
@@ -296,10 +297,10 @@ class BegleitscheinLine(models.Model, VebsvBegleitscheinLine):
             uuid.uuid4(),
             line_item_number,
             self.abfallart.gtin,
-            'None',
-            self.abfallart.name,
+            self.waste_contamination.gtin,
+            self.abfallart.note,
             self.vebsv_id,
-            False,
+            self.contains_pop,
             NetProperty("9008390104439", self.product_qty, "9008390100028")
         )
 

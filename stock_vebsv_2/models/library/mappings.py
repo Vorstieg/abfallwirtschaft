@@ -117,13 +117,19 @@ class ShipmentItem:
                 '_value_1': self.waste_type_gtin
             },
             # 'PredeterminedScopeAssignmentID':              # optional, only used when there is no Schlüsselnummer for the waste
-            # 'WasteContaminationTypeID': {
-            #     'collectionID': '7835',
-            #     '_value_1': self.waste_contamination_id  # Optional Spez 77
-            # },
+            **({'WasteContaminationTypeID': {
+                'collectionID': '7835',
+                '_value_1': self.waste_contamination_id
+            }} if self.waste_contamination_id else {}),
             'NetPropertyStatement': self.netProperty.parse(),
             **({'ConsignmentNoteReferenceID': self.vebsv_id} if self.vebsv_id else {}),
-            # 'DangerousGoodsDescription':  # ADR information
+            **({'DangerousGoodsDescription': {
+                'Description': {
+                    'IndividualDescription': {
+                        'languageID': 'de',
+                        '_value_1': self.waste_type_description
+                    }}
+            }} if self.waste_type_description else {}),
             'ContainsPersistentOrganicPollutant': self.contains_pop
         }
 
@@ -274,5 +280,6 @@ class Recipient:
                 'collectionID': '2976',
                 '_value_1': 'request'  # two possible values: request and inform
             },
-            **({'TelephoneCommunicationNetworkEndpointID': self.sms_telephone_number} if self.sms_telephone_number else {}),
+            **({
+                   'TelephoneCommunicationNetworkEndpointID': self.sms_telephone_number} if self.sms_telephone_number else {}),
         }

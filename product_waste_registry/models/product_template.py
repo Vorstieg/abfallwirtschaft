@@ -9,3 +9,9 @@ class ProductTemplate(models.Model):
         index=True,
         help="Weisen Sie diesem Produkt eine Abfallart zu. (Sie können nach Namen suchen oder eine vollständige GTIN oder Schlüsselnummer eingeben)"
     )
+    waste_contamination = fields.Many2one(
+        'waste.contamination.type',
+        string='Waste Contamination',
+        index=False,
+        help="Liste von Kontaminationsgruppen für Abfallarten mit der Spezifizierung 77 gefährlich kontaminiert"
+    )
