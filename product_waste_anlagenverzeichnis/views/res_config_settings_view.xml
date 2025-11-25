@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="res_config_settings_view_form" model="ir.ui.view">
+        <record id="res_config_settings_waste_management_view_form" model="ir.ui.view">
             <field name="name">res.config.settings.view.form.inherit.eras</field>
             <field name="model">res.config.settings</field>
             <field name="inherit_id" ref="base.res_config_settings_view_form"/>
@@ -23,4 +23,21 @@
             </field>
         </record>
     </data>
+
+    <record id="action_waste_management_config_settings" model="ir.actions.act_window">
+            <field name="name">Configure Waste Management</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="res_config_settings_waste_management_view_form"/>
+            <field name="context">{'module' : 'product_waste_anlagenverzeichnis'}</field>
+        </record>
+
+
+    <menuitem id="menu_waste_management_settings"
+              name="Settings"
+              parent="product_waste_registry.menu_waste_management_configuration"
+              action="action_waste_management_config_settings"
+              sequence="10"
+    />
 </odoo>
