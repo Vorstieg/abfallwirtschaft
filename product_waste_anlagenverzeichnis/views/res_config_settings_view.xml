@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.eras</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="Waste Management" string="Waste Management"
+                         name="product_waste_anlagenverzeichnis">
+                        <block title="eRAS Registerabfrage" name="eras_settings">
+                            <setting help="Credentials for eRAS Registerabfrage API">
+                                <group>
+                                    <field name="eras_api_user"/>
+                                    <field name="eras_api_password" password="True"/>
+                                    <field name="eras_base_url"/>
+                                </group>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

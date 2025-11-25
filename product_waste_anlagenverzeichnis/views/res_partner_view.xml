@@ -9,7 +9,11 @@
                 <xpath expr="//page[@name='contact_addresses']" position="after">
                     <page string="Waste management" name="waste_management">
                         <group>
-                            <field name="person_gln"/>
+                            <label for="person_gln"/>
+                            <div class="o_row">
+                                <field name="person_gln"/>
+                                <button name="action_query_eras" string="Query eRAS" type="object" class="btn-primary"/>
+                            </div>
                         </group>
                     </page>
                 </xpath>

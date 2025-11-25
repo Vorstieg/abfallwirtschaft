@@ -17,6 +17,7 @@
     'depends': ['product','product_waste_registry'],
     'data': [
         'security/ir.model.access.csv',
+        'views/res_config_settings_view.xml',
         'views/waste_treatment_installation.xml',
         'views/res_partner_view.xml',
     ],
