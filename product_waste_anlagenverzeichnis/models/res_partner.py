@@ -128,3 +128,18 @@ class Partner(models.Model):
                     'name': name,
                     'partner_id': self.id,
                 })
+
+    @api.model
+    def _cron_update_eras_contacts(self):
+        """ Scheduled action to update all contacts with a Person GLN from eRAS """
+        partners = self.search([('person_gln', '!=', False)])
+        for partner in partners:
+            try:
+                partner.action_query_eras()
+                # Commit after each partner to avoid long transaction and partial failures blocking everything?
+                # Odoo cron usually runs in one transaction. If one fails, we might want to log and continue.
+                # But action_query_eras raises UserError. We should catch it.
+                self.env.cr.commit() 
+            except Exception as e:
+                _logger.error(f"Failed to update eRAS for partner {partner.id} ({partner.name}): {e}")
+                self.env.cr.rollback()
