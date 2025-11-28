@@ -1,4 +1,6 @@
-from odoo import models, fields
+from odoo import models, fields, _
+from odoo.exceptions import UserError
+from ..utils.eras_client import ErasClient
 
 
 class WasteTreatmentSite(models.Model):
