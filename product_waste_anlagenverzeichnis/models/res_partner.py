@@ -25,7 +25,11 @@ class Partner(models.Model):
                 except (InvalidChecksum, InvalidFormat, InvalidLength):
                     raise ValidationError("The person GLN is not valid")
 
-    def action_query_eras(self):
+    def _get_eras_entity_data(self):
+        """
+        Queries eRAS for the partner's GLN and returns the matching entity and full response data.
+        Returns: (target_entity, env_data)
+        """
         self.ensure_one()
         if not self.person_gln:
             raise UserError(_("Please set a Person GLN first."))
@@ -40,50 +44,79 @@ class Partner(models.Model):
             raise UserError(_("Please configure eRAS credentials in General Settings."))
 
         client = ErasClient(user, password, base_url=base_url)
-        
+
         try:
             response = client.query_register({'gln': self.person_gln})
         except Exception as e:
             raise UserError(_("eRAS Query failed: %s") % str(e))
 
         if not response or not hasattr(response, 'EnvironmentalData'):
-            return
+            return None, None
 
         env_data = response.EnvironmentalData
-        
+
         target_entity = None
         target_scope_id = None
-        
+
         # Check both Person and Organization lists
         entities = getattr(env_data, 'Person', []) + getattr(env_data, 'Organization', [])
-        
+
         for entity in entities:
             if self._match_gln(entity.ID, self.person_gln):
                 target_entity = entity
-                target_scope_id = getattr(entity, 'DocumentScopeAssignmentID', None)
                 break
-        
-        if target_entity:
-            # Find LocalUnits that reference this entity
-            local_units = []
-            all_local_units = getattr(env_data, 'LocalUnit', [])
-            
-            for lu in all_local_units:
-                refs = getattr(lu, 'AssociatedObjectDocumentScopeReferenceID', [])
-                # Check if any reference matches the target scope ID
-                if any(self._get_ident_value(ref) == target_scope_id for ref in refs):
-                    local_units.append(lu)
-            
-            self._update_sites_from_local_units(local_units)
-        else:
+
+        if not target_entity:
             # Collect found IDs for debugging
             found_ids = [
-                self._get_ident_value(ident) 
-                for entity in entities 
+                self._get_ident_value(ident)
+                for entity in entities
                 for ident in getattr(entity, 'ID', [])
             ]
-            
-            raise UserError(_("No entity found in eRAS for GLN %s. Found IDs in response: %s") % (self.person_gln, ", ".join(filter(None, found_ids))))
+            raise UserError(_("No entity found in eRAS for GLN %s. Found IDs in response: %s") % (
+            self.person_gln, ", ".join(filter(None, found_ids))))
+
+        return target_entity, env_data
+
+    def action_query_eras(self):
+        target_entity, env_data = self._get_eras_entity_data()
+        if not target_entity:
+            return
+
+        self._process_eras_sites(target_entity, env_data)
+
+    def action_update_eras_details(self):
+        """
+        Queries eRAS, updates the partner name from the result, and updates sites.
+        """
+        target_entity, env_data = self._get_eras_entity_data()
+        if not target_entity:
+            return
+
+        # Update Name
+        new_name = getattr(target_entity, 'Name', None)
+        if new_name:
+            self.name = str(new_name)
+
+        self._process_eras_sites(target_entity, env_data)
+
+    def _process_eras_sites(self, target_entity, env_data):
+        """
+        Updates sites based on the found entity and environment data.
+        """
+        target_scope_id = getattr(target_entity, 'DocumentScopeAssignmentID', None)
+
+        # Find LocalUnits that reference this entity
+        local_units = []
+        all_local_units = getattr(env_data, 'LocalUnit', [])
+
+        for lu in all_local_units:
+            refs = getattr(lu, 'AssociatedObjectDocumentScopeReferenceID', [])
+            # Check if any reference matches the target scope ID
+            if any(self._get_ident_value(ref) == target_scope_id for ref in refs):
+                local_units.append(lu)
+
+        self._update_sites_from_local_units(local_units)
 
     def _get_ident_value(self, ident):
         """ Helper to extract value from identifier object/dict """
