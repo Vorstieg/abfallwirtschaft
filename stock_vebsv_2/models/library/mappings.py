@@ -129,7 +129,7 @@ class ShipmentItem:
                         'languageID': 'de',
                         '_value_1': self.waste_type_description
                     }}
-            }} if self.waste_type_description else {}),
+            }} if self.waste_type_description and self.waste_contamination_id else {}),
             'ContainsPersistentOrganicPollutant': self.contains_pop
         }
 

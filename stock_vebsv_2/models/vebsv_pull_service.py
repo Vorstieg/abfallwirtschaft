@@ -33,17 +33,9 @@ class VebsvPullService(models.TransientModel):
         for line in respone["changes"]:
             if line["state"] == 'NEW':
                 begleitschein = line["begleitschein"]
-                handover_partner = self.env["res.partner"].search(
-                    [("person_gln", "=", begleitschein["handover_gln"])])
-                takeover_partner = self.env["res.partner"].search(
-                    [("person_gln", "=", begleitschein["takeover_gln"])])
-                organizing_partner = self.env["res.partner"].search(
-                    [("person_gln", "=", begleitschein["organizing_partner_gln"])])
-
-                if not takeover_partner or not handover_partner:
-                    _logger.error(
-                        "Partner not fount")  # TODO: If a partner is not found, a new one should be created. The details can be fetched after the ZAREG ticket
-                    continue
+                handover_partner = self._get_or_create_partner(begleitschein["handover_gln"])
+                takeover_partner = self._get_or_create_partner(begleitschein["takeover_gln"])
+                organizing_partner = self._get_or_create_partner(begleitschein["organizing_partner_gln"])
 
                 sanitised_takeover_party = takeover_partner.name.replace('\\', '').replace('/', '').replace(
                     ' ', '_')
@@ -120,3 +112,16 @@ class VebsvPullService(models.TransientModel):
         auth = Auth(edm_username, edm_secret, connector_id, connector_key,
                     config_params.get_param('waste_management.edm_db_uuid'))
         return BegleitscheinMessageService(auth)
+
+    def _get_or_create_partner(self, gln):
+        partner = self.env["res.partner"].search([("person_gln", "=", gln)], limit=1)
+        if not partner:
+            partner = self.env["res.partner"].create({
+                'name': gln,  # Temporary name
+                'person_gln': gln,
+            })
+            try:
+                partner.action_update_eras_details()
+            except Exception as e:
+                _logger.warning(f"Failed to update details for new partner {gln}: {e}")
+        return partner
