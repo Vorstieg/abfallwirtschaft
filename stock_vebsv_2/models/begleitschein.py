@@ -17,28 +17,42 @@ COMPANY_GLN_MISSING = "You need to have a GLN configured for your company"
 
 class Begleitschein(models.Model, VebsvBegleitschein):
     _name = "waste.begleitschein"
+    _description = "Waste Transport Accompanying Document"
     _inherit = ['mail.thread', 'mail.activity.mixin']
+    _order = 'id desc'
 
     stock_picking_id = fields.Many2one(
-        'stock.picking', 'Stock Picking', index=True, ondelete='set null')
+        'stock.picking', 'Stock Picking', index=True, ondelete='set null',
+        help="Related stock picking/delivery order")
 
-    name = fields.Char(string='Begleitschein Ref', required=True, copy=False)
+    name = fields.Char(string='Begleitschein Ref', required=True, copy=False,
+        help="Unique reference number for this Begleitschein")
 
     source_partner_id = fields.Many2one('res.partner', string='Source Partner', required=True, change_default=True,
-                                        tracking=True)
+                                        tracking=True, help="Partner responsible for waste handover")
     target_partner_id = fields.Many2one('res.partner', string='Target Partner', required=True, change_default=True,
-                                        tracking=True)
-    organizing_partner_id = fields.Many2one('res.partner', string='Organizing Partner')
+                                        tracking=True, help="Partner responsible for waste takeover")
+    organizing_partner_id = fields.Many2one('res.partner', string='Organizing Partner',
+                                            help="Partner organizing the waste transport")
     # When implementing drop-shipping with multiple partners, this needs to change to a many2many
-    dropship_partner_id = fields.Many2one('res.partner', string='Dropship Partner')
+    dropship_partner_id = fields.Many2one('res.partner', string='Dropship Partner',
+                                          help="Intermediate partner in dropship scenarios")
     company_partner_id = fields.Many2one('res.partner', string="Company Partner", related='company_id.partner_id',
                                          store=True, readonly=True)
-    transport_partner_id = fields.Many2one('res.partner', string="Transport Partner")
-    source_installation = fields.Many2one('waste.treatment.installation', string='Source Installation')
-    source_site = fields.Many2one('waste.treatment.site', string='Source Site')
+    transport_partner_id = fields.Many2one('res.partner', string="Transport Partner",
+                                           help="Carrier responsible for the physical transport")
+    transport_mode_id = fields.Many2one('waste.transport.mode', string="Transport Mode")
+    transport_mode_gtin = fields.Char(related='transport_mode_id.gtin')
+    quantification_type_id = fields.Many2one('waste.quantification.type', string="Quantification Type")
+    source_installation = fields.Many2one('waste.treatment.installation', string='Source Installation',
+                                          help="Treatment installation where waste originates")
+    source_site = fields.Many2one('waste.treatment.site', string='Source Site',
+                                  help="Treatment site where waste originates")
 
-    target_installation = fields.Many2one('waste.treatment.installation', string='Target Installation')
-    target_site = fields.Many2one('waste.treatment.site', string='Target Site')
+    target_installation = fields.Many2one('waste.treatment.installation', string='Target Installation',
+                                          help="Target treatment installation for waste delivery")
+    target_site = fields.Many2one('waste.treatment.site', string='Target Site',
+                                  help="Target treatment site for waste delivery")
 
     begleitschein_lines = fields.One2many(
         comodel_name='waste.begleitschein.line',
@@ -79,6 +93,7 @@ class Begleitschein(models.Model, VebsvBegleitschein):
     is_cancel_button_visible = fields.Boolean(string="Cancel Button is visible",
                                               compute='_compute_is_cancel_button_visible',
                                               store=True)
+    contains_pop = fields.Boolean(string='Contains POP', compute='_compute_contains_pop', store=True)
 
     @api.onchange('source_site')
     def _onchange_source_site(self):
@@ -92,6 +107,11 @@ class Begleitschein(models.Model, VebsvBegleitschein):
     def _compute_total_product_qty(self):
         for record in self:
             record.total_product_qty = sum(record.begleitschein_lines.mapped('product_qty'))
+
+    @api.depends('begleitschein_lines.contains_pop')
+    def _compute_contains_pop(self):
+        for record in self:
+            record.contains_pop = any(record.begleitschein_lines.mapped('contains_pop'))
 
     @api.depends('organizing_partner_id', 'company_partner_id')
     def _compute_self_is_main_organizer(self):
@@ -129,8 +149,25 @@ class Begleitschein(models.Model, VebsvBegleitschein):
                 value["organizing_partner_id"] = self.env.user.company_id.partner_id.id
             if not value.get("transport_partner_id"):
                 value["transport_partner_id"] = self.env.user.company_id.partner_id.id
+            if not value.get("transport_mode_id"):
+                # Default to Road (Strasse)
+                road = self.env['waste.transport.mode'].search([('gtin', '=', '9008390100059')], limit=1)
+                if road:
+                    value["transport_mode_id"] = road.id
 
         return super().create(vals_list)
+
+    def action_view_stock_picking(self):
+        """Smart button action to view the related stock picking."""
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Stock Picking'),
+            'res_model': 'stock.picking',
+            'res_id': self.stock_picking_id.id,
+            'view_mode': 'form',
+            'target': 'current',
+        }
 
     def start_begleitschein(self):
         source_partner_gln = self.source_partner_id.get_person_gln()
@@ -256,6 +293,7 @@ class Begleitschein(models.Model, VebsvBegleitschein):
 
 class BegleitscheinLine(models.Model, VebsvBegleitscheinLine):
     _name = "waste.begleitschein.line"
+    _description = "Waste Transport Line Item"
     product_id = fields.Many2one(
         comodel_name='product.product',
         string="Product",
@@ -271,6 +309,9 @@ class BegleitscheinLine(models.Model, VebsvBegleitscheinLine):
 
     vebsv_id = fields.Char(
         string="VEBSV ID", store=True, readonly=False, required=False)
+
+    quantification_type_id = fields.Many2one('waste.quantification.type', string="Quantification Type")
+    quantification_type_gtin = fields.Char(related='quantification_type_id.gtin')
 
     request_identifiers = fields.One2many(
         comodel_name='waste.line.request.identifier',
@@ -301,7 +342,7 @@ class BegleitscheinLine(models.Model, VebsvBegleitscheinLine):
             self.abfallart.note,
             self.vebsv_id,
             self.contains_pop,
-            NetProperty("9008390104439", self.product_qty, "9008390100028")
+            NetProperty("9008390104439", self.product_qty, self.quantification_type_gtin or "9008390100028")
         )
 
     def requires_reporting(self):

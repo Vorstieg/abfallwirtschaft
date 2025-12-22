@@ -6,3 +6,5 @@ access_waste_recycling_types_user,Waste Recycling Types User Access,model_waste_
 access_waste_origin_types_user,Waste Origin Types User Access,model_waste_origin_type,base.group_user,1,1,1,1
 access_waste_revocation_reason_user,waste.revocation.reason.user,model_waste_revocation_reason,base.group_user,1,1,1,1
 access_waste_contamination_type_manager,Waste Contamination Type Manager Access,model_waste_contamination_type,base.group_user,1,1,1,1
+access_waste_reclassification_reason_user,Waste Reclassification Reason User Access,model_waste_reclassification_reason,base.group_user,1,1,1,1
+access_waste_transport_mode_user,Waste Transport Mode User Access,model_waste_transport_mode,base.group_user,1,1,1,1

@@ -1,0 +1,144 @@
+<odoo>
+    <record id="action_bilanz_wizard_v2" model="ir.actions.act_window">
+        <field name="name">Generate Waste Balance</field>
+        <field name="res_model">waste.bilanz</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_open_bilanz_wizard" model="ir.actions.server">
+        <field name="name">Generate New Report</field>
+        <field name="model_id" ref="model_waste_bilanz_submission"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_open_wizard()
+        </field>
+    </record>
+
+    <record id="view_waste_bilanz_submission_list" model="ir.ui.view">
+        <field name="name">waste.bilanz.submission.list</field>
+        <field name="model">waste.bilanz.submission</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'submitted'" decoration-info="state == 'generated'">
+                <header>
+                    <button name="%(abfall_bilanz.action_open_bilanz_wizard)d" string="Generate New Report" type="action" class="btn-primary" display="always"/>
+                </header>
+                <field name="year"/>
+                <field name="name"/>
+                <field name="is_empty_report" optional="show"/>
+                <field name="submission_date"/>
+                <field name="critical_count" string="C" sum="Total Critical" decoration-danger="critical_count > 0" optional="show"/>
+                <field name="error_count" string="E" sum="Total Errors" decoration-warning="error_count > 0" optional="show"/>
+                <field name="warning_count" string="W" sum="Total Warnings" optional="hide"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="state" widget="badge" decoration-success="state == 'submitted'" decoration-info="state == 'generated'"/>
+                <button name="action_download_bilanz" string="Download" type="object" icon="fa-download" class="btn-link"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_waste_bilanz_submission_search" model="ir.ui.view">
+        <field name="name">waste.bilanz.submission.search</field>
+        <field name="model">waste.bilanz.submission</field>
+        <field name="arch" type="xml">
+            <search string="Submission History">
+                <field name="name"/>
+                <field name="year"/>
+                <field name="user_id"/>
+                <separator/>
+                <filter string="Generated" name="generated" domain="[('state', '=', 'generated')]"/>
+                <filter string="Submitted" name="submitted" domain="[('state', '=', 'submitted')]"/>
+                <separator/>
+                <filter string="Empty Reports" name="empty" domain="[('is_empty_report', '=', True)]"/>
+                <filter string="With Data" name="with_data" domain="[('is_empty_report', '=', False)]"/>
+                <separator/>
+                <filter string="Year" name="group_year" context="{'group_by':'year'}"/>
+                <filter string="User" name="group_user" context="{'group_by':'user_id'}"/>
+                <filter string="Status" name="group_state" context="{'group_by':'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_waste_bilanz_submission_form" model="ir.ui.view">
+        <field name="name">waste.bilanz.submission.form</field>
+        <field name="model">waste.bilanz.submission</field>
+        <field name="arch" type="xml">
+            <form string="Submission Record">
+                <header>
+                    <button name="action_download_bilanz" string="Download XML" type="object" class="btn-primary" invisible="not xml_file"/>
+                    <button name="action_validate_edm" string="Validate EDM" type="object" class="btn-secondary" invisible="state == 'submitted'"/>
+                    <button name="generate_xml_data" string="Regenerate XML" type="object" class="btn-secondary" invisible="state == 'submitted'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="generated,submitted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Report Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Report Details">
+                            <field name="year"/>
+                            <field name="is_empty_report"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="EDM Validation Stats">
+                            <field name="critical_count" decoration-danger="critical_count > 0"/>
+                            <field name="error_count" decoration-warning="error_count > 0"/>
+                            <field name="warning_count"/>
+                            <field name="hint_count"/>
+                        </group>
+                    </group>
+                    <group string="Submission Info">
+                        <field name="submission_date"/>
+                        <field name="user_id" widget="many2one_avatar_user"/>
+                    </group>
+                    <notebook>
+                        <page string="Validation Results" name="validation">
+                            <field name="validation_results_html" widget="html"/>
+                        </page>
+                        <page string="XML File" name="file">
+                            <group>
+                                <field name="xml_filename" invisible="1"/>
+                                <field name="xml_file" filename="xml_filename" widget="binary"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_waste_bilanz_submission" model="ir.actions.act_window">
+        <field name="name">Submission History</field>
+        <field name="res_model">waste.bilanz.submission</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_waste_bilanz_submission_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No submissions found.
+            </p>
+            <p>
+                Every time you generate an Abfallbilanz XML, it will be stored here for audit purposes.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_bilanz_reports"
+              name="Reports"
+              parent="menu_bilanz_root"
+              sequence="100"/>
+
+    <menuitem id="menu_generate_bilanz_wizard"
+              name="Generate Report"
+              parent="menu_bilanz_reports"
+              action="action_bilanz_wizard_v2"
+              sequence="10"/>
+
+    <menuitem id="menu_waste_bilanz_submission"
+              name="Submission History"
+              parent="menu_bilanz_reports"
+              action="action_waste_bilanz_submission"
+              sequence="20"/>
+</odoo>

@@ -23,7 +23,10 @@ class WasteType(models.Model):
         in Many2one dropdowns.
         """
         for record in self:
-            name = record.key_number + " - " + record.name
+            if record.key_number:
+                name = record.key_number + " - " + record.name
+            else:
+                name = record.name or ""
             if record.specification:
                 name += f" ({record.specification})"
             if record.dangerous:

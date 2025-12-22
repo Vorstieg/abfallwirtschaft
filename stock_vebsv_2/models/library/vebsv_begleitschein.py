@@ -41,6 +41,7 @@ class VebsvRequestIdentifier():
 class VebsvBegleitscheinLine():
     vebsv_id: str
     request_identifiers: List[VebsvRequestIdentifier]
+    quantification_type_gtin: str
 
     def requires_reporting(self) -> bool:
         pass
@@ -71,6 +72,7 @@ class VebsvBegleitschein():
     target_site: VebsvSite
     begleitschein_lines: List[VebsvBegleitscheinLine]
     request_identifiers: List[VebsvRequestIdentifier]
+    transport_mode_gtin: str
 
     def get_shipment(self) -> Shipment:
         pass
@@ -167,4 +169,4 @@ class VebsvBegleitschein():
                 self.organizing_partner_id == self.source_partner_id)
 
     def transport_mean(self):
-        return TransportMean("Strasse", "9008390100059")  # todo: allow for other transport means
+        return TransportMean("Kennzeichen", self.transport_mode_gtin or "9008390100059")

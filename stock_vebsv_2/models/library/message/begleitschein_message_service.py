@@ -195,11 +195,21 @@ class BegleitscheinMessageService:
                             })
                 elif update["PostProcessingEvent"]:
                     last_transaction_uuid = update["PostProcessingEvent"]['TransactionUUID']
-                    document = retrieve_document_validation_result(self.auth, last_transaction_uuid)
-                    _logger.warning(document)
+                    validation_result = retrieve_document_validation_result(self.auth, last_transaction_uuid)
+                    changes.append({
+                        'state': 'VALIDATION',
+                        'transaction_uuid': last_transaction_uuid,
+                        'validation_result': validation_result,
+                        'message': "Received validation result"
+                    })
                 elif update["ProcessingEvent"]:
                     last_transaction_uuid = update["ProcessingEvent"]['TransactionUUID']
-                    _logger.warning(update["ProcessingEvent"]["StatusDescription"]["_value_1"])
+                    changes.append({
+                        'state': 'PROCESSING',
+                        'transaction_uuid': last_transaction_uuid,
+                        'status': update["ProcessingEvent"]["StatusDescription"]["_value_1"],
+                        'message': f"Processing: {update['ProcessingEvent']['StatusDescription']['_value_1']}"
+                    })
                 elif update["BackwardSharingEvent"]:
                     last_transaction_uuid = update["BackwardSharingEvent"]['TransactionUUID']
                     _logger.info(f"recived backward sharing event for {last_transaction_uuid}")

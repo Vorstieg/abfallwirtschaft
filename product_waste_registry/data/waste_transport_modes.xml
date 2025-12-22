@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="transport_mode_road" model="waste.transport.mode">
+            <field name="name">Strasse</field>
+            <field name="gtin">9008390100059</field>
+        </record>
+        <record id="transport_mode_rail" model="waste.transport.mode">
+            <field name="name">Schiene</field>
+            <field name="gtin">9008390103760</field>
+        </record>
+        <record id="transport_mode_ship" model="waste.transport.mode">
+            <field name="name">Schiff</field>
+            <field name="gtin">9008390103777</field>
+        </record>
+        <record id="transport_mode_air" model="waste.transport.mode">
+            <field name="name">Luft</field>
+            <field name="gtin">9008390103784</field>
+        </record>
+        <record id="transport_mode_none" model="waste.transport.mode">
+            <field name="name">Ohne Transport</field>
+            <field name="gtin">9008390102664</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- 1. Opening Balance (2023-12-31) -->
+        <record id="state_demo_2023_paper" model="waste.storage.state">
+            <field name="installation_id" ref="product_waste_anlagenverzeichnis.inst_demo_entsorgo_main"/>
+            <field name="abfallart" ref="product_waste_registry.11102"/>
+            <field name="reporting_date">2023-12-31</field>
+            <field name="amount">5000.0</field>
+            <field name="quantification_type" ref="product_waste_registry.9008390100011"/>
+            <field name="state">approved</field>
+        </record>
+
+        <!-- 2. Waste Movements (2024) -->
+        <record id="move_demo_2024_in_1" model="waste.move">
+            <field name="name">TR/2024/0001</field>
+            <field name="date">2024-02-15</field>
+            <field name="origin_partner" ref="product_waste_anlagenverzeichnis.partner_demo_quantum"/>
+            <field name="recipient_partner" model="res.company" eval="obj().env.company.partner_id.id"/>
+            <field name="recipient_installation" ref="product_waste_anlagenverzeichnis.inst_demo_entsorgo_main"/>
+            <field name="abfallart" ref="product_waste_registry.11102"/>
+            <field name="amount">2500.0</field>
+            <field name="quantification_type" ref="product_waste_registry.9008390100011"/>
+            <field name="transport_type" ref="product_waste_registry.9008390101544"/>
+            <field name="state">approved</field>
+        </record>
+
+        <record id="move_demo_2024_out_1" model="waste.move">
+            <field name="name">OUT/2024/0001</field>
+            <field name="date">2024-06-20</field>
+            <field name="origin_partner" model="res.company" eval="obj().env.company.partner_id.id"/>
+            <field name="origin_installation" ref="product_waste_anlagenverzeichnis.inst_demo_entsorgo_main"/>
+            <field name="recipient_partner" ref="product_waste_anlagenverzeichnis.partner_demo_hygiene"/>
+            <field name="abfallart" ref="product_waste_registry.11102"/>
+            <field name="amount">3000.0</field>
+            <field name="quantification_type" ref="product_waste_registry.9008390100011"/>
+            <field name="state">approved</field>
+        </record>
+
+        <!-- 3. Reclassification movement -->
+        <record id="reclass_demo_2024" model="waste.reclassification">
+            <field name="installation_id" ref="product_waste_anlagenverzeichnis.inst_demo_entsorgo_main"/>
+            <field name="reporting_date">2024-09-10</field>
+            <field name="preliminary_abfallart" ref="product_waste_registry.11102"/>
+            <field name="new_abfallart" ref="product_waste_registry.11103"/>
+            <field name="amount">200.0</field>
+            <field name="quantification_type" ref="product_waste_registry.9008390100011"/>
+            <field name="reclassification_reason_id" ref="product_waste_registry.9008390118559"/>
+        </record>
+    </data>
+</odoo>

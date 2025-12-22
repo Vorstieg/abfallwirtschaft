@@ -6,4 +6,9 @@ access_reconciliation_installation,Reconciliation installation,model_reconciliat
 access_reconciliation_quantificationtype,Reconciliation quantificationtype,model_reconciliation_quantificationtype,base.group_user,1,1,1,1
 access_reconciliation_origintype,Reconciliation origintype,model_reconciliation_origintype,base.group_user,1,1,1,1
 access_reconciliation_recyclingtype,Reconciliation recyclingtype,model_reconciliation_recyclingtype,base.group_user,1,1,1,1
-access_reconciliation_transporttype,Reconciliation transporttype,model_reconciliation_transporttype,base.group_user,1,1,1,1
+access_reconciliation_transporttype,Reconciliation transporttype,model_reconciliation_transport_type,base.group_user,1,1,1,1
+access_waste_storage_state,Waste Storage State,model_waste_storage_state,base.group_user,1,1,1,1
+access_waste_storage_correction,Waste Storage Correction,model_waste_storage_correction,base.group_user,1,1,1,1
+access_waste_reclassification,Waste Reclassification,model_waste_reclassification,base.group_user,1,1,1,1
+access_waste_remaining_capacity,Waste Remaining Capacity,model_waste_remaining_capacity,base.group_user,1,1,1,1
+access_waste_bilanz_submission,Waste Bilanz Submission,model_waste_bilanz_submission,base.group_user,1,1,1,1

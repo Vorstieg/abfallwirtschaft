@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="9008390113394" model="waste.reclassification.reason">
+            <field name="gtin">9008390113394</field>
+            <field name="name">Ausstufung einer Einzelcharge</field>
+            <field name="description">Diese Buchungsart ist zu verwenden, wenn der Nachweis gemäß § 7 AWG 2002 erbracht wurde, dass eine bestimmte Einzelcharge im konkreten Fall als nicht gefährlich gilt.</field>
+        </record>
+        <record id="9008390113400" model="waste.reclassification.reason">
+            <field name="gtin">9008390113400</field>
+            <field name="name">Ausstufung eines wiederkehrend anfallenden Abfalls</field>
+            <field name="description">Diese Buchungsart ist zu verwenden, wenn der Nachweis gemäß § 7 AWG 2002 erbracht wurde, dass ein wiederkehrend anfallender Abfall im konkreten Fall als nicht gefährlich gilt.</field>
+        </record>
+        <record id="9008390113417" model="waste.reclassification.reason">
+            <field name="gtin">9008390113417</field>
+            <field name="name">Ausstufung eines Abfallstroms</field>
+            <field name="description">Diese Buchungsart ist zu verwenden, wenn der Nachweis gemäß § 7 AWG 2002 erbracht wurde, dass ein Abfallstrom im konkreten Fall als nicht gefährlich gilt.</field>
+        </record>
+        <record id="9008390113424" model="waste.reclassification.reason">
+            <field name="gtin">9008390113424</field>
+            <field name="name">Ausstufung einer Einzelcharge zur Deponierung</field>
+            <field name="description">Diese Buchungsart ist zu verwenden, wenn der Nachweis gemäß § 7 AWG 2002 erbracht wurde, dass eine bestimmte Einzelcharge im konkreten Fall mit der Einbringung in die Deponie als nicht gefährlich gilt.</field>
+        </record>
+        <record id="9008390113431" model="waste.reclassification.reason">
+            <field name="gtin">9008390113431</field>
+            <field name="name">Ausstufung eines wiederkehrend anfallenden Abfalls zur Deponierung</field>
+            <field name="description">Diese Buchungsart ist zu verwenden, wenn der Nachweis gemäß § 7 AWG 2002 erbracht wurde, dass ein wiederkehrend anfallender Abfall im konkreten Fall mit der Einbringung in die Deponie als nicht gefährlich gilt.</field>
+        </record>
+        <record id="9008390113448" model="waste.reclassification.reason">
+            <field name="gtin">9008390113448</field>
+            <field name="name">Ausstufung eines Abfallstroms zur Deponierung</field>
+            <field name="description">Diese Buchungsart ist zu verwenden, wenn der Nachweis gemäß § 7 AWG 2002 erbracht wurde, dass ein Abfallstrom im konkreten Fall mit der Einbringung in die Deponie als nicht gefährlich gilt.</field>
+        </record>
+        <record id="9008390113455" model="waste.reclassification.reason">
+            <field name="gtin">9008390113455</field>
+            <field name="name">Zulässige Vermischung von Abfällen</field>
+            <field name="description">Diese Buchungsart ist zu verwenden, wenn unterschiedliche Abfälle unter Einhaltung des Vermischungsverbots zulässigerweise vermischt werden, z.B. im Rahmen einer Sammeltour oder bei der Übernahme in ein Tanklager.</field>
+        </record>
+        <record id="9008390118559" model="waste.reclassification.reason">
+            <field name="gtin">9008390118559</field>
+            <field name="name">Ergebnis einer Eingangskontrolle</field>
+            <field name="description">Diese Buchungsart ist zu verwenden, wenn ein Abfall auf Grund einer chemischen Analyse oder einer visuellen Kontrolle im Rahmen der Eingangskontrolle einer neuen Abfallart zugeordnet wird.</field>
+        </record>
+        <record id="9008390118566" model="waste.reclassification.reason">
+            <field name="gtin">9008390118566</field>
+            <field name="name">Ergebnis einer sonstigen Überprüfung des Abfalls</field>
+            <field name="description">Diese Buchungsart ist zu verwenden, wenn ein Abfall auf Grund einer chemischen Analyse oder einer visuellen Kontrolle im Rahmen einer sonstigen Überprüfung einer neuen Abfallart zugeordnet wird.</field>
+        </record>
+        <record id="9008390118573" model="waste.reclassification.reason">
+            <field name="gtin">9008390118573</field>
+            <field name="name">Rücknahme von aufbereiteten Baurestmassen aus Lohnarbeit zur Herstellung von Recycling-Baustoffen</field>
+            <field name="description">Diese Buchungsart ist zu verwenden, wenn bei der Rücknahme vom Lohnarbeiter die Qualitätsklasse bereits gesichert feststeht. Hierbei kann in den Aufzeichnungen die Rücknahme des Abfalls direkt in das Lager für hergestellte Recycling-Baustoffe erfolgen.</field>
+        </record>
+    </data>
+</odoo>

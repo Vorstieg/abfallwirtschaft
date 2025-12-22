@@ -80,6 +80,39 @@ class VebsvPullService(models.TransientModel):
                     if begleitschein_line:
                         begleitschein_line.begleitschein_id.state = state_to_set
 
+            elif line['state'] in ['VALIDATION', 'PROCESSING']:
+                transaction_uuid = line['transaction_uuid']
+                # Search in Begleitschein request identifiers
+                begleitschein = self.env['waste.begleitschein'].search([
+                    ('request_identifiers.uuid', '=', transaction_uuid)
+                ], limit=1)
+                
+                if not begleitschein:
+                    # Search in Line request identifiers
+                    line_id = self.env['waste.begleitschein.line'].search([
+                        ('request_identifiers.uuid', '=', transaction_uuid)
+                    ], limit=1)
+                    if line_id:
+                        begleitschein = line_id.begleitschein_id
+
+                if begleitschein:
+                    body = line["message"]
+                    if line['state'] == 'VALIDATION':
+                        val_res = line['validation_result']
+                        if val_res and 'ValidationResult' in val_res:
+                            items = val_res['ValidationResult'].get('ValidationResultItem', [])
+                            if items:
+                                body += "<ul>"
+                                for item in items:
+                                    severity = item.get('SeverityID', {}).get('_value_1', 'Unknown')
+                                    description = item.get('Description', {}).get('IndividualDescription', [{}])[0].get('_value_1', '')
+                                    body += f"<li><b>{severity}</b>: {description}</li>"
+                                body += "</ul>"
+                    elif line['state'] == 'PROCESSING':
+                        body += f": {line['status']}"
+
+                    begleitschein.message_post(body=body, subtype_xmlid='mail.mt_note')
+
         config_params.set_param('waste_management.edm_last_transaction_uuid', respone["last_transaction_uuid"])
 
     def _create_begleitschein_lines(self, lines_data):

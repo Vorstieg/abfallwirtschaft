@@ -48,5 +48,11 @@
                 parent="menu_waste_management_core_data"
                 action="action_waste_contamination_type"
                 sequence="110"/>
+        <menuitem
+                id="menu_waste_reclassification_reason"
+                name="Reclassification Reasons"
+                parent="menu_waste_management_core_data"
+                action="action_waste_reclassification_reason"
+                sequence="120"/>
     </data>
 </odoo>
