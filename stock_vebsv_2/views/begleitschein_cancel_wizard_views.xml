@@ -6,10 +6,14 @@
         <field name="arch" type="xml">
             <form string="Cancel Begleitschein">
                 <group>
+                    <div class="alert alert-warning" role="alert">
+                        <strong><i class="fa fa-exclamation-triangle"/> Warning!</strong>
+                        You are about to cancel this Begleitschein. This action may require coordination with the transport partner.
+                        Please confirm the cancellation reason.
+                    </div>
                     <field name="begleitschein_id" readonly="1"/>
-                    <field name="revocation_reason_id"/>
+                    <field name="revocation_reason_id" required="1" placeholder="Select a reason..."/>
                 </group>
-                <p>Are you sure you want to cancel this Begleitschein?</p>
                 <footer>
                     <button string="Confirm Cancellation" name="action_cancel_begleitschein" type="object" class="btn-danger"/>
                     <button string="Discard" class="btn-secondary" special="cancel"/>
@@ -18,3 +22,4 @@
         </field>
     </record>
 </odoo>
+

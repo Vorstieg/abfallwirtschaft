@@ -22,4 +22,7 @@
         'views/res_config_settings_view.xml',
         'data/ir_cron_data.xml',
     ],
+    'demo': [
+        'demo/anlagenverzeichnis_demo.xml',
+    ],
 }

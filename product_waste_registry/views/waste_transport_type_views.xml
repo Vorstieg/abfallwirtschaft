@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="view_waste_transport_tree" model="ir.ui.view">
+        <record id="view_waste_transport_list" model="ir.ui.view">
             <field name="name">waste.transport.type.list</field>
             <field name="model">waste.transport.type</field>
             <field name="arch" type="xml">

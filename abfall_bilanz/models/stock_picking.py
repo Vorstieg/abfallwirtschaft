@@ -22,7 +22,8 @@ class StockPicking(models.Model):
                  for index, move in enumerate(self.move_ids.filtered(lambda m: m.state == 'done'))
                  if move.product_id.waste_type_id]
 
-        self.env['waste.move'].create(moves)
+        if moves:
+            self.env['waste.move'].create(moves)
 
         return res
 
@@ -36,43 +37,56 @@ class StockPicking(models.Model):
         recycling_type = self.get_recycling_type(target_partner, 'target', waste_type)
         transport_type = self.get_transport_type(target_partner, 'target', waste_type)
         quantification_type = self.get_quantification_type(waste_type)
+
+        uom_kg = self.env.ref('uom.product_uom_kgm')
+        amount = move.product_qty
+
+        # Check if UoMs share a common reference (can be converted) using Odoo 19's tree structure
+        if move.product_uom._has_common_reference(uom_kg):
+            amount = move.product_uom._compute_quantity(move.product_qty, uom_kg)
+
         return {
             'name': f"{self.name} {index}",
             'recipient_partner': target_partner.id,
             'origin_partner': source_partner.id,
-            'recipient_installation': recipient_installation.id if recipient_installation else None,
-            'origin_installation': origin_installation.id if origin_installation else None,
-            'recipient_site': recipient_site.id if recipient_site else None,
-            'origin_site': origin_site.id if origin_site else None,
-            'recycling_type': recycling_type.id if recycling_type else None,
-            'origin_type': origin_type.id if origin_type else None,
-            'transport_type': transport_type.id if transport_type else None,
+            'recipient_installation': recipient_installation.id if recipient_installation else False,
+            'origin_installation': origin_installation.id if origin_installation else False,
+            'recipient_site': recipient_site.id if recipient_site else False,
+            'origin_site': origin_site.id if origin_site else False,
+            'recycling_type': recycling_type.id if recycling_type else False,
+            'origin_type': origin_type.id if origin_type else False,
+            'transport_type': transport_type.id if transport_type else False,
             'abfallart': waste_type.id,
-            'amount': move.product_qty,
-            'quantification_type': quantification_type.id if quantification_type else None,
+            'amount': amount,
+            'quantification_type': quantification_type.id if quantification_type else False,
             'date': move.date,
-            'state': '0_draft',
+            'company_id': self.company_id.id,
+            'state': 'draft',
         }
 
     def get_site(self, partner, side, abfallart):
+        if not partner:
+            return None
         if len(partner.waste_treatment_sites) == 1:
             return partner.waste_treatment_sites
 
         rule = self.env['reconciliation.site'].search([('side', 'in', [side, 'both']),
-                                                       ('partner_id', 'in', [partner.id, None]),
-                                                       ('abfallart', 'in', [abfallart.id, None])],
+                                                       ('partner_id', 'in', [partner.id, False]),
+                                                       ('abfallart', 'in', [abfallart.id, False])],
                                                       order='priority asc',
                                                       limit=1)
         if rule:
             return rule.default_site
 
     def get_installation(self, site, side, abfallart):
+        if not site:
+            return None
         if len(site.treatment_installations) == 1:
             return site.treatment_installations
 
         rule = self.env['reconciliation.installation'].search([('side', 'in', [side, 'both']),
-                                                               ('treatment_site_id', 'in', [site.id, None]),
-                                                               ('abfallart', 'in', [abfallart.id, None])],
+                                                               ('treatment_site', 'in', [site.id, False]),
+                                                               ('abfallart', 'in', [abfallart.id, False])],
                                                               order='priority asc',
                                                               limit=1)
         if rule:
@@ -80,8 +94,8 @@ class StockPicking(models.Model):
 
     def get_origin_type(self, partner_id, side, abfallart):
         rule = self.env['reconciliation.origintype'].search([('side', 'in', [side, 'both']),
-                                                             ('partner_id', 'in', [partner_id.id, None]),
-                                                             ('abfallart', 'in', [abfallart.id, None])],
+                                                             ('partner_id', 'in', [partner_id.id, False]),
+                                                             ('abfallart', 'in', [abfallart.id, False])],
                                                             order='priority asc',
                                                             limit=1)
         if rule:
@@ -89,8 +103,8 @@ class StockPicking(models.Model):
 
     def get_recycling_type(self, partner_id, side, abfallart):
         rule = self.env['reconciliation.recyclingtype'].search([('side', 'in', [side, 'both']),
-                                                                ('partner_id', 'in', [partner_id.id, None]),
-                                                                ('abfallart', 'in', [abfallart.id, None])],
+                                                                ('partner_id', 'in', [partner_id.id, False]),
+                                                                ('abfallart', 'in', [abfallart.id, False])],
                                                                order='priority asc',
                                                                limit=1)
         if rule:
@@ -98,15 +112,15 @@ class StockPicking(models.Model):
 
     def get_transport_type(self, partner_id, side, abfallart):
         rule = self.env['reconciliation.transport.type'].search([('side', 'in', [side, 'both']),
-                                                                ('partner_id', 'in', [partner_id.id, None]),
-                                                                ('abfallart', 'in', [abfallart.id, None])],
+                                                                ('partner_id', 'in', [partner_id.id, False]),
+                                                                ('abfallart', 'in', [abfallart.id, False])],
                                                                order='priority asc',
                                                                limit=1)
         if rule:
             return rule.transport_type
 
     def get_quantification_type(self, abfallart):
-        rule = self.env['reconciliation.quantificationtype'].search([('abfallart', 'in', [abfallart.id, None])],
+        rule = self.env['reconciliation.quantificationtype'].search([('abfallart', 'in', [abfallart.id, False])],
                                                                     order='priority asc',
                                                                     limit=1)
         if rule:

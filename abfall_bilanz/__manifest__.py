@@ -17,10 +17,15 @@
     'version': '0.1',
     'license': 'LGPL-3',
 
-    'depends': ['base', 'stock', 'product_waste_registry', 'product_waste_anlagenverzeichnis'],
+    'depends': ['base', 'stock', 'product_waste_registry', 'product_waste_anlagenverzeichnis', 'mail'],
     'data': [
+        'security/ir.model.access.csv',
         "views/waste_move.xml",
         "views/reconciliation_views.xml",
-        'security/ir.model.access.csv',
+        "views/waste_balance_entries_views.xml",
+        'views/waste_bilanz_submission_views.xml',
+    ],
+    'demo': [
+        'demo/abfall_bilanz_demo.xml',
     ],
 }

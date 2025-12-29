@@ -8,42 +8,47 @@
                 <form string="Waste Move">
                     <header>
                         <button string="Approve Move" name="approve_move" type="object"
-                                class="btn-primary" invisible="state == 'new'"/>
-                        <button string="Bilanz Exportieren" name="action_show_dialog" type="object"
-                                class="btn-primary"/>
-                        <field name="state" widget="statusbar"/>
+                                class="btn-primary" invisible="state != 'draft'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only"/>
                             <h1>
-                                <field name="name"/>
+                                <field name="name" placeholder="e.g. WM/2024/001"/>
                             </h1>
                         </div>
                         <group>
                             <group string="Origin">
                                 <field name="origin_partner"/>
+                                <field name="origin_site"/>
                                 <field name="origin_installation"/>
                                 <field name="origin_type"/>
                             </group>
                             <group string="Recipient">
                                 <field name="recipient_partner"/>
+                                <field name="recipient_site"/>
                                 <field name="recipient_installation"/>
                                 <field name="recycling_type"/>
                             </group>
                         </group>
                         <group>
-                            <group string="Waste details">
+                            <group string="Waste Details">
                                 <field name="abfallart"/>
-                                <field name="amount"/>
+                                <field name="amount" widget="float"/>
+                                <label for="amount" string=""/>
+                                <span class="text-muted">kg</span>
                                 <field name="quantification_type"/>
                             </group>
-                            <group>
+                            <group string="Transport">
                                 <field name="transport_type"/>
                                 <field name="date"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
                             </group>
                         </group>
                     </sheet>
+                    <div class="o_attachment_preview"/>
+                    <chatter/>
                 </form>
             </field>
         </record>
@@ -53,15 +58,56 @@
             <field name="name">waste.move.list</field>
             <field name="model">waste.move</field>
             <field name="arch" type="xml">
-                <list string="Waste Moves">
+                <list string="Waste Moves" decoration-muted="state == 'draft'">
                     <field name="name"/>
                     <field name="date"/>
                     <field name="origin_partner"/>
+                    <field name="origin_site" optional="hide"/>
+                    <field name="recipient_partner"/>
+                    <field name="recipient_site" optional="hide"/>
+                    <field name="abfallart"/>
+                    <field name="amount" sum="Total Weight (kg)"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'"
+                           decoration-success="state == 'approved'"/>
+                    <button name="approve_move" type="object" string="Approve" class="btn-sm btn-primary" invisible="state == 'approved'"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="waste_move_view_search" model="ir.ui.view">
+            <field name="name">waste.move.view.search</field>
+            <field name="model">waste.move</field>
+            <field name="arch" type="xml">
+                <search string="Waste Moves">
+                    <field name="name"/>
+                    <field name="origin_partner"/>
                     <field name="recipient_partner"/>
                     <field name="abfallart"/>
-                    <field name="amount"/>
-                    <field name="state"/>
-                </list>
+                    <field name="origin_site"/>
+                    <field name="recipient_site"/>
+                    <separator/>
+                    <filter string="Draft" name="state_draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Approved" name="state_approved" domain="[('state', '=', 'approved')]"/>
+                    <separator/>
+                    <filter string="This Month" name="this_month"
+                            domain="[('date', '&gt;=', (context_today() - relativedelta(day=1)).strftime('%Y-%m-%d')),
+                                     ('date', '&lt;', (context_today() + relativedelta(months=1, day=1)).strftime('%Y-%m-%d'))]"/>
+                    <filter string="This Year" name="this_year"
+                            domain="[('date', '&gt;=', time.strftime('%Y-01-01')),
+                                     ('date', '&lt;=', time.strftime('%Y-12-31'))]"/>
+                    <filter string="Last Year" name="last_year"
+                            domain="[('date', '&gt;=', (context_today() - relativedelta(years=1)).strftime('%Y-01-01')),
+                                     ('date', '&lt;=', (context_today() - relativedelta(years=1)).strftime('%Y-12-31'))]"/>
+                    <separator/>
+                    <filter string="Origin Partner" name="group_origin_partner"
+                            context="{'group_by':'origin_partner'}"/>
+                    <filter string="Recipient Partner" name="group_recipient_partner"
+                            context="{'group_by':'recipient_partner'}"/>
+                    <filter string="Waste Type" name="group_abfallart" context="{'group_by':'abfallart'}"/>
+                    <filter string="Status" name="group_state" context="{'group_by':'state'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by':'date:month'}"/>
+                    <filter string="Year" name="group_year" context="{'group_by':'date:year'}"/>
+                </search>
             </field>
         </record>
 
@@ -69,33 +115,68 @@
             <field name="name">Waste Moves</field>
             <field name="res_model">waste.move</field>
             <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="waste_move_view_search"/>
+            <field name="context">{'search_default_this_year': 1}</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Create a new waste move record
+                </p>
+                <p>
+                    Waste moves track the handover and takeover of waste materials between parties and installations.
+                    They are automatically created when validating stock pickings for products with waste types configured.
                 </p>
             </field>
         </record>
 
         <record id="view_bilanz_xml" model="ir.ui.view">
-            <field name="name">Billanz XML Report</field>
+            <field name="name">Bilanz XML Report</field>
             <field name="model">waste.bilanz</field>
             <field name="arch" type="xml">
-                <form string="Select Year">
-                    <group>
-                        <field name="year"/>
-                    </group>
+                <form string="Abfallbilanz Export">
+                    <sheet>
+                        <div class="oe_title mb-3">
+                            <h1>Generate Waste Balance Report</h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="year" widget="selection"/>
+                                <field name="is_empty_report"/>
+                            </group>
+                            <group>
+                                <p class="text-muted">
+                                    Select the year and click "Generate Report" to create an XML file 
+                                    for submission to the Austrian waste registry (EDM).
+                                </p>
+                            </group>
+                        </group>
+                        <group invisible="not compliance_errors">
+                            <field name="compliance_errors" nolabel="1" readonly="1"
+                                   widget="text" class="o_field_text_long"
+                                   decoration-danger="compliance_errors and 'Success' not in compliance_errors"
+                                   decoration-success="'Success' in compliance_errors"/>
+                        </group>
+                    </sheet>
                     <footer>
-                        <button string="Select" name="action_download_bilanz" type="object" class="btn-primary"/>
+                        <button string="Generate Report" name="action_generate_report" type="object" class="btn-primary"/>
+                        <button string="Verify Data" name="action_check_compliance" type="object" class="btn-info"/>
+                        <button string="Calculate Inventory" name="action_calculate_inventory" type="object" class="btn-secondary"/>
                         <button string="Cancel" class="btn-secondary" special="cancel"/>
                     </footer>
                 </form>
             </field>
         </record>
-        <menuitem id="waste_move_menu_moves"
+
+        <menuitem id="menu_bilanz_root"
                   name="Abfallbilanz"
                   parent="product_waste_registry.menu_product_waste_registry_root"
-                  action="waste_move_action"
                   sequence="20"
+        />
+
+        <menuitem id="waste_move_menu_moves"
+                  name="Moves"
+                  parent="menu_bilanz_root"
+                  action="waste_move_action"
+                  sequence="10"
         />
     </data>
 </odoo>

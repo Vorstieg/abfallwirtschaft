@@ -23,8 +23,10 @@
         'data/waste_quantification_type.xml',
         'data/waste_recycling_types.xml',
         'data/waste_transport_types.xml',
+        'data/waste_transport_modes.xml',
         'data/waste_revocation_reasons.xml',
         'data/waste_contamination_types.xml',
+        'data/waste_reclassification_reasons.xml',
         'views/waste_type_views.xml',
         'views/waste_quantification_type_views.xml',
         'views/waste_recycling_type_views.xml',
@@ -32,6 +34,7 @@
         'views/waste_revocation_reason_views.xml',
         'views/waste_contamination_views.xml',
         'views/product_template_views.xml',
+        'views/waste_reclassification_reason_views.xml',
 		'views/waste_menu_views.xml',
 ],
 }

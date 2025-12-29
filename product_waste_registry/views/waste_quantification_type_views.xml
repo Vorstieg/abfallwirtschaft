@@ -14,14 +14,14 @@
             </field>
         </record>
 
-        <record id="view_waste_quantification_type_tree" model="ir.ui.view">
-            <field name="name">waste.quantification.type.tree</field>
+        <record id="view_waste_quantification_type_list" model="ir.ui.view">
+            <field name="name">waste.quantification.type.list</field>
             <field name="model">waste.quantification.type</field>
             <field name="arch" type="xml">
                 <list string="Waste Quantification Types">
                     <field name="gtin"/>
                     <field name="name"/>
-                    <field name="code"/> <!-- 'code' is used as 'Description' in your model -->
+                    <field name="code"/>
                 </list>
             </field>
         </record>

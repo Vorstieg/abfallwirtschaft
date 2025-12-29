@@ -1,4 +1,5 @@
 <odoo>
+    <!-- Site Reconciliation Views -->
     <record id="reconciliation_site_form_view" model="ir.ui.view">
         <field name="name">reconciliation.site.form</field>
         <field name="model">reconciliation.site</field>
@@ -6,7 +7,7 @@
             <form string="Site Reconciliation Rule">
                 <sheet>
                     <group>
-                        <field name="name"/>
+                        <field name="name" placeholder="e.g. Default Site for Partner X"/>
                         <field name="priority"/>
                         <field name="side"/>
                     </group>
@@ -27,8 +28,8 @@
         <field name="model">reconciliation.site</field>
         <field name="arch" type="xml">
             <list string="Site Reconciliation Rules">
+                <field name="priority" widget="handle"/>
                 <field name="name"/>
-                <field name="priority"/>
                 <field name="side"/>
                 <field name="partner_id"/>
                 <field name="abfallart"/>
@@ -37,6 +38,26 @@
         </field>
     </record>
 
+    <record id="reconciliation_site_search_view" model="ir.ui.view">
+        <field name="name">reconciliation.site.search</field>
+        <field name="model">reconciliation.site</field>
+        <field name="arch" type="xml">
+            <search string="Site Rules">
+                <field name="name"/>
+                <field name="default_site"/>
+                <field name="partner_id"/>
+                <field name="abfallart"/>
+                <separator/>
+                <filter string="Source" name="source" domain="[('side', 'in', ['source', 'both'])]"/>
+                <filter string="Target" name="target" domain="[('side', 'in', ['target', 'both'])]"/>
+                <separator/>
+                <filter string="Partner" name="group_partner" context="{'group_by':'partner_id'}"/>
+                <filter string="Site" name="group_site" context="{'group_by':'default_site'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Installation Reconciliation Views -->
     <record id="reconciliation_installation_form_view" model="ir.ui.view">
         <field name="name">reconciliation.installation.form</field>
         <field name="model">reconciliation.installation</field>
@@ -44,7 +65,7 @@
             <form string="Installation Reconciliation Rule">
                 <sheet>
                     <group>
-                        <field name="name"/>
+                        <field name="name" placeholder="e.g. Default Installation for Site Y"/>
                         <field name="priority"/>
                         <field name="side"/>
                     </group>
@@ -65,8 +86,8 @@
         <field name="model">reconciliation.installation</field>
         <field name="arch" type="xml">
             <list string="Installation Reconciliation Rules">
+                <field name="priority" widget="handle"/>
                 <field name="name"/>
-                <field name="priority"/>
                 <field name="side"/>
                 <field name="treatment_site"/>
                 <field name="abfallart"/>
@@ -75,6 +96,26 @@
         </field>
     </record>
 
+    <record id="reconciliation_installation_search_view" model="ir.ui.view">
+        <field name="name">reconciliation.installation.search</field>
+        <field name="model">reconciliation.installation</field>
+        <field name="arch" type="xml">
+            <search string="Installation Rules">
+                <field name="name"/>
+                <field name="default_installation"/>
+                <field name="treatment_site"/>
+                <field name="abfallart"/>
+                <separator/>
+                <filter string="Source" name="source" domain="[('side', 'in', ['source', 'both'])]"/>
+                <filter string="Target" name="target" domain="[('side', 'in', ['target', 'both'])]"/>
+                <separator/>
+                <filter string="Site" name="group_site" context="{'group_by':'treatment_site'}"/>
+                <filter string="Installation" name="group_install" context="{'group_by':'default_installation'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Quantification Type Reconciliation Views -->
     <record id="reconciliation_quantificationtype_form_view" model="ir.ui.view">
         <field name="name">reconciliation.quantificationtype.form</field>
         <field name="model">reconciliation.quantificationtype</field>
@@ -82,7 +123,7 @@
             <form string="Quantification Reconciliation Rule">
                 <sheet>
                     <group>
-                        <field name="name"/>
+                        <field name="name" placeholder="e.g. Default Quantification Type"/>
                         <field name="priority"/>
                     </group>
                     <group string="Rule Condition">
@@ -101,14 +142,30 @@
         <field name="model">reconciliation.quantificationtype</field>
         <field name="arch" type="xml">
             <list string="Quantification Reconciliation Rules">
+                <field name="priority" widget="handle"/>
                 <field name="name"/>
-                <field name="priority"/>
                 <field name="abfallart"/>
                 <field name="default_quantification"/>
             </list>
         </field>
     </record>
 
+    <record id="reconciliation_quantificationtype_search_view" model="ir.ui.view">
+        <field name="name">reconciliation.quantificationtype.search</field>
+        <field name="model">reconciliation.quantificationtype</field>
+        <field name="arch" type="xml">
+            <search string="Quantification Rules">
+                <field name="name"/>
+                <field name="default_quantification"/>
+                <field name="abfallart"/>
+                <separator/>
+                <filter string="Quantification Type" name="group_quant" context="{'group_by':'default_quantification'}"/>
+                <filter string="Waste Type" name="group_waste" context="{'group_by':'abfallart'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Origin Type Reconciliation Views -->
     <record id="reconciliation_origintype_form_view" model="ir.ui.view">
         <field name="name">reconciliation.origintype.form</field>
         <field name="model">reconciliation.origintype</field>
@@ -116,7 +173,7 @@
             <form string="Origin Type Reconciliation Rule">
                 <sheet>
                     <group>
-                        <field name="name"/>
+                        <field name="name" placeholder="e.g. Origin Type for Collection"/>
                         <field name="priority"/>
                         <field name="side"/>
                     </group>
@@ -137,8 +194,8 @@
         <field name="model">reconciliation.origintype</field>
         <field name="arch" type="xml">
             <list string="Origin Type Reconciliation Rules">
+                <field name="priority" widget="handle"/>
                 <field name="name"/>
-                <field name="priority"/>
                 <field name="side"/>
                 <field name="partner_id"/>
                 <field name="abfallart"/>
@@ -147,6 +204,26 @@
         </field>
     </record>
 
+    <record id="reconciliation_origintype_search_view" model="ir.ui.view">
+        <field name="name">reconciliation.origintype.search</field>
+        <field name="model">reconciliation.origintype</field>
+        <field name="arch" type="xml">
+            <search string="Origin Type Rules">
+                <field name="name"/>
+                <field name="origin_type"/>
+                <field name="partner_id"/>
+                <field name="abfallart"/>
+                <separator/>
+                <filter string="Source" name="source" domain="[('side', 'in', ['source', 'both'])]"/>
+                <filter string="Target" name="target" domain="[('side', 'in', ['target', 'both'])]"/>
+                <separator/>
+                <filter string="Partner" name="group_partner" context="{'group_by':'partner_id'}"/>
+                <filter string="Origin Type" name="group_origin" context="{'group_by':'origin_type'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Recycling Type Reconciliation Views -->
     <record id="reconciliation_recyclingtype_form_view" model="ir.ui.view">
         <field name="name">reconciliation.recyclingtype.form</field>
         <field name="model">reconciliation.recyclingtype</field>
@@ -154,7 +231,7 @@
             <form string="Recycling Type Reconciliation Rule">
                 <sheet>
                     <group>
-                        <field name="name"/>
+                        <field name="name" placeholder="e.g. Recycling Type for Processing"/>
                         <field name="priority"/>
                         <field name="side"/>
                     </group>
@@ -175,8 +252,8 @@
         <field name="model">reconciliation.recyclingtype</field>
         <field name="arch" type="xml">
             <list string="Recycling Type Reconciliation Rules">
+                <field name="priority" widget="handle"/>
                 <field name="name"/>
-                <field name="priority"/>
                 <field name="side"/>
                 <field name="partner_id"/>
                 <field name="abfallart"/>
@@ -185,66 +262,26 @@
         </field>
     </record>
 
-    <record id="action_reconciliation_site" model="ir.actions.act_window">
-        <field name="name">Site Reconciliation Rules</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">reconciliation.site</field>
-        <field name="view_mode">list,form</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Create a new site reconciliation rule.
-            </p>
+    <record id="reconciliation_recyclingtype_search_view" model="ir.ui.view">
+        <field name="name">reconciliation.recyclingtype.search</field>
+        <field name="model">reconciliation.recyclingtype</field>
+        <field name="arch" type="xml">
+            <search string="Recycling Type Rules">
+                <field name="name"/>
+                <field name="recycling_type"/>
+                <field name="partner_id"/>
+                <field name="abfallart"/>
+                <separator/>
+                <filter string="Source" name="source" domain="[('side', 'in', ['source', 'both'])]"/>
+                <filter string="Target" name="target" domain="[('side', 'in', ['target', 'both'])]"/>
+                <separator/>
+                <filter string="Partner" name="group_partner" context="{'group_by':'partner_id'}"/>
+                <filter string="Recycling Type" name="group_recycling" context="{'group_by':'recycling_type'}"/>
+            </search>
         </field>
     </record>
 
-    <record id="action_reconciliation_installation" model="ir.actions.act_window">
-        <field name="name">Installation Reconciliation Rules</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">reconciliation.installation</field>
-        <field name="view_mode">list,form</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Create a new installation reconciliation rule.
-            </p>
-        </field>
-    </record>
-
-    <record id="action_reconciliation_origintype" model="ir.actions.act_window">
-        <field name="name">Origin Type Reconciliation Rules</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">reconciliation.origintype</field>
-        <field name="view_mode">list,form</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Create a new origin type reconciliation rule.
-            </p>
-        </field>
-    </record>
-
-    <record id="action_reconciliation_quantificationtype" model="ir.actions.act_window">
-        <field name="name">Quantification Reconciliation Rules</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">reconciliation.quantificationtype</field>
-        <field name="view_mode">list,form</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Create a new quantification reconciliation rule.
-            </p>
-        </field>
-    </record>
-
-    <record id="action_reconciliation_recyclingtype" model="ir.actions.act_window">
-        <field name="name">Recycling Type Reconciliation Rules</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">reconciliation.recyclingtype</field>
-        <field name="view_mode">list,form</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Create a new recycling type reconciliation rule.
-            </p>
-        </field>
-    </record>
-
+    <!-- Transport Type Views -->
     <record id="reconciliation_transport_type_view_list" model="ir.ui.view">
         <field name="name">reconciliation.transport.type.view.list</field>
         <field name="model">reconciliation.transport.type</field>
@@ -275,7 +312,7 @@
                         <field name="partner_id"/>
                         <field name="abfallart"/>
                     </group>
-                    <group name="Result">
+                    <group string="Result">
                         <field name="transport_type"/>
                     </group>
                 </sheet>
@@ -292,11 +329,70 @@
                 <field name="transport_type"/>
                 <field name="partner_id"/>
                 <field name="abfallart"/>
-                <group expand="0">
-                    <filter name="group_by_partner" string="Partner" context="{'group_by':'partner_id'}"/>
-                    <filter name="group_by_transport" string="Transport Type" context="{'group_by':'transport_type'}"/>
-                </group>
+                <separator/>
+                <filter string="Source" name="source" domain="[('side', 'in', ['source', 'both'])]"/>
+                <filter string="Target" name="target" domain="[('side', 'in', ['target', 'both'])]"/>
+                <separator/>
+                <filter name="group_by_partner" string="Partner" context="{'group_by':'partner_id'}"/>
+                <filter name="group_by_transport" string="Transport Type" context="{'group_by':'transport_type'}"/>
             </search>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_reconciliation_site" model="ir.actions.act_window">
+        <field name="name">Site Reconciliation Rules</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">reconciliation.site</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="reconciliation_site_search_view"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new site reconciliation rule.</p>
+            <p>Drag to reorder priority. Lower priority = higher precedence.</p>
+        </field>
+    </record>
+
+    <record id="action_reconciliation_installation" model="ir.actions.act_window">
+        <field name="name">Installation Reconciliation Rules</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">reconciliation.installation</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="reconciliation_installation_search_view"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new installation reconciliation rule.</p>
+        </field>
+    </record>
+
+    <record id="action_reconciliation_origintype" model="ir.actions.act_window">
+        <field name="name">Origin Type Reconciliation Rules</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">reconciliation.origintype</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="reconciliation_origintype_search_view"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new origin type reconciliation rule.</p>
+        </field>
+    </record>
+
+    <record id="action_reconciliation_quantificationtype" model="ir.actions.act_window">
+        <field name="name">Quantification Reconciliation Rules</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">reconciliation.quantificationtype</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="reconciliation_quantificationtype_search_view"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new quantification reconciliation rule.</p>
+        </field>
+    </record>
+
+    <record id="action_reconciliation_recyclingtype" model="ir.actions.act_window">
+        <field name="name">Recycling Type Reconciliation Rules</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">reconciliation.recyclingtype</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="reconciliation_recyclingtype_search_view"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new recycling type reconciliation rule.</p>
         </field>
     </record>
 
@@ -304,13 +400,13 @@
         <field name="name">Transport Type Rules</field>
         <field name="res_model">reconciliation.transport.type</field>
         <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="reconciliation_transport_type_view_search"/>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Create your first transport type reconciliation rule.
-            </p>
+            <p class="o_view_nocontent_smiling_face">Create your first transport type reconciliation rule.</p>
         </field>
     </record>
 
+    <!-- Menu Items -->
     <menuitem id="menu_waste_management_reconciliation"
               name="Reconciliation"
               parent="product_waste_registry.menu_waste_management_configuration"
@@ -326,7 +422,7 @@
               name="Installation Rules"
               parent="menu_waste_management_reconciliation"
               action="action_reconciliation_installation"
-              sequence="10"/>
+              sequence="20"/>
 
     <menuitem id="menu_reconciliation_quantificationtype"
               name="Quantification Rules"
@@ -345,6 +441,7 @@
               parent="menu_waste_management_reconciliation"
               action="action_reconciliation_recyclingtype"
               sequence="50"/>
+
     <menuitem id="menu_reconciliation_transporttype"
               name="Transport Type Rules"
               parent="menu_waste_management_reconciliation"
