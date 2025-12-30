@@ -3,5 +3,5 @@
 *.pyc
 abfall_bilanz/Benutzerhandbuch_eADok_V1.140.pdf
 abfall_bilanz/balance
-product_waste_anlagenverzeichnis/EDM_CodelistenWebservice_v1.00_Beschreibung.pdf
-product_waste_anlagenverzeichnis/eRAS-Registerabfrage_Schnittstellenbeschreibung_v1.0.pdf
+abfall_anlagenverzeichnis/EDM_CodelistenWebservice_v1.00_Beschreibung.pdf
+abfall_anlagenverzeichnis/eRAS-Registerabfrage_Schnittstellenbeschreibung_v1.0.pdf

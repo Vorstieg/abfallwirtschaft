@@ -1,0 +1,1451 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* abfall_bilanz
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-30 09:05+0000\n"
+"PO-Revision-Date: 2025-12-30 09:05+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_form
+msgid "<span class=\"text-muted\">kg</span>"
+msgstr "<span class=\"text-muted\">kg</span>"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__abfallart
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_origintype__abfallart
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_quantificationtype__abfallart
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_recyclingtype__abfallart
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_site__abfallart
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_transport_type__abfallart
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__abfallart
+msgid "Abfallart"
+msgstr "Abfallart"
+
+#. module: abfall_bilanz
+#: model:ir.ui.menu,name:abfall_bilanz.menu_bilanz_root
+msgid "Abfallbilanz"
+msgstr "Abfallbilanz"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_bilanz_xml
+msgid "Abfallbilanz Export"
+msgstr "Abfallbilanz Export"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__message_needaction
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__message_needaction
+msgid "Action Needed"
+msgstr "Handlungsbedarf"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__activity_ids
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__activity_ids
+msgid "Activities"
+msgstr "Aktivitäten"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__activity_exception_decoration
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Aktivität Ausnahme-Dekoration"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__activity_state
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__activity_state
+msgid "Activity State"
+msgstr "Status der Aktivität"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__activity_type_icon
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Aktivitätstyp-Icon"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_search
+msgid "Additions (+)"
+msgstr "Zugänge (+)"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__amount
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_correction__amount
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__amount
+msgid "Amount (kg)"
+msgstr "Menge (kg)"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_form
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_list
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_list
+msgid "Approve"
+msgstr "Genehmigen"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_form
+msgid "Approve Move"
+msgstr "Bewegung genehmigen"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__waste_move__state__approved
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__waste_storage_state__state__approved
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
+msgid "Approved"
+msgstr "Genehmigt"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_remaining_capacity_list
+msgid "Approved (m³)"
+msgstr "Genehmigt (m³)"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_remaining_capacity__approved_remaining_capacity
+msgid "Approved Remaining Capacity (m³)"
+msgstr "Genehmigte Restkapazität (m³)"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__message_attachment_count
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__message_attachment_count
+msgid "Attachment Count"
+msgstr "Anzahl Anhänge"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_installation__side__both
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_origintype__side__both
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_recyclingtype__side__both
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_site__side__both
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_transport_type__side__both
+msgid "Both"
+msgstr "Beide"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__buffer_type_code
+msgid "Buffer Type Code"
+msgstr "Pufferlagerungstyp"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_bilanz_xml
+msgid "Calculate Inventory"
+msgstr "Bestand berechnen"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_bilanz_xml
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__waste_move__state__cancel
+msgid "Cancelled"
+msgstr "Abgebrochen"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_remaining_capacity_form
+msgid "Capacity (m³)"
+msgstr "Kapazität (m³)"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_bilanz__is_empty_report
+msgid ""
+"Check this if no waste movements or treatments occurred in the reporting "
+"year."
+msgstr "Markieren Sie dies, wenn im Berichtsjahr keine Abfallbewegungen oder -behandlungen stattgefunden haben."
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__company_id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__company_id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__company_id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_remaining_capacity__company_id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_correction__company_id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__company_id
+msgid "Company"
+msgstr "Unternehmen"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz__compliance_errors
+msgid "Compliance Errors"
+msgstr "Compliance-Fehler"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_form
+msgid "Correction"
+msgstr "Korrektur"
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_reconciliation_installation
+msgid "Create a new installation reconciliation rule."
+msgstr "Erstellen Sie eine neue Regel zur Anlagenabstimmung."
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_reconciliation_origintype
+msgid "Create a new origin type reconciliation rule."
+msgstr "Erstellen Sie eine neue Regel zur Herkunftstypabstimmung."
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_reconciliation_quantificationtype
+msgid "Create a new quantification reconciliation rule."
+msgstr "Erstellen Sie eine neue Regel zur Quantifizierungsabstimmung."
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_reconciliation_recyclingtype
+msgid "Create a new recycling type reconciliation rule."
+msgstr "Erstellen Sie eine neue Regel zur Recylingtypabstimmung."
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_reconciliation_site
+msgid "Create a new site reconciliation rule."
+msgstr "Erstellen Sie eine neue Regel zur Standortabstimmung."
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.waste_move_action
+msgid "Create a new waste move record"
+msgstr "Erstellen Sie einen neuen Abfallbewegungsdatensatz"
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.reconciliation_transport_type_action
+msgid "Create your first transport type reconciliation rule."
+msgstr "Erstellen Sie Ihre erste Regel zur Transportartabstimmung."
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__create_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_origintype__create_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_quantificationtype__create_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_recyclingtype__create_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_site__create_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_transport_type__create_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz__create_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__create_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__create_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__create_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_remaining_capacity__create_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_correction__create_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__create_uid
+msgid "Created by"
+msgstr "Erstellt von"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__create_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_origintype__create_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_quantificationtype__create_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_recyclingtype__create_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_site__create_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_transport_type__create_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz__create_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__create_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__create_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__create_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_remaining_capacity__create_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_correction__create_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__create_date
+msgid "Created on"
+msgstr "Erstellt am"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__critical_count
+msgid "Critical Issues"
+msgstr "Kritische Probleme"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__date
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
+msgid "Date"
+msgstr "Datum"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__default_installation
+msgid "Default Installation"
+msgstr "Standardanlage"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_quantificationtype__default_quantification
+msgid "Default Quantification"
+msgstr "Standardquantifizierung"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__treatment_site
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_site__default_site
+msgid "Default Site"
+msgstr "Standardstandort"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_form
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_form
+msgid "Details"
+msgstr "Details"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__display_name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_origintype__display_name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_quantificationtype__display_name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_recyclingtype__display_name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_site__display_name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_transport_type__display_name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz__display_name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__display_name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__display_name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__display_name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_remaining_capacity__display_name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_correction__display_name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_list
+msgid "Download"
+msgstr "Herunterladen"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_form
+msgid "Download XML"
+msgstr "XML herunterladen"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__waste_storage_state__state__draft
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
+msgid "Draft"
+msgstr "Entwurf"
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_reconciliation_site
+msgid "Drag to reorder priority. Lower priority = higher precedence."
+msgstr "Zum Neuordnen ziehen. Niedrigere Priorität = höhere Präzedenz."
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__validation_results_html
+msgid "EDM Validation Results"
+msgstr "EDM-Validierungsergebnisse"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_form
+msgid "EDM Validation Stats"
+msgstr "EDM-Validierungsstatistiken"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__is_empty_report
+msgid "Empty Report"
+msgstr "Leermeldung"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz__is_empty_report
+msgid "Empty Report (Leermeldung)"
+msgstr "Leermeldung"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_search
+msgid "Empty Reports"
+msgstr "Leermeldungen"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__waste_bilanz_submission__state__error
+msgid "Error"
+msgstr "Fehler"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__error_count
+msgid "Error Issues"
+msgstr "Fehlerhafte Einträge"
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_waste_bilanz_submission
+msgid ""
+"Every time you generate an Abfallbilanz XML, it will be stored here for "
+"audit purposes."
+msgstr "Jedes Mal, wenn Sie eine Abfallbilanz-XML generieren, wird sie hier zu Überprüfungszwecken gespeichert."
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__message_follower_ids
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__message_follower_ids
+msgid "Followers"
+msgstr "Follower"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__message_partner_ids
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Follower (Partner)"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_bilanz_submission__activity_type_icon
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_move__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "FontAwesome-Symbol, z.B. fa-tasks"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_list
+msgid "From"
+msgstr "Von"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_form
+msgid "From Waste Type"
+msgstr "Von Abfallart"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_storage_state__buffer_type_code
+msgid "GTIN for buffer storage if applicable"
+msgstr "GTIN für Pufferlager falls zutreffend"
+
+#. module: abfall_bilanz
+#: model:ir.actions.server,name:abfall_bilanz.action_open_bilanz_wizard
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_list
+msgid "Generate New Report"
+msgstr "Neuen Bericht generieren"
+
+#. module: abfall_bilanz
+#: model:ir.ui.menu,name:abfall_bilanz.menu_generate_bilanz_wizard
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_bilanz_xml
+msgid "Generate Report"
+msgstr "Bericht erstellen"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+#: model:ir.actions.act_window,name:abfall_bilanz.action_bilanz_wizard_v2
+msgid "Generate Waste Balance"
+msgstr "Abfallbilanz erstellen"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_bilanz_xml
+msgid "Generate Waste Balance Report"
+msgstr "Abfallbilanzbericht erstellen"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__waste_bilanz_submission__state__generated
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_search
+msgid "Generated"
+msgstr "Generiert"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__user_id
+msgid "Generated By"
+msgstr "Generiert von"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__has_message
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__has_message
+msgid "Has Message"
+msgstr "Hat Nachrichten"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__hint_count
+msgid "Hint Issues"
+msgstr "Hinweise"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_origintype__id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_quantificationtype__id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_recyclingtype__id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_site__id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_transport_type__id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_stock_picking__id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz__id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_remaining_capacity__id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_correction__id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__id
+msgid "ID"
+msgstr "ID"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__activity_exception_icon
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__activity_exception_icon
+msgid "Icon"
+msgstr "Symbol"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_bilanz_submission__activity_exception_icon
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_move__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Symbol, um eine Ausnahme-Aktivität anzuzeigen."
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_bilanz_submission__message_needaction
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_move__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Falls markiert, erfordern neue Nachrichten Ihre Aufmerksamkeit."
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_bilanz_submission__message_has_error
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_bilanz_submission__message_has_sms_error
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_move__message_has_error
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_move__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Falls markiert, weisen einige Nachrichten einen Zustellungsfehler auf."
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__installation_id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_remaining_capacity__installation_id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_correction__installation_id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__installation_id
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_installation_search_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_remaining_capacity_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_search
+msgid "Installation"
+msgstr "Anlage"
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_reconciliation_installation
+msgid "Installation Reconciliation"
+msgstr "Anlagenabstimmung"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_installation_form_view
+msgid "Installation Reconciliation Rule"
+msgstr "Anlagenabstimmungsregel"
+
+#. module: abfall_bilanz
+#: model:ir.actions.act_window,name:abfall_bilanz.action_reconciliation_installation
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_installation_list_view
+msgid "Installation Reconciliation Rules"
+msgstr "Anlagenabstimmungsregeln"
+
+#. module: abfall_bilanz
+#: model:ir.ui.menu,name:abfall_bilanz.menu_reconciliation_installation
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_installation_search_view
+msgid "Installation Rules"
+msgstr "Anlagenregeln"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__message_is_follower
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__message_is_follower
+msgid "Is Follower"
+msgstr "Ist Follower"
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_waste_remaining_capacity
+msgid "Landfill Remaining Capacity (Deponierestkapazität)"
+msgstr "Deponierestkapazität"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__write_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_origintype__write_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_quantificationtype__write_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_recyclingtype__write_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_site__write_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_transport_type__write_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz__write_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__write_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__write_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__write_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_remaining_capacity__write_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_correction__write_uid
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert von"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__write_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_origintype__write_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_quantificationtype__write_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_recyclingtype__write_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_site__write_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_transport_type__write_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz__write_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__write_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__write_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__write_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_remaining_capacity__write_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_correction__write_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
+msgid "Last Year"
+msgstr "Letztes Jahr"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_form
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_remaining_capacity_form
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_form
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_form
+msgid "Location"
+msgstr "Ort"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__quantification_type
+msgid "Measurement type of waste"
+msgstr "Messart des Abfalls"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__message_has_error
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__message_has_error
+msgid "Message Delivery error"
+msgstr "Nachrichtenzustellungsfehler"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__message_ids
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__message_ids
+msgid "Messages"
+msgstr "Nachrichten"
+
+#. module: abfall_bilanz
+#: model:ir.ui.menu,name:abfall_bilanz.waste_move_menu_moves
+msgid "Moves"
+msgstr "Bewegungen"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__my_activity_date_deadline
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Meine Aktivitätsfrist"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_list
+msgid "Net Correction (kg)"
+msgstr "Nettokorrektur (kg)"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__waste_move__state__draft
+msgid "New"
+msgstr "Neu"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_search
+msgid "New Type"
+msgstr "Neuer Typ"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__new_abfallart
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_search
+msgid "New Waste Type"
+msgstr "Neue Abfallart"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__activity_calendar_event_id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "Nächstes Aktivitätskalenderereignis"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__activity_date_deadline
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Nächste Aktivitätsfrist"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__activity_summary
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__activity_summary
+msgid "Next Activity Summary"
+msgstr "Zusammenfassung der nächsten Aktivität"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__activity_type_id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__activity_type_id
+msgid "Next Activity Type"
+msgstr "Nächster Aktivitätstyp"
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_waste_bilanz_submission
+msgid "No submissions found."
+msgstr "Keine Einreichungen gefunden."
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__message_needaction_counter
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Anzahl der Aktionen"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__message_has_error_counter
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__message_has_error_counter
+msgid "Number of errors"
+msgstr "Anzahl der Fehler"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_bilanz_submission__message_needaction_counter
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_move__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Anzahl der Nachrichten, die eine Aktion erfordern"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_bilanz_submission__message_has_error_counter
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_move__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Anzahl der Nachrichten mit Zustellungsfehler"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_form
+msgid "Origin"
+msgstr "Herkunft"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__origin_installation
+msgid "Origin Installation"
+msgstr "Herkunftsanlage"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__origin_partner
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
+msgid "Origin Partner"
+msgstr "Herkunftspartner"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__origin_site
+msgid "Origin Site"
+msgstr "Herkunftsstandort"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_origintype__origin_type
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__origin_type
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_origintype_search_view
+msgid "Origin Type"
+msgstr "Herkunftstyp"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_origintype_form_view
+msgid "Origin Type Reconciliation Rule"
+msgstr "Herkunftstyp-Abstimmungsregel"
+
+#. module: abfall_bilanz
+#: model:ir.actions.act_window,name:abfall_bilanz.action_reconciliation_origintype
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_origintype_list_view
+msgid "Origin Type Reconciliation Rules"
+msgstr "Herkunftstyp-Abstimmungsregeln"
+
+#. module: abfall_bilanz
+#: model:ir.ui.menu,name:abfall_bilanz.menu_reconciliation_origintype
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_origintype_search_view
+msgid "Origin Type Rules"
+msgstr "Herkunftstyp-Regeln"
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_reconciliation_origintype
+msgid "Origin type Reconciliation"
+msgstr "Herkunftstyp-Abstimmung"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_search
+msgid "Original Type"
+msgstr "Ursprünglicher Typ"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__preliminary_abfallart
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_search
+msgid "Original Waste Type"
+msgstr "Ursprüngliche Abfallart"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_origintype__partner_id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_recyclingtype__partner_id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_site__partner_id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_transport_type__partner_id
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_origintype_search_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_recyclingtype_search_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_site_search_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_transport_type_view_search
+msgid "Partner"
+msgstr "Partner"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_remaining_capacity_list
+msgid "Physical (m³)"
+msgstr "Physisch (m³)"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_remaining_capacity__physical_remaining_capacity
+msgid "Physical Remaining Capacity (m³)"
+msgstr "Physische Restkapazität (m³)"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_storage_correction__amount
+msgid "Positive for addition, negative for removal"
+msgstr "Positiv für Zugang, negativ für Abgang"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__priority
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_origintype__priority
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_quantificationtype__priority
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_recyclingtype__priority
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_site__priority
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_transport_type__priority
+msgid "Priority"
+msgstr "Priorität"
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_reconciliation_quantificationtype
+msgid "Quantification Reconciliation"
+msgstr "Quantifizierungsabstimmung"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_quantificationtype_form_view
+msgid "Quantification Reconciliation Rule"
+msgstr "Quantifizierungsabstimmungsregel"
+
+#. module: abfall_bilanz
+#: model:ir.actions.act_window,name:abfall_bilanz.action_reconciliation_quantificationtype
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_quantificationtype_list_view
+msgid "Quantification Reconciliation Rules"
+msgstr "Quantifizierungsabstimmungsregeln"
+
+#. module: abfall_bilanz
+#: model:ir.ui.menu,name:abfall_bilanz.menu_reconciliation_quantificationtype
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_quantificationtype_search_view
+msgid "Quantification Rules"
+msgstr "Quantifizierungsregeln"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__quantification_type
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_correction__quantification_type
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__quantification_type
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_quantificationtype_search_view
+msgid "Quantification Type"
+msgstr "Quantifizierungstyp"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_form
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_form
+msgid "Quantity"
+msgstr "Menge"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__reclassification_reason_id
+msgid "Reason"
+msgstr "Grund"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_form
+msgid "Recipient"
+msgstr "Empfänger"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__recipient_installation
+msgid "Recipient Installation"
+msgstr "Empfängeranlage"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__recipient_partner
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
+msgid "Recipient Partner"
+msgstr "Empfängerpartner"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__recipient_site
+msgid "Recipient Site"
+msgstr "Empfängerstandort"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_form
+msgid "Reclassification"
+msgstr "Neuzuordnung"
+
+#. module: abfall_bilanz
+#: model:ir.ui.menu,name:abfall_bilanz.menu_waste_reclassification
+msgid "Reclassifications"
+msgstr "Neuzuordnungen"
+
+#. module: abfall_bilanz
+#: model:ir.ui.menu,name:abfall_bilanz.menu_waste_management_reconciliation
+msgid "Reconciliation"
+msgstr "Abstimmung"
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_waste_remaining_capacity
+msgid "Record landfill remaining capacities"
+msgstr "Deponierestkapazitäten erfassen"
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_waste_storage_correction
+msgid "Record storage corrections"
+msgstr "Lagerstandskorrekturen erfassen"
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_waste_storage_state
+msgid "Record storage states for your installations"
+msgstr "Lagerstände für Ihre Anlagen erfassen"
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_waste_reclassification
+msgid "Record waste reclassifications"
+msgstr "Abfallartenneuzuordnungen erfassen"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_recyclingtype__recycling_type
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__recycling_type
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_recyclingtype_search_view
+msgid "Recycling Type"
+msgstr "Verwertungsart"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_recyclingtype_form_view
+msgid "Recycling Type Reconciliation Rule"
+msgstr "Verwertungsart-Abstimmungsregel"
+
+#. module: abfall_bilanz
+#: model:ir.actions.act_window,name:abfall_bilanz.action_reconciliation_recyclingtype
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_recyclingtype_list_view
+msgid "Recycling Type Reconciliation Rules"
+msgstr "Verwertungsart-Abstimmungsregeln"
+
+#. module: abfall_bilanz
+#: model:ir.ui.menu,name:abfall_bilanz.menu_reconciliation_recyclingtype
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_recyclingtype_search_view
+msgid "Recycling Type Rules"
+msgstr "Verwertungsart-Regeln"
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_reconciliation_recyclingtype
+msgid "Recycling type Reconciliation"
+msgstr "Verwertungsart-Abstimmung"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_form
+msgid "Regenerate XML"
+msgstr "XML neu generieren"
+
+#. module: abfall_bilanz
+#: model:ir.actions.act_window,name:abfall_bilanz.action_waste_remaining_capacity
+#: model:ir.ui.menu,name:abfall_bilanz.menu_waste_remaining_capacity
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_remaining_capacity_search
+msgid "Remaining Capacities"
+msgstr "Restkapazitäten"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_remaining_capacity_form
+msgid "Remaining Capacity"
+msgstr "Restkapazität"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_search
+msgid "Removals (-)"
+msgstr "Abgänge (-)"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_form
+msgid "Report Details"
+msgstr "Berichtsdetails"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__name
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_form
+msgid "Report Name"
+msgstr "Berichtsname"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__reporting_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_remaining_capacity__reporting_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_correction__reporting_date
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__reporting_date
+msgid "Reporting Date"
+msgstr "Berichtsdatum"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__year
+msgid "Reporting Year"
+msgstr "Berichtsjahr"
+
+#. module: abfall_bilanz
+#: model:ir.ui.menu,name:abfall_bilanz.menu_bilanz_reports
+msgid "Reports"
+msgstr "Berichte"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__activity_user_id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__activity_user_id
+msgid "Responsible User"
+msgstr "Verantwortlicher Benutzer"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_installation_form_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_origintype_form_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_quantificationtype_form_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_recyclingtype_form_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_site_form_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_transport_type_view_form
+msgid "Result"
+msgstr "Ergebnis"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_quantificationtype_form_view
+msgid "Rule Condition"
+msgstr "Regelbedingung"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_installation_form_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_origintype_form_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_recyclingtype_form_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_site_form_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_transport_type_view_form
+msgid "Rule Conditions"
+msgstr "Regelbedingungen"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_origintype__name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_quantificationtype__name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_recyclingtype__name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_site__name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_transport_type__name
+msgid "Rule Name"
+msgstr "Regelname"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__message_has_sms_error
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "SMS-Zustellungsfehler"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_bilanz_xml
+msgid ""
+"Select the year and click \"Generate Report\" to create an XML file \n"
+"                                    for submission to the Austrian waste registry (EDM)."
+msgstr "Wählen Sie das Jahr und klicken Sie auf \"Bericht erstellen\", um eine XML-Datei \n                                    für die Einreichung beim österreichischen Abfallregister (EDM) zu erstellen."
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__side
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_origintype__side
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_recyclingtype__side
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_site__side
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_transport_type__side
+msgid "Side"
+msgstr "Seite"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_installation_search_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_site_search_view
+msgid "Site"
+msgstr "Standort"
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_reconciliation_site
+msgid "Site Reconciliation"
+msgstr "Standortabstimmung"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_site_form_view
+msgid "Site Reconciliation Rule"
+msgstr "Standortabstimmungsregel"
+
+#. module: abfall_bilanz
+#: model:ir.actions.act_window,name:abfall_bilanz.action_reconciliation_site
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_site_list_view
+msgid "Site Reconciliation Rules"
+msgstr "Standortabstimmungsregeln"
+
+#. module: abfall_bilanz
+#: model:ir.ui.menu,name:abfall_bilanz.menu_reconciliation_site
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_site_search_view
+msgid "Site Rules"
+msgstr "Standortregeln"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_installation__side__source
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_origintype__side__source
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_recyclingtype__side__source
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_site__side__source
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_transport_type__side__source
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_installation_search_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_origintype_search_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_recyclingtype_search_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_site_search_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_transport_type_view_search
+msgid "Source"
+msgstr "Quelle"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__state
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__state
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__state
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
+msgid "Status"
+msgstr "Status"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_bilanz_submission__activity_state
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_move__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr "Status basierend auf Aktivitäten\nÜberfällig: Fälligkeitsdatum bereits überschritten\nHeute: Aktivitätsdatum ist heute\nGeplant: Zukünftige Aktivitäten."
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_form
+msgid "Storage Correction"
+msgstr "Lagerstandskorrektur"
+
+#. module: abfall_bilanz
+#: model:ir.actions.act_window,name:abfall_bilanz.action_waste_storage_correction
+#: model:ir.ui.menu,name:abfall_bilanz.menu_waste_storage_correction
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_search
+msgid "Storage Corrections"
+msgstr "Lagerstandskorrekturen"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_form
+msgid "Storage State"
+msgstr "Lagerstand"
+
+#. module: abfall_bilanz
+#: model:ir.ui.menu,name:abfall_bilanz.menu_waste_storage_state
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_search
+msgid "Storage States"
+msgstr "Lagerstände"
+
+#. module: abfall_bilanz
+#: model:ir.actions.act_window,name:abfall_bilanz.action_waste_storage_state
+msgid "Storage States (Lagerstände)"
+msgstr "Lagerstände"
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_waste_storage_state
+msgid ""
+"Storage states track the amount of waste stored at each installation.\n"
+"                Use \"Calculate Inventory\" in the Report Wizard to auto-generate end-of-year states."
+msgstr "Lagerstände verfolgen die Abfallmenge in jeder Anlage.\n                Verwenden Sie \"Bestand berechnen\" im Report-Assistenten, um automatisch Jahresendbestände zu generieren."
+
+#. module: abfall_bilanz
+#: model:ir.actions.act_window,name:abfall_bilanz.action_waste_bilanz_submission
+#: model:ir.ui.menu,name:abfall_bilanz.menu_waste_bilanz_submission
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_search
+msgid "Submission History"
+msgstr "Einreichungshistorie"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_form
+msgid "Submission Info"
+msgstr "Einreichungsinfos"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_form
+msgid "Submission Record"
+msgstr "Einreichungsdatensatz"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__submission_date
+msgid "Submission/Generation Date"
+msgstr "Einreichungs-/Generierungsdatum"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_search
+msgid "Submitted"
+msgstr "Eingereicht"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__waste_bilanz_submission__state__submitted
+msgid "Submitted to EDM"
+msgstr "Bei EDM eingereicht"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_installation__side__target
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_origintype__side__target
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_recyclingtype__side__target
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_site__side__target
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__reconciliation_transport_type__side__target
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_installation_search_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_origintype_search_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_recyclingtype_search_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_site_search_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_transport_type_view_search
+msgid "Target"
+msgstr "Ziel"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
+msgid "This Month"
+msgstr "Diesen Monat"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_remaining_capacity_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
+msgid "This Year"
+msgstr "Dieses Jahr"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_list
+msgid "To"
+msgstr "Zu"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_form
+msgid "To Waste Type"
+msgstr "Zu Abfallart"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_list
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_list
+msgid "Total (kg)"
+msgstr "Gesamt (kg)"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_list
+msgid "Total Critical"
+msgstr "Kritisch gesamt"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_list
+msgid "Total Errors"
+msgstr "Fehler gesamt"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_list
+msgid "Total Warnings"
+msgstr "Warnungen gesamt"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_list
+msgid "Total Weight (kg)"
+msgstr "Gesamtgewicht (kg)"
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_waste_remaining_capacity
+msgid ""
+"Track the approved and physical remaining capacity of landfill "
+"installations."
+msgstr "Verfolgen Sie die genehmigte und physische Restkapazität von Deponieanlagen."
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_stock_picking
+msgid "Transfer"
+msgstr "Transfer"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__amount
+msgid "Transferred amount"
+msgstr "Übertragene Menge"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_form
+msgid "Transport"
+msgstr "Transport"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_transport_type__transport_type
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__transport_type
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_transport_type_view_search
+msgid "Transport Type"
+msgstr "Transportart"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_transport_type_view_form
+msgid "Transport Type Rule"
+msgstr "Transportart-Regel"
+
+#. module: abfall_bilanz
+#: model:ir.actions.act_window,name:abfall_bilanz.reconciliation_transport_type_action
+#: model:ir.ui.menu,name:abfall_bilanz.menu_reconciliation_transporttype
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_transport_type_view_list
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_transport_type_view_search
+msgid "Transport Type Rules"
+msgstr "Transportart-Regeln"
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_reconciliation_transport_type
+msgid "Transport type Reconciliation"
+msgstr "Transportart-Abstimmung"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_bilanz_submission__activity_exception_decoration
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_move__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Art der Ausnahmeaktivität im Datensatz."
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_waste_storage_correction
+msgid ""
+"Use corrections to adjust inventory amounts that cannot be explained by "
+"normal handovers/takeovers."
+msgstr "Verwenden Sie Korrekturen, um Bestandsmengen anzupassen, die nicht durch normale Übergaben/Übernahmen erklärt werden können."
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.action_waste_reclassification
+msgid ""
+"Use reclassifications when waste is reassigned from one waste type code to "
+"another."
+msgstr "Verwenden Sie Neuzuordnungen, wenn Abfall von einer Abfallart zu einer anderen umgebucht wird."
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_search
+msgid "User"
+msgstr "Benutzer"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_form
+msgid "Validate EDM"
+msgstr "EDM validieren"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_form
+msgid "Validation Results"
+msgstr "Validierungsergebnisse"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_bilanz_xml
+msgid "Verify Data"
+msgstr "Daten überprüfen"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__warning_count
+msgid "Warning Issues"
+msgstr "Warnungen"
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_waste_bilanz
+msgid "Waste Balance Export Wizard"
+msgstr "Abfallbilanz-Export-Assistent"
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_waste_bilanz_submission
+msgid "Waste Balance Submission History"
+msgstr "Abfallbilanz-Einreichungshistorie"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_form
+msgid "Waste Details"
+msgstr "Abfalldetails"
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_waste_move
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__name
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_form
+msgid "Waste Move"
+msgstr "Abfallbewegung"
+
+#. module: abfall_bilanz
+#: model:ir.actions.act_window,name:abfall_bilanz.waste_move_action
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_list
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
+msgid "Waste Moves"
+msgstr "Abfallbewegungen"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_form
+msgid "Waste Reclassification"
+msgstr "Abfallartenneuzuordnung"
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_waste_reclassification
+msgid "Waste Reclassification (Abfallartenneuzuordnung)"
+msgstr "Abfallartenneuzuordnung"
+
+#. module: abfall_bilanz
+#: model:ir.actions.act_window,name:abfall_bilanz.action_waste_reclassification
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_search
+msgid "Waste Reclassifications"
+msgstr "Abfallartenneuzuordnungen"
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_waste_storage_correction
+msgid "Waste Storage Correction (Lagerstandskorrektur)"
+msgstr "Lagerstandskorrektur"
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_waste_storage_state
+msgid "Waste Storage State (Lagerstand)"
+msgstr "Lagerstand"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_correction__abfallart
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__abfallart
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_quantificationtype_search_view
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
+msgid "Waste Type"
+msgstr "Abfallart"
+
+#. module: abfall_bilanz
+#: model_terms:ir.actions.act_window,help:abfall_bilanz.waste_move_action
+msgid ""
+"Waste moves track the handover and takeover of waste materials between parties and installations.\n"
+"                    They are automatically created when validating stock pickings for products with waste types configured."
+msgstr "Abfallbewegungen verfolgen die Übergabe und Übernahme von Abfällen zwischen Parteien und Anlagen.\n                    Sie werden automatisch erstellt, wenn Lagerbuchungen für Produkte mit konfigurierten Abfallarten validiert werden."
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__website_message_ids
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__website_message_ids
+msgid "Website Messages"
+msgstr "Website-Nachrichten"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_bilanz_submission__website_message_ids
+#: model:ir.model.fields,help:abfall_bilanz.field_waste_move__website_message_ids
+msgid "Website communication history"
+msgstr "Website-Kommunikationshistorie"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_search
+msgid "With Data"
+msgstr "Mit Daten"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__xml_file
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_form
+msgid "XML File"
+msgstr "XML-Datei"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__xml_filename
+msgid "XML Filename"
+msgstr "XML-Dateiname"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz__year
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_remaining_capacity_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_search
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
+msgid "Year"
+msgstr "Jahr"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_installation_form_view
+msgid "e.g. Default Installation for Site Y"
+msgstr "z.B. Standardanlage für Standort Y"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_quantificationtype_form_view
+msgid "e.g. Default Quantification Type"
+msgstr "z.B. Standard-Quantifizierungstyp"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_site_form_view
+msgid "e.g. Default Site for Partner X"
+msgstr "z.B. Standardstandort für Partner X"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_origintype_form_view
+msgid "e.g. Origin Type for Collection"
+msgstr "z.B. Herkunftstyp für Sammlung"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_recyclingtype_form_view
+msgid "e.g. Recycling Type for Processing"
+msgstr "z.B. Verwertungsart für Verarbeitung"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_transport_type_view_form
+msgid "e.g. Rule for Partner X and Waste Y"
+msgstr "z.B. Regel für Partner X und Abfall Y"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_form
+msgid "e.g. WM/2024/001"
+msgstr "z.B. WM/2024/001"

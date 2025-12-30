@@ -409,7 +409,7 @@
     <!-- Menu Items -->
     <menuitem id="menu_waste_management_reconciliation"
               name="Reconciliation"
-              parent="product_waste_registry.menu_waste_management_configuration"
+              parent="abfall_stammdaten.menu_waste_management_configuration"
               sequence="60"/>
 
     <menuitem id="menu_reconciliation_site"

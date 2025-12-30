@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="begleitschein_gen_0" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/001</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_muellmeister"/>
+            
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_hygiene"/>
+            
+            <field name="organizing_partner_id" ref="base.main_partner"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="line_gen_0_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_0"/>
+            <field name="abfallart" ref="abfall_stammdaten.11103g"/>
+            <field name="product_qty">2845.0</field>
+            <field name="contains_pop">False</field>
+        </record>
+
+        <record id="begleitschein_gen_1" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/002</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_muellmeister"/>
+            <field name="source_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            
+            <field name="organizing_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">declared</field>
+        </record>
+
+        <record id="line_gen_1_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_1"/>
+            <field name="abfallart" ref="abfall_stammdaten.11102g"/>
+            <field name="product_qty">1290.0</field>
+            <field name="contains_pop">True</field>
+        </record>
+
+        <record id="begleitschein_gen_2" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/003</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_muellmeister"/>
+            <field name="source_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            
+            <field name="organizing_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">confirmed</field>
+        </record>
+
+        <record id="line_gen_2_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_2"/>
+            <field name="abfallart" ref="abfall_stammdaten.11103g"/>
+            <field name="product_qty">4227.0</field>
+            <field name="contains_pop">False</field>
+        </record>
+
+        <record id="begleitschein_gen_3" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/004</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_muellmeister"/>
+            <field name="source_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            <field name="target_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="organizing_partner_id" ref="base.main_partner"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">in_transport</field>
+        </record>
+
+        <record id="line_gen_3_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_3"/>
+            <field name="abfallart" ref="abfall_stammdaten.12101"/>
+            <field name="product_qty">572.0</field>
+            <field name="contains_pop">False</field>
+        </record>
+
+        <record id="begleitschein_gen_4" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/005</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_quantum"/>
+            <field name="source_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            <field name="target_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="organizing_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">transport_complete</field>
+        </record>
+
+        <record id="line_gen_4_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_4"/>
+            <field name="abfallart" ref="abfall_stammdaten.12101"/>
+            <field name="product_qty">569.0</field>
+            <field name="contains_pop">False</field>
+        </record>
+
+        <record id="begleitschein_gen_5" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/006</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_quantum"/>
+            <field name="source_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            <field name="target_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="organizing_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">done</field>
+        </record>
+
+        <record id="line_gen_5_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_5"/>
+            <field name="abfallart" ref="abfall_stammdaten.12101"/>
+            <field name="product_qty">4300.0</field>
+            <field name="contains_pop">True</field>
+        </record>
+
+        <record id="begleitschein_gen_6" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/007</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_muellmeister"/>
+            <field name="source_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            
+            <field name="organizing_partner_id" ref="base.main_partner"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">canceled</field>
+        </record>
+
+        <record id="line_gen_6_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_6"/>
+            <field name="abfallart" ref="abfall_stammdaten.11102"/>
+            <field name="product_qty">1080.0</field>
+            <field name="contains_pop">True</field>
+        </record>
+
+        <record id="begleitschein_gen_7" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/008</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_quantum"/>
+            
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_hygiene"/>
+            
+            <field name="organizing_partner_id" ref="base.main_partner"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="line_gen_7_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_7"/>
+            <field name="abfallart" ref="abfall_stammdaten.11102"/>
+            <field name="product_qty">4450.0</field>
+            <field name="contains_pop">False</field>
+        </record>
+
+        <record id="begleitschein_gen_8" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/009</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_muellmeister"/>
+            <field name="source_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_hygiene"/>
+            
+            <field name="organizing_partner_id" ref="base.main_partner"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">declared</field>
+        </record>
+
+        <record id="line_gen_8_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_8"/>
+            <field name="abfallart" ref="abfall_stammdaten.12101"/>
+            <field name="product_qty">3396.0</field>
+            <field name="contains_pop">True</field>
+        </record>
+
+        <record id="begleitschein_gen_9" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/010</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_muellmeister"/>
+            <field name="source_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_hygiene"/>
+            
+            <field name="organizing_partner_id" ref="base.main_partner"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">confirmed</field>
+        </record>
+
+        <record id="line_gen_9_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_9"/>
+            <field name="abfallart" ref="abfall_stammdaten.11103g"/>
+            <field name="product_qty">441.0</field>
+            <field name="contains_pop">True</field>
+        </record>
+
+        <record id="begleitschein_gen_10" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/011</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_muellmeister"/>
+            <field name="source_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            <field name="target_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="organizing_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">in_transport</field>
+        </record>
+
+        <record id="line_gen_10_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_10"/>
+            <field name="abfallart" ref="abfall_stammdaten.13403g"/>
+            <field name="product_qty">3270.0</field>
+            <field name="contains_pop">True</field>
+        </record>
+
+        <record id="begleitschein_gen_11" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/012</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_muellmeister"/>
+            <field name="source_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            <field name="target_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="organizing_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">transport_complete</field>
+        </record>
+
+        <record id="line_gen_11_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_11"/>
+            <field name="abfallart" ref="abfall_stammdaten.13403g"/>
+            <field name="product_qty">1866.0</field>
+            <field name="contains_pop">True</field>
+        </record>
+
+        <record id="begleitschein_gen_12" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/013</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_muellmeister"/>
+            <field name="source_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_hygiene"/>
+            <field name="target_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="organizing_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_hygiene"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">done</field>
+        </record>
+
+        <record id="line_gen_12_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_12"/>
+            <field name="abfallart" ref="abfall_stammdaten.12101"/>
+            <field name="product_qty">1843.0</field>
+            <field name="contains_pop">False</field>
+        </record>
+
+        <record id="begleitschein_gen_13" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/014</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_quantum"/>
+            <field name="source_site" ref="abfall_anlagenverzeichnis.site_demo_sorting"/>
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            
+            <field name="organizing_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">canceled</field>
+        </record>
+
+        <record id="line_gen_13_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_13"/>
+            <field name="abfallart" ref="abfall_stammdaten.13403g"/>
+            <field name="product_qty">2771.0</field>
+            <field name="contains_pop">False</field>
+        </record>
+
+        <record id="begleitschein_gen_14" model="waste.begleitschein">
+            <field name="name">BS/2025/GEN/015</field>
+            <field name="source_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_quantum"/>
+            
+            <field name="target_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_entsorgo"/>
+            
+            <field name="organizing_partner_id" ref="base.main_partner"/>
+            <field name="transport_partner_id" ref="abfall_anlagenverzeichnis.partner_demo_ecotransport"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="line_gen_14_1" model="waste.begleitschein.line">
+            <field name="begleitschein_id" ref="begleitschein_gen_14"/>
+            <field name="abfallart" ref="abfall_stammdaten.12501g"/>
+            <field name="product_qty">3337.0</field>
+            <field name="contains_pop">True</field>
+        </record>
+
+    </data>
+</odoo>
+

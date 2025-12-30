@@ -17,7 +17,7 @@
     'version': '0.1',
     'license': 'LGPL-3',
 
-    'depends': ['base', 'stock', 'product_waste_registry', 'product_waste_anlagenverzeichnis', 'mail'],
+    'depends': ['base', 'stock', 'abfall_stammdaten', 'abfall_anlagenverzeichnis', 'mail'],
     'data': [
         'security/ir.model.access.csv',
         "views/waste_move.xml",

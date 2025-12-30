@@ -168,7 +168,7 @@
 
         <menuitem id="menu_bilanz_root"
                   name="Abfallbilanz"
-                  parent="product_waste_registry.menu_product_waste_registry_root"
+                  parent="abfall_stammdaten.menu_abfall_stammdaten_root"
                   sequence="20"
         />
 

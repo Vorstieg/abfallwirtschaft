@@ -1,0 +1,1077 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* abfall_vebsv_2
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-30 11:08+0000\n"
+"PO-Revision-Date: 2025-12-30 11:08+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_kanban
+msgid "<i class=\"fa fa-long-arrow-right mx-2 text-muted\" title=\"Transfer to\"/>"
+msgstr "<i class=\"fa fa-long-arrow-right mx-2 text-muted\" title=\"Transport nach\"/>"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_kanban
+msgid "<i class=\"fa fa-map-marker text-danger me-2\" title=\"Target Site\"/>"
+msgstr "<i class=\"fa fa-map-marker text-danger me-2\" title=\"Zielstandort\"/>"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_kanban
+msgid "<i class=\"fa fa-truck text-success me-2\" title=\"Source Site\"/>"
+msgstr "<i class=\"fa fa-truck text-success me-2\" title=\"Herkunftsstandort\"/>"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_kanban
+msgid ""
+"<span class=\"badge rounded-pill text-bg-danger py-1 px-2 fw-bold\" invisible=\"not contains_pop\" title=\"Contains POP waste\">\n"
+"                                            POP\n"
+"                                        </span>"
+msgstr "<span class=\"badge rounded-pill text-bg-danger py-1 px-2 fw-bold\" invisible=\"not contains_pop\" title=\"Enthält POP Abfall\">\n                                            POP\n                                        </span>"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "<span class=\"o_stat_text\">Picking</span>"
+msgstr "<span class=\"o_stat_text\">Kommissionierung</span>"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_begleitschein_cancel_wizard_form
+msgid ""
+"<strong><i class=\"fa fa-exclamation-triangle\"/> Warning!</strong>\n"
+"                        You are about to cancel this Begleitschein. This action may require coordination with the transport partner.\n"
+"                        Please confirm the cancellation reason."
+msgstr "<strong><i class=\"fa fa-exclamation-triangle\"/> Warnung!</strong>\n                        Sie sind dabei, diesen Begleitschein zu stornieren. Diese Aktion erfordert möglicherweise eine Abstimmung mit dem Transportpartner.\n                        Bitte bestätigen Sie den Stornierungsgrund."
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__abfallart
+msgid "Abfallart"
+msgstr "Abfallart"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__message_needaction
+msgid "Action Needed"
+msgstr "Handlungsbedarf"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "Active"
+msgstr "Aktiv"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__activity_ids
+msgid "Activities"
+msgstr "Aktivitäten"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Aktivität Ausnahme-Dekoration"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__activity_state
+msgid "Activity State"
+msgstr "Status der Aktivität"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Aktivitätstyp-Icon"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__message_attachment_count
+msgid "Attachment Count"
+msgstr "Anzahl Anhänge"
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/stock_picking.py:0
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_cancel_wizard__begleitschein_id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__begleitschein_id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_request_identifier__begleitschein_id
+msgid "Begleitschein"
+msgstr "Begleitschein"
+
+#. module: abfall_vebsv_2
+#: model:ir.model,name:abfall_vebsv_2.model_begleitschein_cancel_wizard
+msgid "Begleitschein Cancel Wizard"
+msgstr "Begleitschein-Stornierungsassistent"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_line_request_identifier__line_id
+msgid "Begleitschein Line"
+msgstr "Begleitschein-Zeile"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__begleitschein_lines
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Begleitschein Lines"
+msgstr "Begleitschein-Zeilen"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__name
+msgid "Begleitschein Ref"
+msgstr "Begleitschein-Referenz"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Begleitschein Reference"
+msgstr "Begleitschein-Referenz"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__request_identifiers
+msgid "Begleitschein Request Identifiers"
+msgstr "Begleitschein-Anforderungs-IDs"
+
+#. module: abfall_vebsv_2
+#: model:ir.model,name:abfall_vebsv_2.model_waste_begleitschein_stage
+msgid "Begleitschein Stage"
+msgstr "Begleitschein-Stufe"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_stock_picking__begleitschein_status
+msgid "Begleitschein Status"
+msgstr "Begleitschein-Status"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_stock_picking__begleitscheine
+#: model:ir.ui.menu,name:abfall_vebsv_2.menu_waste_begleitschein_list
+msgid "Begleitscheine"
+msgstr "Begleitscheine"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__business_case_uuid
+msgid "Business Case UUID"
+msgstr "Geschäftsfall-UUID"
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/begleitschein.py:0
+msgid "Can not finish a begleitschein, that is still in transport"
+msgstr "Ein Begleitschein kann nicht beendet werden, der sich noch im Transport befindet"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_begleitschein_modal_form
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/begleitschein.py:0
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_begleitschein_cancel_wizard_form
+msgid "Cancel Begleitschein"
+msgstr "Begleitschein stornieren"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__is_cancel_button_visible
+msgid "Cancel Button is visible"
+msgstr "Abbrechen-Button ist sichtbar"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein__state__canceled
+#: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein_stage__state__canceled
+#: model:waste.begleitschein.stage,name:abfall_vebsv_2.stage_canceled
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "Canceled"
+msgstr "Storniert"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Cancelled"
+msgstr "Storniert"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__transport_partner_id
+msgid "Carrier responsible for the physical transport"
+msgstr "Transporteur, der für den physischen Transport verantwortlich ist"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__company_id
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Company"
+msgstr "Unternehmen"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__company_partner_id
+msgid "Company Partner"
+msgstr "Unternehmenspartner"
+
+#. module: abfall_vebsv_2
+#: model:ir.model,name:abfall_vebsv_2.model_res_config_settings
+msgid "Config Settings"
+msgstr "Konfigurationseinstellungen"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_begleitschein_modal_form
+msgid "Confirm"
+msgstr "Bestätigen"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_begleitschein_cancel_wizard_form
+msgid "Confirm Cancellation"
+msgstr "Stornierung bestätigen"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Confirm Handover"
+msgstr "Übergabe bestätigen"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein__state__confirmed
+#: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein_stage__state__confirmed
+#: model:waste.begleitschein.stage,name:abfall_vebsv_2.stage_confirmed
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "Confirmed"
+msgstr "Bestätigt"
+
+#. module: abfall_vebsv_2
+#: model:ir.model,name:abfall_vebsv_2.model_res_partner
+msgid "Contact"
+msgstr "Kontakt"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__contains_pop
+msgid "Contains POP"
+msgstr "Enthält POP"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Contamination"
+msgstr "Kontamination"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_begleitschein_modal_form
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_picking_form_begleitschein
+msgid "Create Begleitschein"
+msgstr "Begleitschein erstellen"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_res_config_settings__begleitscheine_non_reporting
+msgid "Create Begleitscheine für non obligatory reporting waste"
+msgstr "Begleitscheine für nicht meldepflichtige Abfälle erstellen"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.actions.act_window,help:abfall_vebsv_2.action_waste_begleitschein
+msgid "Create your first Begleitschein"
+msgstr "Erstellen Sie Ihren ersten Begleitschein"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_cancel_wizard__create_uid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_modal__create_uid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__create_uid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__create_uid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_request_identifier__create_uid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_stage__create_uid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_line_request_identifier__create_uid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_vebsv_pull_service__create_uid
+msgid "Created by"
+msgstr "Erstellt von"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_cancel_wizard__create_date
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_modal__create_date
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__create_date
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__create_date
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_request_identifier__create_date
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_stage__create_date
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_line_request_identifier__create_date
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_vebsv_pull_service__create_date
+msgid "Created on"
+msgstr "Erstellt am"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Declare Begleitschein"
+msgstr "Begleitschein deklarieren"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein__state__declared
+#: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein_stage__state__declared
+#: model:waste.begleitschein.stage,name:abfall_vebsv_2.stage_declared
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "Declared"
+msgstr "Deklariert"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_begleitschein_cancel_wizard_form
+msgid "Discard"
+msgstr "Verwerfen"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_cancel_wizard__display_name
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_modal__display_name
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_res_partner__display_name
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__display_name
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__display_name
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_request_identifier__display_name
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_stage__display_name
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_line_request_identifier__display_name
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_vebsv_pull_service__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein__state__done
+#: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein_stage__state__done
+#: model:waste.begleitschein.stage,name:abfall_vebsv_2.stage_done
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "Done"
+msgstr "Erledigt"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein__state__draft
+#: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein_stage__state__draft
+#: model:waste.begleitschein.stage,name:abfall_vebsv_2.stage_draft
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "Draft"
+msgstr "Entwurf"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__dropship_partner_id
+msgid "Dropship Partner"
+msgstr "Streckenpartner"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_res_config_settings__edm_secret
+msgid "EDM Application Key"
+msgstr "EDM-Anwendungsschlüssel"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_res_config_settings__edm_db_uuid
+msgid "EDM DB UUID"
+msgstr "EDM DB UUID"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.waste_management_config_settings_view_form
+msgid "EDM User Data"
+msgstr "EDM-Benutzerdaten"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_res_config_settings__edm_username
+msgid "EDM Username"
+msgstr "EDM-Benutzername"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_res_partner__enable_sms_solution
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_res_users__enable_sms_solution
+msgid "Enable SMS solution"
+msgstr "SMS-Lösung aktivieren"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "End Transport"
+msgstr "Transport beenden"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_stage__fold
+msgid "Folded in Kanban"
+msgstr "In Kanban eingeklappt"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__message_follower_ids
+msgid "Followers"
+msgstr "Follower"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Follower (Partner)"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "FontAwesome-Symbol, z.B. fa-tasks"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__transport_mode_gtin
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__quantification_type_gtin
+msgid "GTIN"
+msgstr "GTIN"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "General"
+msgstr "Allgemein"
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/begleitschein.py:0
+msgid "Handover and takeover party cannot be the same."
+msgstr "Übergeber und Übernehmer dürfen nicht identisch sein."
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__has_message
+msgid "Has Message"
+msgstr "Hat Nachricht"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_cancel_wizard__id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_modal__id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_res_config_settings__id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_res_partner__id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_stock_picking__id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_request_identifier__id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_stage__id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_line_request_identifier__id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_vebsv_pull_service__id
+msgid "ID"
+msgstr "ID"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__activity_exception_icon
+msgid "Icon"
+msgstr "Symbol"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Symbol, um eine Ausnahmeaktivität anzuzeigen."
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Wenn markiert, erfordern neue Nachrichten Ihre Aufmerksamkeit."
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__message_has_error
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Wenn markiert, weisen einige Nachrichten einen Zustellungsfehler auf."
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/begleitschein.py:0
+msgid ""
+"If the sms solution is active, the partner needs to have a phone number "
+"configured"
+msgstr "Wenn die SMS-Lösung aktiv ist, muss für den Partner eine Telefonnummer konfiguriert sein"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein__state__in_transport
+#: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein_stage__state__in_transport
+#: model:waste.begleitschein.stage,name:abfall_vebsv_2.stage_in_transport
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "In Transport"
+msgstr "Im Transport"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__dropship_partner_id
+msgid "Intermediate partner in dropship scenarios"
+msgstr "Zwischenpartner in Streckengeschäftsszenarien"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__message_is_follower
+msgid "Is Follower"
+msgstr "Ist Follower"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__waste_contamination
+msgid "Kontaminationsgruppe"
+msgstr "Kontaminationsgruppe"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_cancel_wizard__write_uid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_modal__write_uid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__write_uid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__write_uid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_request_identifier__write_uid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_stage__write_uid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_line_request_identifier__write_uid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_vebsv_pull_service__write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert von"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_cancel_wizard__write_date
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_modal__write_date
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__write_date
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__write_date
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_request_identifier__write_date
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_stage__write_date
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_line_request_identifier__write_date
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_vebsv_pull_service__write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__request_identifiers
+msgid "Line Request Identifiers"
+msgstr "Zeilen-Anforderungs-IDs"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__message_has_error
+msgid "Message Delivery error"
+msgstr "Nachrichtenzustellungsfehler"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__message_ids
+msgid "Messages"
+msgstr "Nachrichten"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_stock_picking__begleitschein_recent
+msgid "Most Recent Begleitschein"
+msgstr "Neuester Begleitschein"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Meine Aktivitätsfrist"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_stage__name
+msgid "Name"
+msgstr "Name"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Nächste Aktivitätsfrist"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__activity_summary
+msgid "Next Activity Summary"
+msgstr "Zusammenfassung der nächsten Aktivität"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__activity_type_id
+msgid "Next Activity Type"
+msgstr "Nächster Aktivitätstyp"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Anzahl der Aktionen"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__message_has_error_counter
+msgid "Number of errors"
+msgstr "Anzahl der Fehler"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Anzahl der Nachrichten, die eine Aktion erfordern"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Anzahl der Nachrichten mit Zustellungsfehler"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__organizing_partner_id
+msgid "Organizing Partner"
+msgstr "Organisierender Partner"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__contains_pop
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "POP"
+msgstr "POP"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__organizing_partner_id
+msgid "Partner organizing the waste transport"
+msgstr "Partner, der den Abfalltransport organisiert"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__source_partner_id
+msgid "Partner responsible for waste handover"
+msgstr "Partner, der für die Abfallübergabe verantwortlich ist"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__target_partner_id
+msgid "Partner responsible for waste takeover"
+msgstr "Partner, der für die Abfallübernahme verantwortlich ist"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_begleitschein_modal_form
+msgid "Partners"
+msgstr "Partner"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_res_partner__sms_solution_phone_number
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_res_users__sms_solution_phone_number
+msgid "Phone number for SMS solution"
+msgstr "Telefonnummer für SMS-Lösung"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__product_id
+msgid "Product"
+msgstr "Produkt"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_list
+msgid "Qty (kg)"
+msgstr "Menge (kg)"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__quantification_type_id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__quantification_type_id
+msgid "Quantification Type"
+msgstr "Quantifizierungsart"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__product_qty
+msgid "Quantity"
+msgstr "Menge"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Quantity (kg)"
+msgstr "Menge (kg)"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_stage__state
+msgid "Related Status"
+msgstr "Verwandter Status"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__stock_picking_id
+msgid "Related stock picking/delivery order"
+msgstr "Zugehöriger Lagerkommissionier-/Lieferauftrag"
+
+#. module: abfall_vebsv_2
+#: model:ir.model,name:abfall_vebsv_2.model_waste_begleitschein_request_identifier
+#: model:ir.model,name:abfall_vebsv_2.model_waste_line_request_identifier
+msgid "Request Identifier"
+msgstr "Anforderungskennung"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_request_identifier__name
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_line_request_identifier__name
+msgid "Request Name"
+msgstr "Anforderungsname"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_request_identifier__uuid
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_line_request_identifier__uuid
+msgid "Request UUID"
+msgstr "Anforderungs-UUID"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__activity_user_id
+msgid "Responsible User"
+msgstr "Verantwortlicher Benutzer"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_cancel_wizard__revocation_reason_id
+msgid "Revocation Reason"
+msgstr "Widerrufsgrund"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "SMS-Zustellungsfehler"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "Search Begleitscheine"
+msgstr "Begleitscheine suchen"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_res_config_settings__edm_secret
+msgid "Secret key/password for authenticating with the EDM"
+msgstr "Geheimer Schlüssel/Passwort zur Authentifizierung beim EDM"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_begleitschein_cancel_wizard_form
+msgid "Select a reason..."
+msgstr "Wählen Sie einen Grund..."
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Select installation..."
+msgstr "Anlage auswählen..."
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_begleitschein_modal_form
+msgid "Select source site..."
+msgstr "Quellstandort auswählen..."
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_begleitschein_modal_form
+msgid "Select target site..."
+msgstr "Zielstandort auswählen..."
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Select treatment site..."
+msgstr "Behandlungsstandort auswählen..."
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__self_is_main_organizer
+msgid "Self is Main Organizer"
+msgstr "Selbst ist Hauptorganisator"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.waste_management_config_settings_view_form
+msgid "Send Begleitscheine, that don't require reporting"
+msgstr "Begleitscheine senden, die keine Meldung erfordern"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_stage__sequence
+msgid "Sequence"
+msgstr "Sequenz"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__shipment_uuid
+msgid "Shipment UUID"
+msgstr "Versand-UUID"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_begleitschein_modal_form
+msgid "Sites"
+msgstr "Standorte"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Source (Handover)"
+msgstr "Quelle (Übergabe)"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_modal__source_site
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__source_installation
+msgid "Source Installation"
+msgstr "Quellanlage"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_modal__source_partner_id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__source_partner_id
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "Source Partner"
+msgstr "Quellpartner"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__source_site
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "Source Site"
+msgstr "Herkunftsstandort"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__stage_id
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "Stage"
+msgstr "Stufe"
+
+#. module: abfall_vebsv_2
+#: model:ir.model,name:abfall_vebsv_2.model_begleitschein_modal
+msgid "Start Begleitschein Modal"
+msgstr "Begleitschein-Modal starten"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_picking_form_begleitschein
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Start Transport"
+msgstr "Transport starten"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "State"
+msgstr "Status"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__state
+msgid "Status"
+msgstr "Status"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr "Status basierend auf Aktivitäten\nÜberfällig: Fälligkeitsdatum bereits überschritten\nHeute: Aktivitätsdatum ist heute\nGeplant: Zukünftige Aktivitäten."
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/begleitschein.py:0
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_modal__stock_picking_id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__stock_picking_id
+msgid "Stock Picking"
+msgstr "Lagerkommissionierung"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Target (Takeover)"
+msgstr "Ziel (Übernahme)"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_modal__target_site
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__target_installation
+msgid "Target Installation"
+msgstr "Zielanlage"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_begleitschein_modal__target_partner_id
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__target_partner_id
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "Target Partner"
+msgstr "Zielpartner"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__target_site
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "Target Site"
+msgstr "Zielstandort"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__target_installation
+msgid "Target treatment installation for waste delivery"
+msgstr "Zielbehandlungsanlage für die Abfalllieferung"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__target_site
+msgid "Target treatment site for waste delivery"
+msgstr "Zielbehandlungsstandort für die Abfalllieferung"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Technical"
+msgstr "Technisch"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein_request_identifier__name
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_line_request_identifier__name
+msgid "The name of request"
+msgstr "Der Name der Anfrage"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein_request_identifier__uuid
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_line_request_identifier__uuid
+msgid "The uuid to identify the request"
+msgstr "Die UUID zur Identifizierung der Anfrage"
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/stock_picking.py:0
+msgid "There is no Begleitschein to start transport for."
+msgstr "Es gibt keinen Begleitschein, für den der Transport gestartet werden kann."
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/stock_picking.py:0
+msgid "This picking type is not supported."
+msgstr "Dieser Kommissioniertyp wird nicht unterstützt."
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_list
+msgid "Total"
+msgstr "Gesamt"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__total_product_qty
+msgid "Total Product Quantity"
+msgstr "Gesamtproduktmenge"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.actions.act_window,help:abfall_vebsv_2.action_waste_begleitschein
+msgid ""
+"Track hazardous waste transport documentation compliant with Austrian ANV "
+"2012 regulations."
+msgstr "Verfolgen Sie die Dokumentation für den Transport gefährlicher Abfälle gemäß den österreichischen ANV 2012-Vorschriften."
+
+#. module: abfall_vebsv_2
+#: model:ir.model,name:abfall_vebsv_2.model_stock_picking
+msgid "Transfer"
+msgstr "Transport"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Transport"
+msgstr "Transport"
+
+#. module: abfall_vebsv_2
+#: model:waste.begleitschein.stage,name:abfall_vebsv_2.stage_transport_complete
+msgid "Transport Complete"
+msgstr "Transport abgeschlossen"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__transport_mode_id
+msgid "Transport Mode"
+msgstr "Transportart"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__transport_partner_id
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_search
+msgid "Transport Partner"
+msgstr "Transportpartner"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__transport_uuid
+msgid "Transport UUID"
+msgstr "Transport-UUID"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein__state__transport_complete
+#: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein_stage__state__transport_complete
+msgid "Transport complete"
+msgstr "Transport abgeschlossen"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__source_installation
+msgid "Treatment installation where waste originates"
+msgstr "Behandlungsanlage, in der der Abfall entsteht"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__source_site
+msgid "Treatment site where waste originates"
+msgstr "Behandlungsstandort, an dem der Abfall entsteht"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Art der Ausnahmeaktivität im Datensatz."
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_res_config_settings__edm_last_transaction_uuid
+msgid "UUID of the last transaction fetched from the message service"
+msgstr "UUID der letzten vom Nachrichtendienst abgerufenen Transaktion"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_res_config_settings__edm_last_transaction_uuid
+msgid "UUID to track, which messages have already been processed"
+msgstr "UUID zur Verfolgung, welche Nachrichten bereits verarbeitet wurden"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_res_config_settings__edm_db_uuid
+msgid "UUID used to identify application for polling message ws"
+msgstr "UUID zur Identifizierung der Anwendung für das Polling des Nachrichten-Webservices"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "UUIDs"
+msgstr "UUIDs"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__name
+msgid "Unique reference number for this Begleitschein"
+msgstr "Eindeutige Referenznummer für diesen Begleitschein"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_res_config_settings__edm_username
+msgid "Username for authenticating with EDM-"
+msgstr "Benutzername zur Authentifizierung beim EDM-"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein_line__vebsv_id
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "VEBSV ID"
+msgstr "VEBSV-ID"
+
+#. module: abfall_vebsv_2
+#: model:ir.actions.server,name:abfall_vebsv_2.edm_vebsv_polling_ir_actions_server
+msgid "VEBSV Message Web Service Polling"
+msgstr "VEBSV-Nachrichten-Webservice-Polling"
+
+#. module: abfall_vebsv_2
+#: model:ir.model,name:abfall_vebsv_2.model_waste_vebsv_pull_service
+msgid "VEBSV Pull Service"
+msgstr "VEBSV-Pull Service"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_graph
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_list
+msgid "Waste Begleitschein"
+msgstr "Begleitschein"
+
+#. module: abfall_vebsv_2
+#: model:ir.actions.act_window,name:abfall_vebsv_2.action_waste_begleitschein
+msgid "Waste Begleitscheine"
+msgstr "Begleitscheine"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Waste Lines"
+msgstr "Abfallzeilen"
+
+#. module: abfall_vebsv_2
+#: model:ir.model,name:abfall_vebsv_2.model_waste_begleitschein
+msgid "Waste Transport Accompanying Document"
+msgstr "Begleitschein"
+
+#. module: abfall_vebsv_2
+#: model:ir.model,name:abfall_vebsv_2.model_waste_begleitschein_line
+msgid "Waste Transport Line Item"
+msgstr "Begleitschein-Zeilenelement"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_form
+msgid "Waste Type"
+msgstr "Abfallart"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__website_message_ids
+msgid "Website Messages"
+msgstr "Website-Nachrichten"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_waste_begleitschein__website_message_ids
+msgid "Website communication history"
+msgstr "Website-Kommunikationsverlauf"
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/begleitschein.py:0
+msgid "You can only start transport for a confirmed begleitschein."
+msgstr "Sie können den Transport nur für einen bestätigten Begleitschein starten."
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/begleitschein.py:0
+msgid "You need at least one product with a waste code"
+msgstr "Sie benötigen mindestens ein Produkt mit einem Abfallschlüssel"
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/begleitschein.py:0
+#: code:addons/abfall_vebsv_2/models/vebsv_pull_service.py:0
+msgid "You need to configure connector id and connector key."
+msgstr "Sie müssen Connector-ID und Connector-Schlüssel konfigurieren."
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/begleitschein.py:0
+#: code:addons/abfall_vebsv_2/models/vebsv_pull_service.py:0
+msgid "You need to configure edm username and secret."
+msgstr "Sie müssen EDM-Benutzernamen und -Geheimnis konfigurieren."
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/begleitschein.py:0
+msgid "You need to define a source site."
+msgstr "Sie müssen einen Quellstandort definieren."
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/begleitschein.py:0
+msgid "You need to define a target site."
+msgstr "Sie müssen einen Zielstandort definieren."
+
+#. module: abfall_vebsv_2
+#. odoo-python
+#: code:addons/abfall_vebsv_2/models/stock_picking.py:0
+msgid "You need waste products to create a Begleitschein"
+msgstr "Sie benötigen Abfallprodukte, um einen Begleitschein zu erstellen"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_waste_begleitschein_kanban
+msgid "kg"
+msgstr "kg"

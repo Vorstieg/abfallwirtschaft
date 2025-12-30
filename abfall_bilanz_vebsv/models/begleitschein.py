@@ -4,7 +4,7 @@ from operator import index
 
 from odoo import api, fields, models
 
-from odoo.addons.stock_vebsv_2.models.library.vebsv_begleitschein import VebsvBegleitschein
+from odoo.addons.abfall_vebsv_2.models.library.vebsv_begleitschein import VebsvBegleitschein
 
 
 class Begleitschein(models.Model, VebsvBegleitschein):

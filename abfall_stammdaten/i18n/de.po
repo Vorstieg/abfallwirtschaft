@@ -1,0 +1,95 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* abfall_stammdaten
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-12 08:00+0000\n"
+"PO-Revision-Date: 2025-06-12 08:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: German (http://www.transifex.com/odoo/odoo-11/language/de/)\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: abfall_stammdaten
+#: model:ir.actions.act_window,name:abfall_stammdaten.action_waste_type
+#: model:ir.ui.menu,name:abfall_stammdaten.menu_waste_type
+msgid "Waste Types"
+msgstr "Abfallarten"
+
+#. module: abfall_stammdaten
+#: model:ir.ui.menu,name:abfall_stammdaten.menu_abfall_stammdaten_root
+msgid "Waste Management"
+msgstr "Abfallmanagement"
+
+#. module: abfall_stammdaten
+#: model:ir.model.fields,field_description:abfall_stammdaten.field_waste_type__note
+msgid "Note"
+msgstr "Notiz"
+
+#. module: abfall_stammdaten
+#: model:ir.model.fields,field_description:abfall_stammdaten.field_waste_type__name
+msgid "Name"
+msgstr "Bezeichnung"
+
+#. module: abfall_stammdaten
+#: model:ir.model.fields,field_description:abfall_stammdaten.field_waste_type__specification
+msgid "Specification"
+msgstr "Abfallspezifizierung"
+
+#. module: abfall_stammdaten
+#: model:ir.model.fields,field_description:abfall_stammdaten.field_waste_type__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: abfall_stammdaten
+#: model:ir.model.fields,field_description:abfall_stammdaten.field_waste_type__specification_enumeration
+msgid "Specification Enumeration"
+msgstr "Abfallspezifizierung Enumeration"
+
+#. module: abfall_stammdaten
+#: model:ir.model.fields,field_description:abfall_stammdaten.field_waste_type__dangerous
+msgid "Dangerous"
+msgstr "Gefährlichkeit / Ausstufbarkeit"
+
+#. module: abfall_stammdaten
+#: model:ir.model.fields,field_description:abfall_stammdaten.field_waste_type__gtin
+msgid "GTIN"
+msgstr "GTIN"
+
+#. module: abfall_stammdaten
+#: model:ir.model.fields,field_description:abfall_stammdaten.field_waste_type__key_number
+msgid "Key Number"
+msgstr "Abfall Schlüssel-Nummer"
+
+#. module: abfall_stammdaten
+#: model:ir.model.fields,field_description:abfall_stammdaten.field_product_template__waste_type_id
+#: model_terms:ir.ui.view,arch_db:abfall_stammdaten.view_waste_type_form
+msgid "Waste Type"
+msgstr "Abfallart"
+
+#. module: abfall_stammdaten
+#: model_terms:ir.actions.act_window,help:abfall_stammdaten.action_waste_type
+msgid "Create a new waste type."
+msgstr "Erstelle eine neue Abfallart."
+
+#. module: abfall_stammdaten
+#: model_terms:ir.ui.view,arch_db:abfall_stammdaten.view_waste_type_form
+msgid "Notes"
+msgstr "Anmerkungen"
+
+#. module: abfall_stammdaten
+#: model_terms:ir.ui.view,arch_db:abfall_stammdaten.view_waste_type_search
+msgid "Search Waste Type"
+msgstr "Abfallart suchen"
+
+#. module: abfall_stammdaten
+#: model:ir.model.fields,field_help:abfall_stammdaten.field_product_template__waste_type_id
+#: model_terms:ir.ui.view,arch_db:abfall_stammdaten.view_waste_type_form
+msgid "Assign a waste type to this product. (You can search by name or key number, or enter a full GTIN)"
+msgstr "Weisen Sie diesem Produkt eine Abfallart zu. (Sie können nach Namen oder Schlüsselnummer suchen oder eine vollständige GTIN eingeben)"
