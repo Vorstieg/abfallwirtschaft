@@ -125,10 +125,7 @@
         </field>
     </record>
 
-    <menuitem id="menu_bilanz_reports"
-              name="Reports"
-              parent="menu_bilanz_root"
-              sequence="100"/>
+
 
     <menuitem id="menu_generate_bilanz_wizard"
               name="Generate Report"

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stage_draft" model="waste.begleitschein.stage">
+        <field name="name">Draft</field>
+        <field name="state">draft</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="stage_declared" model="waste.begleitschein.stage">
+        <field name="name">Declared</field>
+        <field name="state">declared</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="stage_confirmed" model="waste.begleitschein.stage">
+        <field name="name">Confirmed</field>
+        <field name="state">confirmed</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="stage_in_transport" model="waste.begleitschein.stage">
+        <field name="name">In Transport</field>
+        <field name="state">in_transport</field>
+        <field name="sequence">40</field>
+    </record>
+    <record id="stage_transport_complete" model="waste.begleitschein.stage">
+        <field name="name">Transport Complete</field>
+        <field name="state">transport_complete</field>
+        <field name="sequence">50</field>
+    </record>
+    <record id="stage_done" model="waste.begleitschein.stage">
+        <field name="name">Done</field>
+        <field name="state">done</field>
+        <field name="sequence">60</field>
+        <field name="fold" eval="True"/>
+    </record>
+    <record id="stage_canceled" model="waste.begleitschein.stage">
+        <field name="name">Canceled</field>
+        <field name="state">canceled</field>
+        <field name="sequence">70</field>
+        <field name="fold" eval="True"/>
+    </record>
+</odoo>

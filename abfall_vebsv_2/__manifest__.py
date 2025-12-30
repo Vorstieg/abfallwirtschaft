@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'VEBSV 2 Begleitschein',
+
+    'summary': 'connects to VEBSV 2',
+    'description': """
+        This module allows users to create and print Begleitschein reports for gefährlichen Abfall,
+        compliant with the Austrian ANV 2012 regulations.
+    """,
+
+    'author': "Vorstieg Software FlexCo",
+    'website': "https://abfallwirtschaft.vorstieg.eu",
+    'images': ['images/template.png'],
+
+    'category': 'Inventory',
+    'version': '0.1',
+    'license': 'LGPL-3',
+    'depends': ['stock', 'abfall_anlagenverzeichnis'],
+    'data': [
+        'views/report_anv_begleitschein.xml',
+        'views/res_config_settings_views.xml',
+        'data/begleitschein_stages.xml',
+        'views/begleitschein_views.xml',
+        'views/ir.cron.xml',
+        'security/ir.model.access.csv',
+        'views/res_partner_view.xml',
+        'views/begleitschein_cancel_wizard_views.xml',
+    ],
+    'demo': [
+        'demo/begleitschein_demo.xml',
+    ],
+}

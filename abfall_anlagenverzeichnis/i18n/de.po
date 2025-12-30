@@ -1,0 +1,253 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* abfall_anlagenverzeichnis
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-30 09:40+0000\n"
+"PO-Revision-Date: 2025-12-30 09:40+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model,name:abfall_anlagenverzeichnis.model_res_config_settings
+msgid "Config Settings"
+msgstr "Konfigurationseinstellungen"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.actions.act_window,name:abfall_anlagenverzeichnis.action_waste_management_config_settings
+msgid "Configure Waste Management"
+msgstr "Abfallwirtschaft konfigurieren"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model,name:abfall_anlagenverzeichnis.model_res_partner
+msgid "Contact"
+msgstr "Kontakt"
+
+#. module: abfall_anlagenverzeichnis
+#: model_terms:ir.actions.act_window,help:abfall_anlagenverzeichnis.waste_treatment_site_action
+msgid "Create your first Waste Treatment Site"
+msgstr "Erstellen Sie Ihren ersten Abfallbehandlungsstandort"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_installation__create_uid
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_site__create_uid
+msgid "Created by"
+msgstr "Erstellt von"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_installation__create_date
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_site__create_date
+msgid "Created on"
+msgstr "Erstellt am"
+
+#. module: abfall_anlagenverzeichnis
+#: model_terms:ir.ui.view,arch_db:abfall_anlagenverzeichnis.res_config_settings_waste_management_view_form
+msgid "Credentials for eRAS Registerabfrage API"
+msgstr "Anmeldedaten für eRAS Registerabfrage API"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_res_partner__display_name
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_installation__display_name
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_site__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,help:abfall_anlagenverzeichnis.field_waste_treatment_installation__gtin
+#: model:ir.model.fields,help:abfall_anlagenverzeichnis.field_waste_treatment_site__gtin
+msgid "Global Trade Item Number."
+msgstr "Globale Artikelnummer (GTIN)."
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_res_config_settings__id
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_res_partner__id
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_installation__id
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_site__id
+msgid "ID"
+msgstr "ID"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_installation__gtin
+msgid "Installation GLN"
+msgstr "Anlagen-GLN"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_installation__name
+msgid "Installation Name"
+msgstr "Anlagenname"
+
+#. module: abfall_anlagenverzeichnis
+#: model_terms:ir.ui.view,arch_db:abfall_anlagenverzeichnis.waste_treatment_site_view_form
+msgid "Installations"
+msgstr "Anlagen"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_installation__write_uid
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_site__write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert von"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_installation__write_date
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_site__write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_installation__treatment_site_id
+msgid "Location"
+msgstr "Ort"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_site__gtin
+msgid "Location GLN"
+msgstr "Standort-GLN"
+
+#. module: abfall_anlagenverzeichnis
+#. odoo-python
+#: code:addons/abfall_anlagenverzeichnis/models/res_partner.py:0
+msgid "No entity found in eRAS for GLN %s. Found IDs in response: %s"
+msgstr "Keine Entität in eRAS für GLN %s gefunden. Gefundene IDs in der Antwort: %s"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_site__partner_id
+msgid "Partner"
+msgstr "Partner"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,help:abfall_anlagenverzeichnis.field_res_config_settings__eras_api_password
+msgid "Password for eRAS Registerabfrage"
+msgstr "Passwort für eRAS Registerabfrage"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_res_partner__person_gln
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_res_users__person_gln
+msgid "Person GLN"
+msgstr "Personen-GLN"
+
+#. module: abfall_anlagenverzeichnis
+#. odoo-python
+#: code:addons/abfall_anlagenverzeichnis/models/res_partner.py:0
+msgid "Please configure eRAS credentials in General Settings."
+msgstr "Bitte konfigurieren Sie die eRAS-Anmeldedaten in den Allgemeinen Einstellungen."
+
+#. module: abfall_anlagenverzeichnis
+#. odoo-python
+#: code:addons/abfall_anlagenverzeichnis/models/res_partner.py:0
+msgid "Please set a Person GLN first."
+msgstr "Bitte setzen Sie zuerst eine Personen-GLN."
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields.selection,name:abfall_anlagenverzeichnis.selection__res_config_settings__eras_base_url__https://secure_umweltbundesamt_at/eras/erasapi?wsdl
+msgid "Production"
+msgstr "Produktion"
+
+#. module: abfall_anlagenverzeichnis
+#: model_terms:ir.ui.view,arch_db:abfall_anlagenverzeichnis.view_partner_form_vebsv
+msgid "Query eRAS"
+msgstr "eRAS abfragen"
+
+#. module: abfall_anlagenverzeichnis
+#: model_terms:ir.ui.view,arch_db:abfall_anlagenverzeichnis.waste_treatment_site_view_search
+msgid "Search Waste Treatment Site"
+msgstr "Abfallbehandlungsstandort suchen"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,help:abfall_anlagenverzeichnis.field_res_config_settings__eras_base_url
+msgid "Select the eRAS environment (Production or Test)"
+msgstr "Wählen Sie die eRAS-Umgebung (Produktion oder Test)"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.ui.menu,name:abfall_anlagenverzeichnis.menu_waste_management_settings
+msgid "Settings"
+msgstr "Einstellungen"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_site__name
+#: model_terms:ir.ui.view,arch_db:abfall_anlagenverzeichnis.waste_treatment_site_view_search
+msgid "Site Name"
+msgstr "Standortname"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields.selection,name:abfall_anlagenverzeichnis.selection__res_config_settings__eras_base_url__https://edmdemo_umweltbundesamt_at/eras/erasapi?wsdl
+msgid "Test / Demo"
+msgstr "Test / Demo"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_waste_treatment_site__treatment_installations
+msgid "Treatment Installations"
+msgstr "Behandlungsanlagen"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,help:abfall_anlagenverzeichnis.field_res_config_settings__eras_api_user
+msgid "Username for eRAS Registerabfrage"
+msgstr "Benutzername für eRAS Registerabfrage"
+
+#. module: abfall_anlagenverzeichnis
+#: model_terms:ir.ui.view,arch_db:abfall_anlagenverzeichnis.res_config_settings_waste_management_view_form
+msgid "Waste Management"
+msgstr "Abfallwirtschaft"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model,name:abfall_anlagenverzeichnis.model_waste_treatment_installation
+msgid "Waste Treatment Installation"
+msgstr "Abfallbehandlungsanlage"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model,name:abfall_anlagenverzeichnis.model_waste_treatment_site
+#: model_terms:ir.ui.view,arch_db:abfall_anlagenverzeichnis.waste_treatment_site_view_form
+msgid "Waste Treatment Site"
+msgstr "Abfallbehandlungsstandort"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.actions.act_window,name:abfall_anlagenverzeichnis.waste_treatment_site_action
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_res_partner__waste_treatment_sites
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_res_users__waste_treatment_sites
+#: model:ir.ui.menu,name:abfall_anlagenverzeichnis.waste_treatment_site_menu
+#: model_terms:ir.ui.view,arch_db:abfall_anlagenverzeichnis.waste_treatment_site_view_list
+msgid "Waste Treatment Sites"
+msgstr "Abfallbehandlungsstandorte"
+
+#. module: abfall_anlagenverzeichnis
+#: model_terms:ir.ui.view,arch_db:abfall_anlagenverzeichnis.view_partner_form_vebsv
+msgid "Waste management"
+msgstr "Abfallwirtschaft"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_res_config_settings__eras_api_password
+msgid "eRAS API Password"
+msgstr "eRAS API Passwort"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_res_config_settings__eras_api_user
+msgid "eRAS API User"
+msgstr "eRAS API Benutzer"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.model.fields,field_description:abfall_anlagenverzeichnis.field_res_config_settings__eras_base_url
+msgid "eRAS Environment"
+msgstr "eRAS Umgebung"
+
+#. module: abfall_anlagenverzeichnis
+#. odoo-python
+#: code:addons/abfall_anlagenverzeichnis/models/res_partner.py:0
+msgid "eRAS Query failed: %s"
+msgstr "eRAS Abfrage fehlgeschlagen: %s"
+
+#. module: abfall_anlagenverzeichnis
+#: model_terms:ir.ui.view,arch_db:abfall_anlagenverzeichnis.res_config_settings_waste_management_view_form
+msgid "eRAS Registerabfrage"
+msgstr "eRAS Registerabfrage"
+
+#. module: abfall_anlagenverzeichnis
+#: model:ir.actions.server,name:abfall_anlagenverzeichnis.ir_cron_update_eras_contacts_ir_actions_server
+msgid "eRAS: Update Contacts"
+msgstr "eRAS: Kontakte aktualisieren"

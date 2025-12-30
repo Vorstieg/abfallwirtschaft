@@ -111,10 +111,34 @@
             </field>
         </record>
 
+        <record id="waste_move_view_graph" model="ir.ui.view">
+            <field name="name">waste.move.view.graph</field>
+            <field name="model">waste.move</field>
+            <field name="arch" type="xml">
+                <graph string="Waste Moves" sample="1">
+                    <field name="date"/>
+                    <field name="abfallart"/>
+                    <field name="amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="waste_move_view_pivot" model="ir.ui.view">
+            <field name="name">waste.move.view.pivot</field>
+            <field name="model">waste.move</field>
+            <field name="arch" type="xml">
+                <pivot string="Waste Moves Analysis" sample="1">
+                    <field name="date" type="row" interval="month"/>
+                    <field name="abfallart" type="col"/>
+                    <field name="amount" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
         <record id="waste_move_action" model="ir.actions.act_window">
             <field name="name">Waste Moves</field>
             <field name="res_model">waste.move</field>
-            <field name="view_mode">list,form</field>
+            <field name="view_mode">list,form,graph,pivot</field>
             <field name="search_view_id" ref="waste_move_view_search"/>
             <field name="context">{'search_default_this_year': 1}</field>
             <field name="help" type="html">
@@ -168,9 +192,19 @@
 
         <menuitem id="menu_bilanz_root"
                   name="Abfallbilanz"
-                  parent="product_waste_registry.menu_product_waste_registry_root"
+                  parent="abfall_stammdaten.menu_abfall_stammdaten_root"
                   sequence="20"
         />
+
+        <menuitem id="menu_bilanz_reports"
+                  name="Reports"
+                  parent="menu_bilanz_root"
+                  sequence="100"/>
+
+        <record id="action_waste_sankey" model="ir.actions.client">
+            <field name="name">Waste Flow Sankey</field>
+            <field name="tag">abfall_bilanz.waste_sankey_view</field>
+        </record>
 
         <menuitem id="waste_move_menu_moves"
                   name="Moves"
@@ -178,5 +212,11 @@
                   action="waste_move_action"
                   sequence="10"
         />
+
+        <menuitem id="menu_waste_sankey"
+                  name="Sankey Analysis"
+                  parent="menu_bilanz_reports"
+                  action="action_waste_sankey"
+                  sequence="15"/>
     </data>
 </odoo>
