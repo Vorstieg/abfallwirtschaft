@@ -107,6 +107,11 @@
                     <filter string="Status" name="group_state" context="{'group_by':'state'}"/>
                     <filter string="Date" name="group_date" context="{'group_by':'date:month'}"/>
                     <filter string="Year" name="group_year" context="{'group_by':'date:year'}"/>
+                    <searchpanel>
+                        <field name="abfallart" icon="fa-recycle" enable_counters="1" select="multi"/>
+                        <field name="origin_partner" icon="fa-building" enable_counters="1"/>
+                        <field name="recipient_partner" icon="fa-building" enable_counters="1"/>
+                    </searchpanel>
                 </search>
             </field>
         </record>
