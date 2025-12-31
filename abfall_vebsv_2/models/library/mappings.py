@@ -231,7 +231,7 @@ class Shipment:
             'PredeterminedScopeAssignmentID': self.internal_id,
             'ShipmentItem': list(map(lambda x: x.parse(), self.shipment_items)),
             **(self.pickup_site_service.parse_pick_up_service() if sms_solution else {}),
-            **(self.pickup_site_service.parse_drop_of_service() if sms_solution else {}),
+            **(self.drop_of_site_service.parse_drop_of_service() if sms_solution else {}),
             'HandOverPartyReferenceID': "handover",
             'TakeOverPartyReferenceID': "takeover",
         }

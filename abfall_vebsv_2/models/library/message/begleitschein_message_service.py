@@ -212,28 +212,7 @@ class BegleitscheinMessageService:
                     })
                 elif update["BackwardSharingEvent"]:
                     last_transaction_uuid = update["BackwardSharingEvent"]['TransactionUUID']
-                    if any(party["RecipientID"] == own_gln for party in update["BackwardSharingEvent"]["SharedToParty"]):
-                        try:
-                            document = retrieve_document(self.auth, last_transaction_uuid)
-                        except Fault as fault:
-                            _logger.error(f"Error while fetching backward document {last_transaction_uuid}: {fault.message}")
-                            continue
-
-                        documentType = document["AuthenticatedDocument"]["DocumentUQ"]["DocumentHeader"]["DocumentTypeID"][
-                            "_value_1"]
-                        business_case_id = \
-                            document["AuthenticatedDocument"]["DocumentUQ"]["DocumentHeader"]["ContextUUIDReference"][
-                                "ContextUUID"]
-                        
-                        _logger.info(f"Backward Message {documentType} found for business case {business_case_id}")
-                        
-                        changes.append({
-                            'state': 'BACKWARD_INFO',
-                            'begleitschein': {
-                                'business_case_uuid': business_case_id,
-                            },
-                            'message': f"Received partner message {documentType} (Backward Sharing)"
-                        })
+                    _logger.info(update["BackwardSharingEvent"])
                 elif update["UpdateSignalEvent"]:
                     last_transaction_uuid = update["UpdateSignalEvent"]['TransactionUUID']
                     changes.append({
@@ -296,8 +275,9 @@ class BegleitscheinMessageService:
 
     def _ug_un_message(self, begleitschein, sms_telephone_number, sender: VebsvPartner, first_leg=True,
                        suffix: str = ""):
+        include_dropoff = not (not first_leg and begleitschein.is_dropshipping_with_two_legs())
         message_envelope = create_ug_un_message(begleitschein.selected_organisations(first_leg),
-                                                begleitschein.selected_local_units(dropoff=not first_leg),
+                                                begleitschein.selected_local_units(dropoff=include_dropoff),
                                                 begleitschein.get_shipment(),
                                                 sms_telephone_number)
         share_document(self.auth, uuid.uuid4(), message_envelope, begleitschein.shipment_uuid,

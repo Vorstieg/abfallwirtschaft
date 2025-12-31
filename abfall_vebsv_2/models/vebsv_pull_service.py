@@ -46,7 +46,7 @@ class VebsvPullService(models.TransientModel):
                     'company_id': company.id,
                     'organizing_partner_id': organizing_partner.id,
                     'business_case_uuid': begleitschein["business_case_uuid"],
-                    'state': '1_declared',
+                    'state': 'declared',
                     'begleitschein_lines': self._create_begleitschein_lines(begleitschein["begleitschein_lines"]),
                 })
                 new_begleitschein.message_post(
