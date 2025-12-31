@@ -31,6 +31,7 @@
     'assets': {
         'web.assets_backend': [
             'abfall_bilanz/static/src/xml/waste_sankey.xml',
+            'abfall_bilanz/static/src/css/waste_sankey.css',
             'abfall_bilanz/static/src/js/waste_sankey.js',
         ],
     },

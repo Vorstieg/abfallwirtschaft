@@ -1,0 +1,17 @@
+.o_sankey_icon {
+    display: inline-block !important;
+    width: 1.2em;
+    height: 1.2em;
+    background-color: currentColor !important;
+    -webkit-mask: url("/abfall_bilanz/static/src/img/sankey.svg") no-repeat center;
+    mask: url("/abfall_bilanz/static/src/img/sankey.svg") no-repeat center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    vertical-align: text-bottom;
+}
+
+.o_sankey_icon::before,
+.o_sankey_icon::after {
+    content: none !important;
+    display: none !important;
+}

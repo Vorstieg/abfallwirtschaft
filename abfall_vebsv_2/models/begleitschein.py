@@ -218,7 +218,7 @@ class Begleitschein(models.Model, VebsvBegleitschein):
 
         if len(self.begleitschein_lines) == 0:
             raise UserError(_("You need at least one product with a waste code"))
-        if self.target_partner_id.enable_sms_solution and not sms_telephone_number:
+        if self.source_partner_id.enable_sms_solution and not sms_telephone_number:
             raise UserError(_("If the sms solution is active, the partner needs to have a phone number configured"))
 
         has_dangerous_waste = self._get_unified_service().start_begleitschein(self, self.company_partner_id,
