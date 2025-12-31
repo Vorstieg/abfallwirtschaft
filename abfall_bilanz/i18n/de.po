@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-30 09:05+0000\n"
-"PO-Revision-Date: 2025-12-30 09:05+0000\n"
+"POT-Creation-Date: 2025-12-31 13:26+0000\n"
+"PO-Revision-Date: 2025-12-31 13:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 #. module: abfall_bilanz
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_form
 msgid "<span class=\"text-muted\">kg</span>"
-msgstr "<span class=\"text-muted\">kg</span>"
+msgstr ""
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__abfallart
@@ -29,23 +29,28 @@ msgstr "<span class=\"text-muted\">kg</span>"
 #: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_transport_type__abfallart
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__abfallart
 msgid "Abfallart"
-msgstr "Abfallart"
+msgstr ""
 
 #. module: abfall_bilanz
 #: model:ir.ui.menu,name:abfall_bilanz.menu_bilanz_root
 msgid "Abfallbilanz"
-msgstr "Abfallbilanz"
+msgstr ""
 
 #. module: abfall_bilanz
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_bilanz_xml
 msgid "Abfallbilanz Export"
-msgstr "Abfallbilanz Export"
+msgstr ""
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__message_needaction
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__message_needaction
 msgid "Action Needed"
 msgstr "Handlungsbedarf"
+
+#. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_ir_actions_act_window_view
+msgid "Action Window View"
+msgstr "Ansicht des Aktionsfensters"
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__activity_ids
@@ -75,6 +80,12 @@ msgstr "Aktivitätstyp-Icon"
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_search
 msgid "Additions (+)"
 msgstr "Zugänge (+)"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "All validations passed"
+msgstr "Alle Überprüfungen bestanden"
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__amount
@@ -158,7 +169,9 @@ msgstr "Kapazität (m³)"
 msgid ""
 "Check this if no waste movements or treatments occurred in the reporting "
 "year."
-msgstr "Markieren Sie dies, wenn im Berichtsjahr keine Abfallbewegungen oder -behandlungen stattgefunden haben."
+msgstr ""
+"Markieren Sie dies, wenn im Berichtsjahr keine Abfallbewegungen oder "
+"-behandlungen stattgefunden haben."
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__company_id
@@ -171,14 +184,46 @@ msgid "Company"
 msgstr "Unternehmen"
 
 #. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid "Company %s: Missing Person GLN."
+msgstr "Unternehmen %s: Fehlende Personen-GLN."
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Company must have a valid person_gln (Personen-GLN) configured"
+msgstr "Unternehmen muss eine gültige Personen-GLN konfiguriert haben"
+
+#. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz__compliance_errors
 msgid "Compliance Errors"
 msgstr "Compliance-Fehler"
 
 #. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid ""
+"Consistency Error [%s - %s]: Calculated stock is %.2f kg, but reported "
+"approved stock is %.2f kg. Difference: %.2f kg."
+msgstr ""
+
+#. module: abfall_bilanz
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_form
 msgid "Correction"
 msgstr "Korrektur"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid "Correction %s: Amount cannot be zero."
+msgstr "Korrektur %s: Menge darf nicht Null sein."
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid "Correction %s: Installation missing GTIN."
+msgstr "Korrektur %s: Anlage fehlt GTIN."
 
 #. module: abfall_bilanz
 #: model_terms:ir.actions.act_window,help:abfall_bilanz.action_reconciliation_installation
@@ -250,6 +295,12 @@ msgid "Created on"
 msgstr "Erstellt am"
 
 #. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Critical"
+msgstr "Kritisch"
+
+#. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__critical_count
 msgid "Critical Issues"
 msgstr "Kritische Probleme"
@@ -277,12 +328,21 @@ msgid "Default Site"
 msgstr "Standardstandort"
 
 #. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid ""
+"Destination location (Empfangsort) is missing or incomplete for handover"
+msgstr "Empfangsort fehlt oder ist unvollständig für Übergabe"
+
+#. module: abfall_bilanz
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_form
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_form
 msgid "Details"
-msgstr "Details"
+msgstr ""
 
 #. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_ir_actions_act_window_view__display_name
+#: model:ir.model.fields,field_description:abfall_bilanz.field_ir_ui_view__display_name
 #: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__display_name
 #: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_origintype__display_name
 #: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_quantificationtype__display_name
@@ -343,11 +403,21 @@ msgid "Empty Report (Leermeldung)"
 msgstr "Leermeldung"
 
 #. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid ""
+"Empty Report error: Found approved waste activities or storage entries for "
+"this year. A Leermeldung is only allowed if no activities occurred."
+msgstr ""
+
+#. module: abfall_bilanz
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_search
 msgid "Empty Reports"
 msgstr "Leermeldungen"
 
 #. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
 #: model:ir.model.fields.selection,name:abfall_bilanz.selection__waste_bilanz_submission__state__error
 msgid "Error"
 msgstr "Fehler"
@@ -362,7 +432,9 @@ msgstr "Fehlerhafte Einträge"
 msgid ""
 "Every time you generate an Abfallbilanz XML, it will be stored here for "
 "audit purposes."
-msgstr "Jedes Mal, wenn Sie eine Abfallbilanz-XML generieren, wird sie hier zu Überprüfungszwecken gespeichert."
+msgstr ""
+"Jedes Mal, wenn Sie eine Abfallbilanz-XML generieren, wird sie hier zu "
+"Überprüfungszwecken gespeichert."
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__message_follower_ids
@@ -439,11 +511,19 @@ msgid "Has Message"
 msgstr "Hat Nachrichten"
 
 #. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Hint"
+msgstr "Hinweis"
+
+#. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__hint_count
 msgid "Hint Issues"
 msgstr "Hinweise"
 
 #. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_ir_actions_act_window_view__id
+#: model:ir.model.fields,field_description:abfall_bilanz.field_ir_ui_view__id
 #: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__id
 #: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_origintype__id
 #: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_quantificationtype__id
@@ -459,7 +539,7 @@ msgstr "Hinweise"
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_correction__id
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_storage_state__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__activity_exception_icon
@@ -485,7 +565,8 @@ msgstr "Falls markiert, erfordern neue Nachrichten Ihre Aufmerksamkeit."
 #: model:ir.model.fields,help:abfall_bilanz.field_waste_move__message_has_error
 #: model:ir.model.fields,help:abfall_bilanz.field_waste_move__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr "Falls markiert, weisen einige Nachrichten einen Zustellungsfehler auf."
+msgstr ""
+"Falls markiert, weisen einige Nachrichten einen Zustellungsfehler auf."
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_reclassification__installation_id
@@ -521,6 +602,48 @@ msgstr "Anlagenabstimmungsregeln"
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_installation_search_view
 msgid "Installation Rules"
 msgstr "Anlagenregeln"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Installation is required for reclassification"
+msgstr "Anlage ist für Umklassifizierung erforderlich"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Installation is required for storage state"
+msgstr "Anlage ist für Lagerstand erforderlich"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Invalid GLN format: %s (must be 13 digits)"
+msgstr "Ungültiges GLN-Format: %s (muss 13 Ziffern haben)"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Invalid installation GTIN format: %s"
+msgstr "Ungültiges Anlagen-GTIN-Format: %s"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Invalid origin partner GLN: %s"
+msgstr "Ungültige Herkunftspartner-GLN: %s"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Invalid recipient partner GLN: %s"
+msgstr "Ungültige Empfängerpartner-GLN: %s"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Invalid waste type GTIN format: %s"
+msgstr "Ungültiges Abfallart-GTIN-Format: %s"
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__message_is_follower
@@ -573,12 +696,36 @@ msgid "Last Year"
 msgstr "Letztes Jahr"
 
 #. module: abfall_bilanz
+#. odoo-javascript
+#: code:addons/abfall_bilanz/static/src/xml/waste_sankey.xml:0
+msgid "Loading Chart..."
+msgstr ""
+
+#. module: abfall_bilanz
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_form
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_remaining_capacity_form
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_form
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_form
 msgid "Location"
 msgstr "Ort"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Mass cannot be negative (%s kg)"
+msgstr "Masse darf nicht negativ sein (%s kg)"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Mass cannot be zero"
+msgstr "Masse darf nicht null sein"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Mass exceeds maximum (100 billion kg): %s"
+msgstr "Masse überschreitet das Maximum (100 Milliarden kg): %s"
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__quantification_type
@@ -596,6 +743,36 @@ msgstr "Nachrichtenzustellungsfehler"
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__message_ids
 msgid "Messages"
 msgstr "Nachrichten"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid "Move %s: %s Partner '%s' is non-registered but has incomplete address."
+msgstr "Bewegung %s: %s Partner '%s' ist nicht registriert, hat aber eine unvollständige Adresse."
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid "Move %s: Amount must be greater than zero."
+msgstr "Bewegung %s: Menge muss größer als Null sein."
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid "Move %s: Missing Origin Partner."
+msgstr "Bewegung %s: Fehlender Herkunftspartner."
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid "Move %s: Missing Recipient Partner."
+msgstr "Bewegung %s: Fehlender Empfängerpartner."
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid "Move %s: Missing Waste Type."
+msgstr "Bewegung %s: Fehlende Abfallart."
 
 #. module: abfall_bilanz
 #: model:ir.ui.menu,name:abfall_bilanz.waste_move_menu_moves
@@ -630,10 +807,10 @@ msgid "New Waste Type"
 msgstr "Neue Abfallart"
 
 #. module: abfall_bilanz
-#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__activity_calendar_event_id
-#: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__activity_calendar_event_id
-msgid "Next Activity Calendar Event"
-msgstr "Nächstes Aktivitätskalenderereignis"
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "New waste type (Klassifikation) is required"
+msgstr "Neue Abfallart (Klassifikation) ist erforderlich"
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__activity_date_deadline
@@ -652,6 +829,12 @@ msgstr "Zusammenfassung der nächsten Aktivität"
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__activity_type_id
 msgid "Next Activity Type"
 msgstr "Nächster Aktivitätstyp"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid "No data found for this year. Did you mean to file an 'Empty Report'?"
+msgstr "Keine Daten für dieses Jahr gefunden. Wollten Sie eine 'Leermeldung' einreichen?"
 
 #. module: abfall_bilanz
 #: model_terms:ir.actions.act_window,help:abfall_bilanz.action_waste_bilanz_submission
@@ -683,6 +866,8 @@ msgid "Number of messages with delivery error"
 msgstr "Anzahl der Nachrichten mit Zustellungsfehler"
 
 #. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_form
 msgid "Origin"
 msgstr "Herkunft"
@@ -728,6 +913,19 @@ msgid "Origin Type Rules"
 msgstr "Herkunftstyp-Regeln"
 
 #. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Origin location (Absendeort) is missing or incomplete for takeover"
+msgstr "Absendeort fehlt oder ist unvollständig für Übernahme"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid ""
+"Origin treatment procedure (Herkunftsverfahren) is missing for handover"
+msgstr "Herkunftsverfahren fehlt für Übergabe"
+
+#. module: abfall_bilanz
 #: model:ir.model,name:abfall_bilanz.model_reconciliation_origintype
 msgid "Origin type Reconciliation"
 msgstr "Herkunftstyp-Abstimmung"
@@ -753,7 +951,7 @@ msgstr "Ursprüngliche Abfallart"
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_site_search_view
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_transport_type_view_search
 msgid "Partner"
-msgstr "Partner"
+msgstr ""
 
 #. module: abfall_bilanz
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_remaining_capacity_list
@@ -769,6 +967,12 @@ msgstr "Physische Restkapazität (m³)"
 #: model:ir.model.fields,help:abfall_bilanz.field_waste_storage_correction__amount
 msgid "Positive for addition, negative for removal"
 msgstr "Positiv für Zugang, negativ für Abgang"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Preliminary waste type is required"
+msgstr "Vorläufige Abfallart ist erforderlich"
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__priority
@@ -822,6 +1026,8 @@ msgid "Reason"
 msgstr "Grund"
 
 #. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_form
 msgid "Recipient"
 msgstr "Empfänger"
@@ -846,6 +1052,24 @@ msgstr "Empfängerstandort"
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_form
 msgid "Reclassification"
 msgstr "Neuzuordnung"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid "Reclassification %s: Amount must be positive."
+msgstr "Umklassifizierung %s: Menge muss positiv sein."
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid "Reclassification %s: Missing Reason."
+msgstr "Umklassifizierung %s: Grund fehlt."
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Reclassification amount must be > 0 (%s kg)"
+msgstr "Umklassifizierungsmenge muss > 0 sein (%s kg)"
 
 #. module: abfall_bilanz
 #: model:ir.ui.menu,name:abfall_bilanz.menu_waste_reclassification
@@ -953,6 +1177,12 @@ msgid "Reporting Year"
 msgstr "Berichtsjahr"
 
 #. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Reporting year %s is in the future"
+msgstr "Berichtsjahr %s liegt in der Zukunft"
+
+#. module: abfall_bilanz
 #: model:ir.ui.menu,name:abfall_bilanz.menu_bilanz_reports
 msgid "Reports"
 msgstr "Berichte"
@@ -1004,11 +1234,21 @@ msgid "SMS Delivery error"
 msgstr "SMS-Zustellungsfehler"
 
 #. module: abfall_bilanz
+#. odoo-javascript
+#: code:addons/abfall_bilanz/static/src/js/waste_sankey.js:0
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__ir_actions_act_window_view__view_mode__sankey
+#: model:ir.model.fields.selection,name:abfall_bilanz.selection__ir_ui_view__type__sankey
+msgid "Sankey"
+msgstr ""
+
+#. module: abfall_bilanz
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_bilanz_xml
 msgid ""
 "Select the year and click \"Generate Report\" to create an XML file \n"
 "                                    for submission to the Austrian waste registry (EDM)."
-msgstr "Wählen Sie das Jahr und klicken Sie auf \"Bericht erstellen\", um eine XML-Datei \n                                    für die Einreichung beim österreichischen Abfallregister (EDM) zu erstellen."
+msgstr ""
+"Wählen Sie das Jahr und klicken Sie auf \"Bericht erstellen\", um eine XML-Datei \n"
+"                                    für die Einreichung beim österreichischen Abfallregister (EDM) zu erstellen."
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_installation__side
@@ -1069,7 +1309,7 @@ msgstr "Quelle"
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_search
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
 msgid "Status"
-msgstr "Status"
+msgstr ""
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,help:abfall_bilanz.field_waste_bilanz_submission__activity_state
@@ -1079,7 +1319,11 @@ msgid ""
 "Overdue: Due date is already passed\n"
 "Today: Activity date is today\n"
 "Planned: Future activities."
-msgstr "Status basierend auf Aktivitäten\nÜberfällig: Fälligkeitsdatum bereits überschritten\nHeute: Aktivitätsdatum ist heute\nGeplant: Zukünftige Aktivitäten."
+msgstr ""
+"Status basierend auf Aktivitäten\n"
+"Überfällig: Fälligkeitsdatum bereits überschritten\n"
+"Heute: Aktivitätsdatum ist heute\n"
+"Geplant: Zukünftige Aktivitäten."
 
 #. module: abfall_bilanz
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_correction_form
@@ -1099,6 +1343,18 @@ msgid "Storage State"
 msgstr "Lagerstand"
 
 #. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid "Storage State %s: Amount cannot be negative."
+msgstr "Lagerstand %s: Menge darf nicht negativ sein."
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/waste_bilanz.py:0
+msgid "Storage State %s: Installation missing GTIN."
+msgstr "Lagerstand %s: Anlage fehlt GTIN."
+
+#. module: abfall_bilanz
 #: model:ir.ui.menu,name:abfall_bilanz.menu_waste_storage_state
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_storage_state_search
 msgid "Storage States"
@@ -1110,11 +1366,33 @@ msgid "Storage States (Lagerstände)"
 msgstr "Lagerstände"
 
 #. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Storage amount cannot be negative (%s kg)"
+msgstr "Lagermenge darf nicht negativ sein (%s kg)"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid ""
+"Storage state (%s kg) does not match calculated inventory (%s kg). Diff: %s "
+"kg"
+msgstr ""
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Storage state date should be January 1 or December 31"
+msgstr "Lagerstanddatum sollte 1. Januar oder 31. Dezember sein"
+
+#. module: abfall_bilanz
 #: model_terms:ir.actions.act_window,help:abfall_bilanz.action_waste_storage_state
 msgid ""
 "Storage states track the amount of waste stored at each installation.\n"
 "                Use \"Calculate Inventory\" in the Report Wizard to auto-generate end-of-year states."
-msgstr "Lagerstände verfolgen die Abfallmenge in jeder Anlage.\n                Verwenden Sie \"Bestand berechnen\" im Report-Assistenten, um automatisch Jahresendbestände zu generieren."
+msgstr ""
+"Lagerstände verfolgen die Abfallmenge in jeder Anlage.\n"
+"                Verwenden Sie \"Bestand berechnen\" im Report-Assistenten, um automatisch Jahresendbestände zu generieren."
 
 #. module: abfall_bilanz
 #: model:ir.actions.act_window,name:abfall_bilanz.action_waste_bilanz_submission
@@ -1217,12 +1495,13 @@ msgstr "Gesamtgewicht (kg)"
 msgid ""
 "Track the approved and physical remaining capacity of landfill "
 "installations."
-msgstr "Verfolgen Sie die genehmigte und physische Restkapazität von Deponieanlagen."
+msgstr ""
+"Verfolgen Sie die genehmigte und physische Restkapazität von Deponieanlagen."
 
 #. module: abfall_bilanz
 #: model:ir.model,name:abfall_bilanz.model_stock_picking
 msgid "Transfer"
-msgstr "Transfer"
+msgstr ""
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__amount
@@ -1232,7 +1511,7 @@ msgstr "Übertragene Menge"
 #. module: abfall_bilanz
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_form
 msgid "Transport"
-msgstr "Transport"
+msgstr ""
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_reconciliation_transport_type__transport_type
@@ -1260,6 +1539,12 @@ msgid "Transport type Reconciliation"
 msgstr "Transportart-Abstimmung"
 
 #. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Treatment procedure (Verbleibsverfahren) is missing for takeover"
+msgstr "Verbleibsverfahren fehlt für Übernahme"
+
+#. module: abfall_bilanz
 #: model:ir.model.fields,help:abfall_bilanz.field_waste_bilanz_submission__activity_exception_decoration
 #: model:ir.model.fields,help:abfall_bilanz.field_waste_move__activity_exception_decoration
 msgid "Type of the exception activity on record."
@@ -1270,14 +1555,18 @@ msgstr "Art der Ausnahmeaktivität im Datensatz."
 msgid ""
 "Use corrections to adjust inventory amounts that cannot be explained by "
 "normal handovers/takeovers."
-msgstr "Verwenden Sie Korrekturen, um Bestandsmengen anzupassen, die nicht durch normale Übergaben/Übernahmen erklärt werden können."
+msgstr ""
+"Verwenden Sie Korrekturen, um Bestandsmengen anzupassen, die nicht durch "
+"normale Übergaben/Übernahmen erklärt werden können."
 
 #. module: abfall_bilanz
 #: model_terms:ir.actions.act_window,help:abfall_bilanz.action_waste_reclassification
 msgid ""
 "Use reclassifications when waste is reassigned from one waste type code to "
 "another."
-msgstr "Verwenden Sie Neuzuordnungen, wenn Abfall von einer Abfallart zu einer anderen umgebucht wird."
+msgstr ""
+"Verwenden Sie Neuzuordnungen, wenn Abfall von einer Abfallart zu einer "
+"anderen umgebucht wird."
 
 #. module: abfall_bilanz
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_bilanz_submission_search
@@ -1300,6 +1589,23 @@ msgid "Verify Data"
 msgstr "Daten überprüfen"
 
 #. module: abfall_bilanz
+#: model:ir.model,name:abfall_bilanz.model_ir_ui_view
+msgid "View"
+msgstr "Ansicht"
+
+#. module: abfall_bilanz
+#: model:ir.model.fields,field_description:abfall_bilanz.field_ir_actions_act_window_view__view_mode
+#: model:ir.model.fields,field_description:abfall_bilanz.field_ir_ui_view__type
+msgid "View Type"
+msgstr "Ansichtstyp"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Warning"
+msgstr "Warnung"
+
+#. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__warning_count
 msgid "Warning Issues"
 msgstr "Warnungen"
@@ -1320,6 +1626,12 @@ msgid "Waste Details"
 msgstr "Abfalldetails"
 
 #. module: abfall_bilanz
+#. odoo-javascript
+#: code:addons/abfall_bilanz/static/src/xml/waste_sankey.xml:0
+msgid "Waste Flow Analysis (Sankey)"
+msgstr ""
+
+#. module: abfall_bilanz
 #: model:ir.model,name:abfall_bilanz.model_waste_move
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_move__name
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_form
@@ -1328,10 +1640,16 @@ msgstr "Abfallbewegung"
 
 #. module: abfall_bilanz
 #: model:ir.actions.act_window,name:abfall_bilanz.waste_move_action
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_graph
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_list
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
 msgid "Waste Moves"
 msgstr "Abfallbewegungen"
+
+#. module: abfall_bilanz
+#: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_pivot
+msgid "Waste Moves Analysis"
+msgstr ""
 
 #. module: abfall_bilanz
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.view_waste_reclassification_form
@@ -1374,7 +1692,9 @@ msgstr "Abfallart"
 msgid ""
 "Waste moves track the handover and takeover of waste materials between parties and installations.\n"
 "                    They are automatically created when validating stock pickings for products with waste types configured."
-msgstr "Abfallbewegungen verfolgen die Übergabe und Übernahme von Abfällen zwischen Parteien und Anlagen.\n                    Sie werden automatisch erstellt, wenn Lagerbuchungen für Produkte mit konfigurierten Abfallarten validiert werden."
+msgstr ""
+"Abfallbewegungen verfolgen die Übergabe und Übernahme von Abfällen zwischen Parteien und Anlagen.\n"
+"                    Sie werden automatisch erstellt, wenn Lagerbuchungen für Produkte mit konfigurierten Abfallarten validiert werden."
 
 #. module: abfall_bilanz
 #: model:ir.model.fields,field_description:abfall_bilanz.field_waste_bilanz_submission__website_message_ids
@@ -1414,6 +1734,12 @@ msgstr "XML-Dateiname"
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.waste_move_view_search
 msgid "Year"
 msgstr "Jahr"
+
+#. module: abfall_bilanz
+#. odoo-python
+#: code:addons/abfall_bilanz/models/edm_validator.py:0
+msgid "Year %s"
+msgstr "Jahr %s"
 
 #. module: abfall_bilanz
 #: model_terms:ir.ui.view,arch_db:abfall_bilanz.reconciliation_installation_form_view

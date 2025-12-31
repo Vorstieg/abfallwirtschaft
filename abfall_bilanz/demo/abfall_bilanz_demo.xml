@@ -105,6 +105,8 @@
             <field name="amount">3761.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -119,6 +121,8 @@
             <field name="amount">2195.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -133,6 +137,8 @@
             <field name="amount">2385.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -147,6 +153,8 @@
             <field name="amount">572.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -161,6 +169,8 @@
             <field name="amount">4147.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -175,6 +185,8 @@
             <field name="amount">3578.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -189,6 +201,8 @@
             <field name="amount">659.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -203,6 +217,8 @@
             <field name="amount">1748.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -217,6 +233,8 @@
             <field name="amount">584.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -231,6 +249,8 @@
             <field name="amount">415.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -245,6 +265,8 @@
             <field name="amount">501.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -259,6 +281,8 @@
             <field name="amount">1271.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -273,6 +297,8 @@
             <field name="amount">4403.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -287,6 +313,8 @@
             <field name="amount">1576.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -301,6 +329,8 @@
             <field name="amount">4647.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -315,6 +345,8 @@
             <field name="amount">4329.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -329,6 +361,8 @@
             <field name="amount">834.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -343,6 +377,8 @@
             <field name="amount">4230.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -357,6 +393,8 @@
             <field name="amount">1235.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -371,6 +409,8 @@
             <field name="amount">3580.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -385,6 +425,8 @@
             <field name="amount">379.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -399,6 +441,8 @@
             <field name="amount">3155.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -413,6 +457,8 @@
             <field name="amount">3718.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -427,6 +473,8 @@
             <field name="amount">597.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -441,6 +489,8 @@
             <field name="amount">698.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -455,6 +505,8 @@
             <field name="amount">2946.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -469,6 +521,8 @@
             <field name="amount">4008.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -483,6 +537,8 @@
             <field name="amount">3483.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -497,6 +553,8 @@
             <field name="amount">1762.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -511,6 +569,8 @@
             <field name="amount">3102.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -525,6 +585,8 @@
             <field name="amount">1880.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">draft</field>
         </record>
 
@@ -539,6 +601,8 @@
             <field name="amount">3484.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -553,6 +617,8 @@
             <field name="amount">3563.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -567,6 +633,8 @@
             <field name="amount">2733.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -581,6 +649,8 @@
             <field name="amount">3456.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -595,6 +665,8 @@
             <field name="amount">2764.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">draft</field>
         </record>
 
@@ -609,6 +681,8 @@
             <field name="amount">1767.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -623,6 +697,8 @@
             <field name="amount">161.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -637,6 +713,8 @@
             <field name="amount">2897.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -651,6 +729,8 @@
             <field name="amount">1121.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -665,6 +745,8 @@
             <field name="amount">1835.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">draft</field>
         </record>
 
@@ -679,6 +761,8 @@
             <field name="amount">726.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -693,6 +777,8 @@
             <field name="amount">3354.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -707,6 +793,8 @@
             <field name="amount">1536.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -721,6 +809,8 @@
             <field name="amount">1515.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -735,6 +825,8 @@
             <field name="amount">414.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">draft</field>
         </record>
 
@@ -749,6 +841,8 @@
             <field name="amount">1746.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -763,6 +857,8 @@
             <field name="amount">1301.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -777,6 +873,8 @@
             <field name="amount">256.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">approved</field>
         </record>
 
@@ -791,6 +889,8 @@
             <field name="amount">2103.0</field>
             <field name="quantification_type" ref="abfall_stammdaten.9008390100011"/>
             <field name="transport_type" ref="abfall_stammdaten.9008390101544"/>
+            <field name="origin_type" ref="abfall_stammdaten.origin_9008390100257"/>
+            <field name="recycling_type" ref="abfall_stammdaten.recycling_9008390008027"/>
             <field name="state">draft</field>
         </record>
 

@@ -3,7 +3,7 @@
     <t t-name="abfall_bilanz.WasteSankeyView">
         <Layout display="{ controlPanel: {}, searchPanel: true }" className="'h-100 overflow-auto'">
              <t t-set-slot="layout-actions">
-                  <SearchBar model="props.searchModel"/>
+                  <SearchBar/>
              </t>
              
              <WasteSankeyRenderer domain="props.domain"/>

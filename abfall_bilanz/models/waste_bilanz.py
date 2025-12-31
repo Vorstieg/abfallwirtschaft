@@ -98,7 +98,7 @@ class WasteBilanz(models.TransientModel):
         # 1. Company Check
         company = self.env.company
         if not company.partner_id.person_gln:
-            errors.append(f"Company {company.name}: Missing Person GLN.")
+            errors.append(_("Company %s: Missing Person GLN.") % company.name)
 
         # 2. Waste Activity Check (Mutually exclusive with Empty Report)
         moves = self.env['waste.move'].search([
@@ -132,48 +132,49 @@ class WasteBilanz(models.TransientModel):
 
         if self.is_empty_report:
             if has_data:
-                errors.append("Empty Report error: Found approved waste activities or storage entries for this year. "
-                              "A Leermeldung is only allowed if no activities occurred.")
+                errors.append(_("Empty Report error: Found approved waste activities or storage entries for this year. "
+                              "A Leermeldung is only allowed if no activities occurred."))
             return errors # No further checks needed for empty report
 
+
         if not has_data:
-            errors.append("No data found for this year. Did you mean to file an 'Empty Report'?")
+            errors.append(_("No data found for this year. Did you mean to file an 'Empty Report'?"))
             return errors
 
         # 3. Detailed Data Integrity Checks (only if not empty report)
         for move in moves:
             if move.amount <= 0:
-                errors.append(f"Move {move.name or move.id}: Amount must be greater than zero.")
+                errors.append(_("Move %s: Amount must be greater than zero.") % (move.name or move.id))
             if not move.abfallart:
-                errors.append(f"Move {move.name or move.id}: Missing Waste Type.")
+                errors.append(_("Move %s: Missing Waste Type.") % (move.name or move.id))
             if not move.origin_partner:
-                errors.append(f"Move {move.name or move.id}: Missing Origin Partner.")
+                errors.append(_("Move %s: Missing Origin Partner.") % (move.name or move.id))
             if not move.recipient_partner:
-                errors.append(f"Move {move.name or move.id}: Missing Recipient Partner.")
+                errors.append(_("Move %s: Missing Recipient Partner.") % (move.name or move.id))
             
             # Party specific checks
-            for partner, label in [(move.origin_partner, "Origin"), (move.recipient_partner, "Recipient")]:
+            for partner, label in [(move.origin_partner, _("Origin")), (move.recipient_partner, _("Recipient"))]:
                 if partner and not partner.person_gln:
                     if not (partner.city or partner.zip or partner.street or partner.country_id):
-                        errors.append(f"Move {move.name or move.id}: {label} Partner '{partner.name}' is non-registered but has incomplete address.")
+                        errors.append(_("Move %s: %s Partner '%s' is non-registered but has incomplete address.") % (move.name or move.id, label, partner.name))
 
         for s in states:
             if s.amount < 0:
-                errors.append(f"Storage State {s.id}: Amount cannot be negative.")
+                errors.append(_("Storage State %s: Amount cannot be negative.") % s.id)
             if not s.installation_id.gtin:
-                errors.append(f"Storage State {s.id}: Installation missing GTIN.")
+                errors.append(_("Storage State %s: Installation missing GTIN.") % s.id)
 
         for c in corrections:
             if c.amount == 0:
-                errors.append(f"Correction {c.id}: Amount cannot be zero.")
+                errors.append(_("Correction %s: Amount cannot be zero.") % c.id)
             if not c.installation_id.gtin:
-                errors.append(f"Correction {c.id}: Installation missing GTIN.")
+                errors.append(_("Correction %s: Installation missing GTIN.") % c.id)
 
         for r in reclasses:
             if r.amount <= 0:
-                errors.append(f"Reclassification {r.id}: Amount must be positive.")
+                errors.append(_("Reclassification %s: Amount must be positive.") % r.id)
             if not r.reclassification_reason_id:
-                errors.append(f"Reclassification {r.id}: Missing Reason.")
+                errors.append(_("Reclassification %s: Missing Reason.") % r.id)
 
         # 4. Inventory Reconciliation (Consistency Check)
         # Verify that reported states match the calculated balance
@@ -206,9 +207,9 @@ class WasteBilanz(models.TransientModel):
                 actual_stock = sum(actual_state.mapped('amount'))
                 
                 if abs(expected_stock - actual_stock) > 0.001: # Use epsilon for float comparison
-                    errors.append(f"Consistency Error [{inst.name} - {w_type.name}]: "
-                                  f"Calculated stock is {expected_stock:.2f} kg, but reported approved stock is {actual_stock:.2f} kg. "
-                                  f"Difference: {expected_stock - actual_stock:.2f} kg.")
+                    errors.append(_("Consistency Error [%s - %s]: "
+                                  "Calculated stock is %.2f kg, but reported approved stock is %.2f kg. "
+                                  "Difference: %.2f kg.") % (inst.name, w_type.name, expected_stock, actual_stock, expected_stock - actual_stock))
 
         return errors
 

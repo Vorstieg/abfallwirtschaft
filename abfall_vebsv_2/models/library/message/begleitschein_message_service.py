@@ -171,7 +171,7 @@ class BegleitscheinMessageService:
                                 'state': 'UPDATE',
                                 'begleitschein': {
                                     'business_case_uuid': business_case_id,
-                                    'state': '4_in_transport'
+                                    'state': 'in_transport'
                                 },
                                 'message': "Recived transport start message"
                             })
@@ -180,7 +180,7 @@ class BegleitscheinMessageService:
                                 'state': 'UPDATE',
                                 'begleitschein': {
                                     'business_case_uuid': business_case_id,
-                                    'state': '6_transport_complete'
+                                    'state': 'transport_complete'
                                 },
                                 'message': "Recived transport abschluss message"
                             })
@@ -189,7 +189,7 @@ class BegleitscheinMessageService:
                                 'state': 'UPDATE',
                                 'begleitschein': {
                                     'business_case_uuid': business_case_id,
-                                    'state': '8_done'
+                                    'state': 'done'
                                 },
                                 'message': "Übernahme bestätigungs message"
                             })

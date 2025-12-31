@@ -10,6 +10,7 @@ from enum import Enum
 from dataclasses import dataclass, field
 from typing import List, Optional
 from datetime import date
+from odoo import _
 
 
 class EDMSeverity(Enum):
@@ -93,7 +94,7 @@ class EDMValidationResult:
     def to_html(self) -> str:
         """Generate HTML summary for display in Odoo."""
         if not self.errors:
-            return '<p style="color: green;">✓ All validations passed</p>'
+            return '<p style="color: green;">✓ ' + _('All validations passed') + '</p>'
         
         html_parts = ['<div class="edm-validation-results">']
         
@@ -117,13 +118,19 @@ class EDMValidationResult:
                 EDMSeverity.HINT: 'ℹ️'
             }.get(severity, '•')
             
-            html_parts.append(f'<h4 style="color: {color};">{icon} {severity.value.title()} ({len(severity_errors)})</h4>')
+            severity_labels = {
+                EDMSeverity.CRITICAL: _('Critical'),
+                EDMSeverity.ERROR: _('Error'),
+                EDMSeverity.WARNING: _('Warning'),
+                EDMSeverity.HINT: _('Hint')
+            }
+            label = severity_labels.get(severity, severity.value.title())
+            
+            html_parts.append(f'<h4 style="color: {color};">{icon} {label} ({len(severity_errors)})</h4>')
             html_parts.append('<ul>')
-            for err in severity_errors[:20]:  # Limit display
+            for err in severity_errors:
                 record_info = f' [{err.record_name}]' if err.record_name else ''
                 html_parts.append(f'<li><strong>{err.rule_id}</strong>: {err.message}{record_info}</li>')
-            if len(severity_errors) > 20:
-                html_parts.append(f'<li>... and {len(severity_errors) - 20} more</li>')
             html_parts.append('</ul>')
         
         html_parts.append('</div>')
@@ -159,8 +166,8 @@ class EDMValidator:
         # Validate all waste moves
         year = int(submission.year)
         moves = self.env['waste.move'].search([
-            ('date', '>=', f'{year}-01-01'),
-            ('date', '<=', f'{year}-12-31'),
+            ('date', '>=', date(year, 1, 1)),
+            ('date', '<=', date(year, 12, 31)),
             ('state', '=', 'approved'),
             ('company_id', '=', submission.company_id.id)
         ])
@@ -169,8 +176,8 @@ class EDMValidator:
         
         # Validate storage states
         storage_states = self.env['waste.storage.state'].search([
-            ('reporting_date', '>=', f'{year}-01-01'),
-            ('reporting_date', '<=', f'{year}-12-31'),
+            ('reporting_date', '>=', date(year, 1, 1)),
+            ('reporting_date', '<=', date(year, 12, 31)),
             ('company_id', '=', submission.company_id.id)
         ])
         for state in storage_states:
@@ -178,8 +185,8 @@ class EDMValidator:
         
         # Validate reclassifications
         reclassifications = self.env['waste.reclassification'].search([
-            ('reporting_date', '>=', f'{year}-01-01'),
-            ('reporting_date', '<=', f'{year}-12-31'),
+            ('reporting_date', '>=', date(year, 1, 1)),
+            ('reporting_date', '<=', date(year, 12, 31)),
             ('company_id', '=', submission.company_id.id)
         ])
         for reclass in reclassifications:
@@ -195,11 +202,11 @@ class EDMValidator:
         # C316: Valid person GLN required
         if not partner.person_gln:
             self.result.add_critical('C316',
-                'Company must have a valid person_gln (Personen-GLN) configured',
+                _('Company must have a valid person_gln (Personen-GLN) configured'),
                 record_name=company.name, record_model='res.company', record_id=company.id)
         elif len(partner.person_gln) != 13 or not partner.person_gln.isdigit():
             self.result.add_critical('C316',
-                f'Invalid GLN format: {partner.person_gln} (must be 13 digits)',
+                _('Invalid GLN format: %s (must be 13 digits)') % partner.person_gln,
                 record_name=company.name, record_model='res.company', record_id=company.id)
     
     def _validate_date_range(self, submission):
@@ -211,8 +218,8 @@ class EDMValidator:
         current_year = date.today().year
         if year > current_year:
             self.result.add_critical('C400',
-                f'Reporting year {year} is in the future',
-                record_name=f'Year {year}')
+                _('Reporting year %s is in the future') % year,
+                record_name=_('Year %s') % year)
     
     def _validate_waste_move(self, move):
         """Validate a single waste move."""
@@ -225,19 +232,19 @@ class EDMValidator:
         # R131: Negative mass
         if move.amount < 0:
             self.result.add_error_level('R131',
-                f'Mass cannot be negative ({move.amount} kg)',
+                _('Mass cannot be negative (%s kg)') % move.amount,
                 **record_info)
         
         # R867: Zero mass
         if move.amount == 0:
             self.result.add_error_level('R867',
-                'Mass cannot be zero',
+                _('Mass cannot be zero'),
                 **record_info)
         
         # R784: Excessively large mass
         if move.amount > 100_000_000_000:
             self.result.add_error_level('R784',
-                f'Mass exceeds maximum (100 billion kg): {move.amount}',
+                _('Mass exceeds maximum (100 billion kg): %s') % move.amount,
                 **record_info)
         
         # Booking Type Logic (BookingTypeCode rules)
@@ -246,12 +253,12 @@ class EDMValidator:
             # R979: Origin location missing
             if not move.origin_site and not (move.origin_partner and (move.origin_partner.person_gln or (move.origin_partner.city and move.origin_partner.zip))):
                 self.result.add_warning('R979',
-                    'Origin location (Absendeort) is missing or incomplete for takeover',
+                    _('Origin location (Absendeort) is missing or incomplete for takeover'),
                     **record_info)
             # R901: Treatment procedure missing
             if not move.recycling_type:
                 self.result.add_warning('R901',
-                    'Treatment procedure (Verbleibsverfahren) is missing for takeover',
+                    _('Treatment procedure (Verbleibsverfahren) is missing for takeover'),
                     **record_info)
         
         # 2. Handover (Übergabe) - Origin is own installation
@@ -259,12 +266,12 @@ class EDMValidator:
             # R402: Destination location missing
             if not move.recipient_site and not (move.recipient_partner and (move.recipient_partner.person_gln or (move.recipient_partner.city and move.recipient_partner.zip))):
                 self.result.add_warning('R402',
-                    'Destination location (Empfangsort) is missing or incomplete for handover',
+                    _('Destination location (Empfangsort) is missing or incomplete for handover'),
                     **record_info)
             # R108: Origin treatment procedure missing
             if not move.origin_type:
                 self.result.add_warning('R108',
-                    'Origin treatment procedure (Herkunftsverfahren) is missing for handover',
+                    _('Origin treatment procedure (Herkunftsverfahren) is missing for handover'),
                     **record_info)
 
         # 3. Internal Move (Internal) - Both installations belong to own company
@@ -276,7 +283,7 @@ class EDMValidator:
         if move.abfallart and move.abfallart.gtin:
             if len(move.abfallart.gtin) != 13:
                 self.result.add_warning('R351',
-                    f'Invalid waste type GTIN format: {move.abfallart.gtin}',
+                    _('Invalid waste type GTIN format: %s') % move.abfallart.gtin,
                     **record_info)
         
         # Validate partner GLNs
@@ -284,14 +291,14 @@ class EDMValidator:
             gln = move.origin_partner.person_gln
             if len(gln) != 13 or not gln.isdigit():
                 self.result.add_warning('R688',
-                    f'Invalid origin partner GLN: {gln}',
+                    _('Invalid origin partner GLN: %s') % gln,
                     **record_info)
         
         if move.recipient_partner and move.recipient_partner.person_gln:
             gln = move.recipient_partner.person_gln
             if len(gln) != 13 or not gln.isdigit():
                 self.result.add_warning('R688',
-                    f'Invalid recipient partner GLN: {gln}',
+                    _('Invalid recipient partner GLN: %s') % gln,
                     **record_info)
 
     def _validate_storage_state(self, state):
@@ -305,7 +312,7 @@ class EDMValidator:
         # R757: Storage amount cannot be negative
         if state.amount < 0:
             self.result.add_error_level('R757',
-                f'Storage amount cannot be negative ({state.amount} kg)',
+                _('Storage amount cannot be negative (%s kg)') % state.amount,
                 **record_info)
         
         # R753: Date should be start or end of year  
@@ -314,95 +321,26 @@ class EDMValidator:
             month = state.reporting_date.month
             if not ((month == 1 and day == 1) or (month == 12 and day == 31)):
                 self.result.add_hint('R753',
-                    'Storage state date should be January 1 or December 31',
+                    _('Storage state date should be January 1 or December 31'),
                     **record_info)
         
         # Installation validation
         if not state.installation_id:
             self.result.add_error_level('R889',
-                'Installation is required for storage state',
+                _('Installation is required for storage state'),
                 **record_info)
         elif state.installation_id.gtin:
             if len(state.installation_id.gtin) != 13:
                 self.result.add_warning('R687',
-                    f'Invalid installation GTIN format: {state.installation_id.gtin}',
+                    _('Invalid installation GTIN format: %s') % state.installation_id.gtin,
                     **record_info)
-        
-        # Consistency Check (only if approved)
-        if state.state == 'approved':
-             self._check_storage_consistency(state)
-
-    def _check_storage_consistency(self, state):
-        """Check if approved storage state matches calculated inventory."""
-        installation = state.installation_id
-        waste_type = state.abfallart
-        year = state.reporting_date.year
-        
-        # Simple formula matching WasteBilanz wizard
-        # Note: In a real ERP, we might need more complex checks, but let's match the existing wizard logic
-        prev_stock = self._get_previous_inventory(installation, waste_type, year)
-        
-        # Takeovers
-        takeovers = self.env['waste.move'].search([
-            ('recipient_installation', '=', installation.id),
-            ('abfallart', '=', waste_type.id),
-            ('date', '>=', f'{year}-01-01'),
-            ('date', '<=', f'{year}-12-31'),
-            ('state', '=', 'approved'),
-        ])
-        takeover_amount = sum(takeovers.mapped('amount'))
-
-        # Handovers
-        handovers = self.env['waste.move'].search([
-            ('origin_installation', '=', installation.id),
-            ('abfallart', '=', waste_type.id),
-            ('date', '>=', f'{year}-01-01'),
-            ('date', '<=', f'{year}-12-31'),
-            ('state', '=', 'approved'),
-        ])
-        handover_amount = sum(handovers.mapped('amount'))
-        
-        # Corrections
-        corrections = self.env['waste.storage.correction'].search([
-            ('installation_id', '=', installation.id),
-            ('abfallart', '=', waste_type.id),
-            ('reporting_date', '>=', f'{year}-01-01'),
-            ('reporting_date', '<=', f'{year}-12-31'),
-        ])
-        correction_amount = sum(corrections.mapped('amount'))
-        
-        # Reclassifications
-        reclasses_in = self.env['waste.reclassification'].search([
-            ('installation_id', '=', installation.id),
-            ('new_abfallart', '=', waste_type.id),
-            ('reporting_date', '>=', f'{year}-01-01'),
-            ('reporting_date', '<=', f'{year}-12-31'),
-        ])
-        reclass_in_amount = sum(reclasses_in.mapped('amount'))
-
-        reclasses_out = self.env['waste.reclassification'].search([
-            ('installation_id', '=', installation.id),
-            ('preliminary_abfallart', '=', waste_type.id),
-            ('reporting_date', '>=', f'{year}-01-01'),
-            ('reporting_date', '<=', f'{year}-12-31'),
-        ])
-        reclass_out_amount = sum(reclasses_out.mapped('amount'))
-
-        expected_stock = prev_stock + takeover_amount - handover_amount + correction_amount + reclass_in_amount - reclass_out_amount
-        
-        if abs(expected_stock - state.amount) > 0.001:
-            self.result.add_warning('CONSISTENCY',
-                f'Storage state ({state.amount} kg) does not match calculated inventory ({expected_stock:.2f} kg). '
-                f'Diff: {state.amount - expected_stock:.2f} kg',
-                record_name=f'{installation.name} - {waste_type.name}',
-                record_model='waste.storage.state', record_id=state.id)
 
     def _get_previous_inventory(self, installation, waste_type, year):
         """Finds the most recent approved inventory before the given year"""
         prev_state = self.env['waste.storage.state'].search([
             ('installation_id', '=', installation.id),
             ('abfallart', '=', waste_type.id),
-            ('reporting_date', '<', f'{year}-01-01'),
+            ('reporting_date', '<', date(year, 1, 1)),
             ('state', '=', 'approved'),
         ], order='reporting_date desc', limit=1)
         
@@ -419,24 +357,24 @@ class EDMValidator:
         # R928: New waste type required
         if not reclass.new_abfallart:
             self.result.add_error_level('R928',
-                'New waste type (Klassifikation) is required',
+                _('New waste type (Klassifikation) is required'),
                 **record_info)
         
         # R936: Preliminary waste type required
         if not reclass.preliminary_abfallart:
             self.result.add_error_level('R936',
-                'Preliminary waste type is required',
+                _('Preliminary waste type is required'),
                 **record_info)
         
         # R941: Installation required
         if not reclass.installation_id:
             self.result.add_error_level('R941',
-                'Installation is required for reclassification',
+                _('Installation is required for reclassification'),
                 **record_info)
         
         # Amount validation
         if reclass.amount <= 0:
             self.result.add_error_level('R867',
-                f'Reclassification amount must be > 0 ({reclass.amount} kg)',
+                _('Reclassification amount must be > 0 (%s kg)') % reclass.amount,
                 **record_info)
 

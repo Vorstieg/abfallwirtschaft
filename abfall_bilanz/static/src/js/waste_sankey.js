@@ -93,10 +93,14 @@ export class WasteSankeyRenderer extends Component {
 
                 if (isOriginInternal) {
                     originNode += ` (${wasteName})`;
+                } else {
+                    originNode += ' (Quelle)';  // Force left
                 }
 
                 if (isRecInternal) {
                     recipientNode += ` (${wasteName})`;
+                } else {
+                    recipientNode += ' (Ziel)';  // Force right
                 }
 
                 if (originNode === recipientNode) return;
