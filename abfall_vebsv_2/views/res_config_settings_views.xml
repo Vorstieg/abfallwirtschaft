@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="waste_management_config_settings_view_form" model="ir.ui.view">
+            <field name="name">waste.management.config.settings.view.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="100"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//app[@name='abfall_anlagenverzeichnis']" position="inside">
+                    <block title="EDM User Data" name="vebsv">
+                        <setting>
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="edm_username" class="col-lg-3 o_light_label"/>
+                                    <field name="edm_username" class="oe_inline"/>
+                                </div>
+                                <div class="row mt16">
+                                    <label for="edm_secret" class="col-lg-3 o_light_label"/>
+                                    <field name="edm_secret" class="oe_inline"/>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting string="Send Begleitscheine, that don't require reporting"
+                                 id="edm_begleitschein_settings">
+                            <field name="begleitscheine_non_reporting"/>
+                        </setting>
+                    </block>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,7 +1,7 @@
 TBD: needs to be adapted as we create new modules
 
 
-# Odoo Waste Registry Module (`product_waste_registry`)
+# Odoo Waste Registry Module (`abfall_stammdaten`)
 
 This Odoo module provides a system for managing waste types within Odoo, based on the official Austrian waste directory ("Abfallverzeichnis"). It introduces a new "Waste Type" model, links it to products, and includes a tool for importing data directly from the official source.
 
@@ -25,14 +25,14 @@ The primary data source for this module is the [**Abfallverzeichnis from the EDM
 
 ## Installation & Setup
 
-1.  **Add the Module**: Add the `product_waste_registry` directory to the `addons_path` in your `odoo.conf` file.
+1.  **Add the Module**: Add the `abfall_stammdaten` directory to the `addons_path` in your `odoo.conf` file.
 2.  **Generate new Data File (only if you need updated data)**:
     * Download the official waste directory as a CSV file from the EDM Portal link above.
     * Save this file as `waste_types_export.csv`.
     * Place it in the same directory as the `convert_csv_to_xml.py` script provided in the `utils` directory.
     * Run the script from your terminal: `python convert_csv_to_xml.py`
     * This will generate a `waste_type_data.xml` file.
-    * Move this generated `waste_type_data.xml` file into the `product_waste_registry/data/` directory (replace with existing).
+    * Move this generated `waste_type_data.xml` file into the `abfall_stammdaten/data/` directory (replace with existing).
 3.  **Install in Odoo**:
     * Restart your Odoo server.
     * Navigate to the **Apps** menu in Odoo.

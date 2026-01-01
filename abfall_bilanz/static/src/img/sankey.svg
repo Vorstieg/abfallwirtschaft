@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor">
+  <!-- Source Node -->
+  <rect x="0" y="20" width="10" height="60" rx="2" />
+  
+  <!-- Target Nodes -->
+  <rect x="90" y="10" width="10" height="30" rx="2" />
+  <rect x="90" y="60" width="10" height="30" rx="2" />
+
+  <!-- Flow 1: Top Split -->
+  <path d="M 10 30 C 40 30, 60 25, 90 25 L 90 35 C 60 35, 40 45, 10 45 Z" opacity="0.8" />
+
+  <!-- Flow 2: Bottom Split -->
+  <path d="M 10 55 C 40 55, 60 65, 90 65 L 90 75 C 60 75, 40 70, 10 70 Z" opacity="0.8" />
+</svg>

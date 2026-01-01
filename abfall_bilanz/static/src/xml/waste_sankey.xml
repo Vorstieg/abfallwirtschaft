@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="abfall_bilanz.WasteSankeyView">
+        <Layout display="{ controlPanel: {}, searchPanel: true }" className="'h-100 overflow-auto'">
+             <t t-set-slot="layout-actions">
+                  <SearchBar/>
+             </t>
+             
+             <WasteSankeyRenderer domain="props.domain"/>
+        </Layout>
+    </t>
+
+    <t t-name="abfall_bilanz.WasteSankeyRenderer">
+         <div class="container-fluid py-3">
+             <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>Waste Flow Analysis (Sankey)</h3>
+             </div>
+                          
+             <div t-ref="sankey" style="width: 100%; height: 600px; background: white; border-radius: 4px; padding: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                Loading Chart...
+             </div>
+         </div>
+    </t>
+</templates>

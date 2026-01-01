@@ -107,14 +107,43 @@
                     <filter string="Status" name="group_state" context="{'group_by':'state'}"/>
                     <filter string="Date" name="group_date" context="{'group_by':'date:month'}"/>
                     <filter string="Year" name="group_year" context="{'group_by':'date:year'}"/>
+                    <searchpanel view_types="list,sankey">
+                        <field name="abfallart" icon="fa-recycle" enable_counters="1" select="multi"/>
+                        <field name="origin_partner" icon="fa-building" enable_counters="1"/>
+                        <field name="recipient_partner" icon="fa-building" enable_counters="1"/>
+                    </searchpanel>
                 </search>
+            </field>
+        </record>
+
+        <record id="waste_move_view_graph" model="ir.ui.view">
+            <field name="name">waste.move.view.graph</field>
+            <field name="model">waste.move</field>
+            <field name="arch" type="xml">
+                <graph string="Waste Moves" sample="1">
+                    <field name="date"/>
+                    <field name="abfallart"/>
+                    <field name="amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="waste_move_view_pivot" model="ir.ui.view">
+            <field name="name">waste.move.view.pivot</field>
+            <field name="model">waste.move</field>
+            <field name="arch" type="xml">
+                <pivot string="Waste Moves Analysis" sample="1">
+                    <field name="date" type="row" interval="month"/>
+                    <field name="abfallart" type="col"/>
+                    <field name="amount" type="measure"/>
+                </pivot>
             </field>
         </record>
 
         <record id="waste_move_action" model="ir.actions.act_window">
             <field name="name">Waste Moves</field>
             <field name="res_model">waste.move</field>
-            <field name="view_mode">list,form</field>
+            <field name="view_mode">list,form,graph,pivot,sankey</field>
             <field name="search_view_id" ref="waste_move_view_search"/>
             <field name="context">{'search_default_this_year': 1}</field>
             <field name="help" type="html">
@@ -125,6 +154,14 @@
                     Waste moves track the handover and takeover of waste materials between parties and installations.
                     They are automatically created when validating stock pickings for products with waste types configured.
                 </p>
+            </field>
+        </record>
+        
+        <record id="waste_move_view_sankey" model="ir.ui.view">
+            <field name="name">waste.move.sankey</field>
+            <field name="model">waste.move</field>
+            <field name="arch" type="xml">
+                <sankey/>
             </field>
         </record>
 
@@ -168,9 +205,14 @@
 
         <menuitem id="menu_bilanz_root"
                   name="Abfallbilanz"
-                  parent="product_waste_registry.menu_product_waste_registry_root"
+                  parent="abfall_stammdaten.menu_abfall_stammdaten_root"
                   sequence="20"
         />
+
+        <menuitem id="menu_bilanz_reports"
+                  name="Reports"
+                  parent="menu_bilanz_root"
+                  sequence="100"/>
 
         <menuitem id="waste_move_menu_moves"
                   name="Moves"
