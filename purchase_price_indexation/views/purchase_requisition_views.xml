@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_purchase_requisition_form_indexed_price" model="ir.ui.view">
+        <field name="name">purchase.requisition.form.indexed.price</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='line_ids']/list/field[@name='price_unit']" position="after">
+                <field name="is_indexed_price"/>
+                <field name="price_index_id" invisible="not is_indexed_price"/>
+                <field name="base_price" optional="show" invisible="not is_indexed_price"/>
+                <field name="base_index_value" optional="show" invisible="not is_indexed_price"/>
+                <field name="spread" optional="show" invisible="not is_indexed_price"/>
+            </xpath>
+            <xpath expr="//field[@name='line_ids']/form/group/field[@name='company_id']" position="before">
+                <separator string="Indexed Pricing"/>
+                <field name="is_indexed_price"/>
+                <field name="base_price" invisible="not is_indexed_price"/>
+                <field name="price_index_id" invisible="not is_indexed_price"/>
+                <field name="base_index_value" invisible="not is_indexed_price"/>
+                <field name="spread" invisible="not is_indexed_price"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
