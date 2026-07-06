@@ -5,6 +5,14 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_ids']/list/field[@name='quantity']" position="after">
+                <field name="show_weigh_quantity_button" column_invisible="True"/>
+                <button name="action_weigh_quantity"
+                        string="Menge verwiegen"
+                        type="object"
+                        class="btn-secondary"
+                        invisible="not show_weigh_quantity_button or not is_quantity_done_editable"/>
+            </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_view_dispatch_lists"
                         type="object"

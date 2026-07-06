@@ -1,4 +1,5 @@
-from odoo import fields, models
+from odoo import api, fields, models
+from odoo.tools.float_utils import float_round
 
 
 class StockPicking(models.Model):
@@ -30,3 +31,35 @@ class StockPicking(models.Model):
             'default_picking_ids': [(4, self.id)],
         }
         return action
+
+
+class StockMove(models.Model):
+    _inherit = 'stock.move'
+
+    show_weigh_quantity_button = fields.Boolean(
+        string='Show Weigh Quantity Button',
+        compute='_compute_show_weigh_quantity_button',
+    )
+
+    @api.depends('product_uom', 'state')
+    def _compute_show_weigh_quantity_button(self):
+        for move in self:
+            move.show_weigh_quantity_button = (
+                move.state not in ('done', 'cancel')
+                and move._is_abfall_weight_uom()
+            )
+
+    def action_weigh_quantity(self):
+        for move in self:
+            if move.state in ('done', 'cancel') or not move._is_abfall_weight_uom():
+                continue
+            move.quantity = float_round(
+                move.product_uom_qty * 0.9,
+                precision_rounding=move.product_uom.rounding,
+                rounding_method='HALF-UP',
+            )
+
+    def _is_abfall_weight_uom(self):
+        self.ensure_one()
+        uom_kg = self.env.ref('uom.product_uom_kgm', raise_if_not_found=False)
+        return bool(uom_kg and self.product_uom and self.product_uom._has_common_reference(uom_kg))
