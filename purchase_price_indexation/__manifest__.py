@@ -16,5 +16,6 @@ The indexed price is snapshotted when a new purchase order line is created.
         'security/ir.model.access.csv',
         'views/purchase_price_index_views.xml',
         'views/purchase_requisition_views.xml',
+        'views/purchase_order_views.xml',
     ],
 }

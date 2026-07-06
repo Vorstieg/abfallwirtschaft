@@ -19,12 +19,29 @@ class StockPicking(models.Model):
         related='begleitschein_recent.state',
         readonly=True,
     )
+    contains_begleitscheinpflichtig_products = fields.Boolean(
+        string='Begleitschein Required',
+        compute='_compute_contains_begleitscheinpflichtig_products',
+        store=True,
+        help="Indicates that this picking contains products with dangerous waste types.",
+    )
 
     @api.depends('begleitscheine')
     def _compute_recent_begleitschein(self):
         for picking in self:
             picking.begleitschein_recent = self.env['waste.begleitschein'].search(
                 [('stock_picking_id', '=', picking.id)], order='create_date desc', limit=1)
+
+    @api.depends(
+        'move_ids.product_id.waste_type_id.dangerous',
+        'move_line_ids.product_id.waste_type_id.dangerous',
+    )
+    def _compute_contains_begleitscheinpflichtig_products(self):
+        for picking in self:
+            products = picking.move_ids.product_id | picking.move_line_ids.product_id
+            picking.contains_begleitscheinpflichtig_products = any(
+                products.mapped('waste_type_id.dangerous')
+            )
 
     def create_begleitschein_action(self):
         if not self._get_waste_products():

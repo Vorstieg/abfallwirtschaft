@@ -15,7 +15,7 @@
     'license': 'LGPL-3',
     'images': ['images/template.png'],
 
-    'depends': ['sale_management', 'purchase', 'account','product'],
+    'depends': ['sale_management', 'purchase', 'purchase_requisition', 'account', 'product'],
     'data': [
         'views/exchange_order_views.xml',
     ],

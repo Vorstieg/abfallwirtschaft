@@ -142,6 +142,16 @@ msgid "Begleitschein Status"
 msgstr "Begleitschein-Status"
 
 #. module: abfall_vebsv_2
+#: model:ir.model.fields,field_description:abfall_vebsv_2.field_stock_picking__contains_begleitscheinpflichtig_products
+msgid "Begleitschein Required"
+msgstr "Begleitscheinpflichtig"
+
+#. module: abfall_vebsv_2
+#: model_terms:ir.ui.view,arch_db:abfall_vebsv_2.view_picking_form_begleitschein
+msgid "Begleitscheinpflichtig"
+msgstr "Begleitscheinpflichtig"
+
+#. module: abfall_vebsv_2
 #: model:ir.model.fields,field_description:abfall_vebsv_2.field_stock_picking__begleitscheine
 #: model:ir.ui.menu,name:abfall_vebsv_2.menu_waste_begleitschein_list
 msgid "Begleitscheine"
@@ -175,6 +185,11 @@ msgstr "Begleitschein stornieren"
 #: model:ir.model.fields,field_description:abfall_vebsv_2.field_waste_begleitschein__is_cancel_button_visible
 msgid "Cancel Button is visible"
 msgstr "Abbrechen-Button ist sichtbar"
+
+#. module: abfall_vebsv_2
+#: model:ir.model.fields,help:abfall_vebsv_2.field_stock_picking__contains_begleitscheinpflichtig_products
+msgid "Indicates that this picking contains products with dangerous waste types."
+msgstr "Zeigt an, dass dieser Transfer Produkte mit gefährlichen Abfallarten enthält."
 
 #. module: abfall_vebsv_2
 #: model:ir.model.fields.selection,name:abfall_vebsv_2.selection__waste_begleitschein__state__canceled

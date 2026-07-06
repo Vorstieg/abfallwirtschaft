@@ -18,6 +18,11 @@
                         </div>
                     </button>
                 </xpath>
+                <xpath expr="//sheet/*[1]" position="before">
+                    <field name="contains_begleitscheinpflichtig_products" invisible="1"/>
+                    <widget name="web_ribbon" title="Begleitscheinpflichtig" bg_color="text-bg-warning"
+                            invisible="not contains_begleitscheinpflichtig_products"/>
+                </xpath>
                 <xpath expr="//header" position="inside">
                     <button name="create_begleitschein_action" type="object" string="Create Begleitschein"
                             class="oe_highlight"/>

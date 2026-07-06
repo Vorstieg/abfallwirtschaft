@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_purchase_order_form_indexed_price" model="ir.ui.view">
+        <field name="name">purchase.order.form.indexed.price</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="before">
+                <field name="has_indexed_price" column_invisible="True"/>
+                <field name="index_price_date" optional="show" invisible="not has_indexed_price" readonly="qty_invoiced != 0"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='price_unit']" position="before">
+                <field name="has_indexed_price" invisible="1"/>
+                <field name="index_price_date" invisible="not has_indexed_price" readonly="qty_invoiced != 0"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

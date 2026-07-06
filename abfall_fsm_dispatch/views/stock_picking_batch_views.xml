@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_picking_batch_form_inherit_abfall_fsm_dispatch" model="ir.ui.view">
+        <field name="name">stock.picking.batch.form.inherit.abfall.fsm.dispatch</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/div[@name='button_box']" position="inside">
+                <button name="action_view_fsm_tasks"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-wrench"
+                        invisible="fsm_task_count == 0">
+                    <field name="fsm_task_count" widget="statinfo" string="Field Tasks"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
