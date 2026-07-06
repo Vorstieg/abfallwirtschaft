@@ -15,10 +15,12 @@ Außendienstaufgabe, wenn die Dispositionsliste bestätigt oder aktualisiert wir
         'stock',
         'fleet',
         'industry_fsm',
+        'industry_fsm_report',
     ],
     'data': [
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
+        'data/worksheet_template_data.xml',
         'data/cleanup_data.xml',
         'views/dispatch_list_views.xml',
         'views/stock_picking_views.xml',

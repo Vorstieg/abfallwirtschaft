@@ -1,4 +1,5 @@
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.tools import formatLang, html_escape
 from odoo.tools.float_utils import float_round
 
 
@@ -53,11 +54,30 @@ class StockMove(models.Model):
         for move in self:
             if move.state in ('done', 'cancel') or not move._is_abfall_weight_uom():
                 continue
+            previous_quantity = move.quantity
             move.quantity = float_round(
                 move.product_uom_qty * 0.9,
                 precision_rounding=move.product_uom.rounding,
                 rounding_method='HALF-UP',
             )
+            move._post_weigh_quantity_message(previous_quantity)
+
+    def _post_weigh_quantity_message(self, previous_quantity):
+        self.ensure_one()
+        if not self.picking_id:
+            return
+
+        self.picking_id.message_post(
+            body=_(
+                'Menge verwogen: %(product)s von %(previous_quantity)s %(uom)s '
+                'auf %(new_quantity)s %(uom)s gesetzt.',
+                product=html_escape(self.product_id.display_name),
+                previous_quantity=formatLang(self.env, previous_quantity),
+                new_quantity=formatLang(self.env, self.quantity),
+                uom=html_escape(self.product_uom.display_name),
+            ),
+            subtype_xmlid='mail.mt_note',
+        )
 
     def _is_abfall_weight_uom(self):
         self.ensure_one()

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="abfall_dispatch_worksheet_template" model="worksheet.template">
+            <field name="name">Abfall Dispatch Worksheet</field>
+            <field name="res_model">project.task</field>
+        </record>
+    </data>
+    <function model="worksheet.template" name="_setup_abfall_dispatch_worksheet_template"/>
+</odoo>

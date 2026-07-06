@@ -3,6 +3,7 @@ from datetime import timedelta
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.fields import Command
+from odoo.tools import formatLang, html_escape
 
 
 class AbfallDispatchList(models.Model):
@@ -213,24 +214,53 @@ class AbfallDispatchList(models.Model):
 
     def _get_fsm_project(self):
         self.ensure_one()
-        return self.env['project.project'].search([
+        fsm_project = self.env['project.project'].search([
             ('is_fsm', '=', True),
             ('company_id', '=', self.company_id.id),
         ], order='sequence, id', limit=1)
+        if fsm_project:
+            self._ensure_fsm_project_worksheet(fsm_project)
+        return fsm_project
+
+    def _ensure_fsm_project_worksheet(self, fsm_project):
+        vals = {}
+        if 'allow_worksheets' in fsm_project._fields and not fsm_project.allow_worksheets:
+            vals['allow_worksheets'] = True
+        if 'worksheet_template_id' in fsm_project._fields and not fsm_project.worksheet_template_id:
+            worksheet_template = self._get_abfall_dispatch_worksheet_template()
+            if worksheet_template:
+                vals['worksheet_template_id'] = worksheet_template.id
+        if vals:
+            fsm_project.write(vals)
+
+    def _get_abfall_dispatch_worksheet_template(self):
+        return self.env.ref('abfall_fsm_dispatch.abfall_dispatch_worksheet_template', raise_if_not_found=False)
 
     def _prepare_fsm_task_vals(self, picking, fsm_project):
         self.ensure_one()
         scheduled_start = picking.scheduled_date
         scheduled_end = scheduled_start + timedelta(hours=1) if scheduled_start else False
         description_parts = [
-            _('Dispatch List: %(dispatch)s', dispatch=self.name),
+            _('Dispositionsliste: %(dispatch)s', dispatch=self.name),
             _('Transfer: %(transfer)s', transfer=picking.name),
-            _('Operation Type: %(operation_type)s', operation_type=picking.picking_type_id.display_name),
+            _('Vorgangsart: %(operation_type)s', operation_type=picking.picking_type_id.display_name),
         ]
         if picking.origin:
-            description_parts.append(_('Origin: %(origin)s', origin=picking.origin))
+            description_parts.append(_('Herkunft: %(origin)s', origin=picking.origin))
+        if picking.partner_id:
+            description_parts.append(_('Kunde: %(customer)s', customer=picking.partner_id.display_name))
+            contact_address = picking.partner_id.contact_address
+            if contact_address:
+                description_parts.append(_('Adresse: %(address)s', address=contact_address))
+        if self.vehicle_id:
+            description_parts.append(_('Fahrzeug: %(vehicle)s', vehicle=self.vehicle_id.display_name))
+        elif self.vehicle_category_id:
+            description_parts.append(_('Fahrzeugkategorie: %(vehicle_category)s', vehicle_category=self.vehicle_category_id.display_name))
         if self.description:
-            description_parts.append(_('Dispatch Description: %(description)s', description=self.description))
+            description_parts.append(_('Dispo-Hinweis: %(description)s', description=self.description))
+        instruction = self._prepare_fsm_task_instruction(picking)
+        if instruction:
+            description_parts.extend(['', instruction])
 
         vals = {
             'name': f'{self.name} - {picking.name}',
@@ -239,7 +269,7 @@ class AbfallDispatchList(models.Model):
             'company_id': self.company_id.id,
             'planned_date_begin': scheduled_start,
             'date_deadline': scheduled_end,
-            'description': '\n'.join(description_parts),
+            'description': self._format_fsm_task_description(description_parts),
             'dispatch_list_id': self.id,
             'stock_picking_id': picking.id,
         }
@@ -247,4 +277,104 @@ class AbfallDispatchList(models.Model):
         if self.user_id:
             vals['user_ids'] = [Command.set([self.user_id.id])]
 
+        if 'worksheet_template_id' in self.env['project.task']._fields:
+            worksheet_template = self._get_abfall_dispatch_worksheet_template() or fsm_project.worksheet_template_id
+            if worksheet_template:
+                vals['worksheet_template_id'] = worksheet_template.id
+
         return vals
+
+    def _format_fsm_task_description(self, description_parts):
+        escaped_parts = [
+            str(html_escape(part)).replace('\n', '<br/>')
+            for part in description_parts
+        ]
+        return '<br/>'.join(escaped_parts)
+
+    def _prepare_fsm_task_instruction(self, picking):
+        self.ensure_one()
+        sections = self._get_fsm_picking_instruction_sections(picking)
+        if not any(sections.values()):
+            return False
+
+        lines = [_('Arbeitsanweisungen')]
+        section_labels = {
+            'pickup': _('Abholung'),
+            'delivery': _('Lieferung'),
+            'internal': _('Interne Bewegung'),
+            'unknown': _('Nicht klassifiziert'),
+        }
+        for section_key in ('pickup', 'delivery', 'internal', 'unknown'):
+            section_lines = sections[section_key]
+            if not section_lines:
+                continue
+            lines.extend(['', '%s:' % section_labels[section_key]])
+            lines.extend(section_lines)
+        return '\n'.join(lines)
+
+    def _get_fsm_picking_instruction_sections(self, picking):
+        sections = {
+            'pickup': [],
+            'delivery': [],
+            'internal': [],
+            'unknown': [],
+        }
+        for move in picking.move_ids.filtered(lambda stock_move: stock_move.state != 'cancel'):
+            move_lines = move.move_line_ids.filtered(lambda line: line.state != 'cancel')
+            if move_lines:
+                for move_line in move_lines:
+                    operation = self._classify_fsm_move_operation(move, move_line)
+                    sections[operation].extend(self._format_fsm_instruction_line(move, move_line))
+                continue
+            operation = self._classify_fsm_move_operation(move)
+            sections[operation].extend(self._format_fsm_instruction_line(move))
+        return sections
+
+    def _classify_fsm_move_operation(self, move, move_line=False):
+        source_location = move_line.location_id if move_line and move_line.location_id else move.location_id
+        destination_location = move_line.location_dest_id if move_line and move_line.location_dest_id else move.location_dest_id
+
+        if source_location.usage == 'customer' or move.picking_type_id.code == 'incoming':
+            return 'pickup'
+        if destination_location.usage == 'customer' or move.picking_type_id.code == 'outgoing':
+            return 'delivery'
+        if source_location.usage == 'internal' and destination_location.usage == 'internal':
+            return 'internal'
+        return 'unknown'
+
+    def _format_fsm_instruction_line(self, move, move_line=False):
+        product = move_line.product_id if move_line and move_line.product_id else move.product_id
+        product_uom = move_line.product_uom_id if move_line and move_line.product_uom_id else move.product_uom
+        quantity = self._get_fsm_instruction_quantity(move, move_line)
+        source_location = move_line.location_id if move_line and move_line.location_id else move.location_id
+        destination_location = move_line.location_dest_id if move_line and move_line.location_dest_id else move.location_dest_id
+        lot = move_line.lot_id if move_line and move_line.lot_id else self._get_fsm_instruction_move_lot(move)
+
+        lines = ['- %s: %s' % (_('Produkt'), product.display_name)]
+        if lot:
+            lines.append('  %s: %s' % (_('Container-Seriennummer'), lot.name))
+        lines.append('  %s: %s %s' % (
+            _('Menge'),
+            formatLang(self.env, quantity),
+            product_uom.display_name,
+        ))
+        if source_location:
+            lines.append('  %s: %s' % (_('Von'), source_location.display_name))
+        if destination_location:
+            lines.append('  %s: %s' % (_('Nach'), destination_location.display_name))
+        return lines
+
+    def _get_fsm_instruction_quantity(self, move, move_line=False):
+        if move_line:
+            if 'quantity' in move_line._fields:
+                return move_line.quantity or move.product_uom_qty
+            if 'qty_done' in move_line._fields:
+                return move_line.qty_done or move.product_uom_qty
+        if 'quantity' in move._fields and move.quantity:
+            return move.quantity
+        return move.product_uom_qty
+
+    def _get_fsm_instruction_move_lot(self, move):
+        if 'lot_ids' in move._fields and move.lot_ids:
+            return move.lot_ids[:1]
+        return self.env['stock.lot']
