@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Abfallwirtschaft FSM Dispatch',
-    'summary': 'Auto-create Field Service jobs from Inventory batches',
+    'summary': 'Außendienstaufgaben aus gemischten Dispositionslisten erstellen',
     'description': """
-Automatically creates one Field Service task per transfer when a stock batch
-is created or updated with pickings.
+Erstellt gemischte Dispositionslisten für Lagertransfers und je Transfer eine
+Außendienstaufgabe, wenn die Dispositionsliste bestätigt oder aktualisiert wird.
     """,
     'author': 'Vorstieg Software FlexCo',
     'website': 'https://abfallwirtschaft.vorstieg.eu',
@@ -12,11 +12,17 @@ is created or updated with pickings.
     'version': '0.1',
     'license': 'LGPL-3',
     'depends': [
-        'stock_picking_batch',
+        'stock',
+        'fleet',
         'industry_fsm',
     ],
     'data': [
-        'views/stock_picking_batch_views.xml',
+        'security/ir.model.access.csv',
+        'data/ir_sequence_data.xml',
+        'data/cleanup_data.xml',
+        'views/dispatch_list_views.xml',
+        'views/stock_picking_views.xml',
+        'views/project_task_views.xml',
     ],
     'installable': True,
     'application': False,

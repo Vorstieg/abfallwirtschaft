@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_abfall_dispatch_list_user,abfall.dispatch.list user,model_abfall_dispatch_list,stock.group_stock_user,1,1,1,1

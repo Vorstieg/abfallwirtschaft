@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <delete model="ir.ui.view" search="[('key', '=', 'abfall_fsm_dispatch.stock_picking_batch_form_inherit_abfall_fsm_dispatch')]"/>
+</odoo>

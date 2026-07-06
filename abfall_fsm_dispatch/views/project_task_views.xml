@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="project_task_form_inherit_abfall_fsm_dispatch" model="ir.ui.view">
+        <field name="name">project.task.form.inherit.abfall.fsm.dispatch</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="industry_fsm.view_task_form2_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="dispatch_list_id" readonly="1"/>
+                <field name="stock_picking_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

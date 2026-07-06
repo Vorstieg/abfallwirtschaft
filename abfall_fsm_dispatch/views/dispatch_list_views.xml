@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_abfall_dispatch_list_list" model="ir.ui.view">
+        <field name="name">abfall.dispatch.list.list</field>
+        <field name="model">abfall.dispatch.list</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state in ('done', 'cancel')">
+                <field name="name"/>
+                <field name="scheduled_date"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="vehicle_category_id" optional="hide"/>
+                <field name="vehicle_id" optional="hide"/>
+                <field name="picking_count"/>
+                <field name="fsm_task_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_abfall_dispatch_list_form" model="ir.ui.view">
+        <field name="name">abfall.dispatch.list.form</field>
+        <field name="model">abfall.dispatch.list</field>
+        <field name="arch" type="xml">
+            <form string="Dispatch List">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_start" string="Start" type="object" class="btn-primary" invisible="state != 'confirmed'"/>
+                    <button name="action_done" string="Done" type="object" invisible="state not in ('confirmed', 'in_progress')"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state in ('done', 'cancel')"/>
+                    <button name="action_reset_to_draft" string="Reset to Draft" type="object" invisible="state not in ('cancel',)"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,in_progress,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_pickings"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-truck"
+                                invisible="picking_count == 0">
+                            <field name="picking_count" widget="statinfo" string="Transfers"/>
+                        </button>
+                        <button name="action_view_fsm_tasks"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-wrench"
+                                invisible="fsm_task_count == 0">
+                            <field name="fsm_task_count" widget="statinfo" string="Field Tasks"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="scheduled_date"/>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                        </group>
+                        <group>
+                            <field name="vehicle_id" placeholder="Drittanbieter"/>
+                            <field name="vehicle_category_id" placeholder="Sattelzug"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Transfers" name="transfers">
+                            <field name="picking_ids"
+                                   context="{'default_company_id': company_id}"
+                                   domain="[('company_id', '=', company_id), ('state', 'not in', ('done', 'cancel'))]">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="picking_type_id"/>
+                                    <field name="partner_id"/>
+                                    <field name="location_id"/>
+                                    <field name="location_dest_id"/>
+                                    <field name="scheduled_date"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Field Service Tasks" name="field_service_tasks" invisible="fsm_task_count == 0">
+                            <field name="fsm_task_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="stock_picking_id"/>
+                                    <field name="partner_id"/>
+                                    <field name="planned_date_begin"/>
+                                    <field name="user_ids" widget="many2many_avatar_user"/>
+                                    <field name="stage_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_abfall_dispatch_list_search" model="ir.ui.view">
+        <field name="name">abfall.dispatch.list.search</field>
+        <field name="model">abfall.dispatch.list</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="vehicle_id"/>
+                <field name="vehicle_category_id"/>
+                <field name="picking_ids"/>
+                <filter name="active" string="Active" domain="[('state', 'not in', ('done', 'cancel'))]"/>
+                <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="confirmed" string="Confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter name="in_progress" string="In Progress" domain="[('state', '=', 'in_progress')]"/>
+                <filter name="done" string="Done" domain="[('state', '=', 'done')]"/>
+                <group>
+                    <filter string="Responsible" name="group_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Vehicle" name="group_vehicle" context="{'group_by': 'vehicle_id'}"/>
+                    <filter string="Vehicle Category" name="group_vehicle_category" context="{'group_by': 'vehicle_category_id'}"/>
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Scheduled Date" name="group_scheduled_date" context="{'group_by': 'scheduled_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_abfall_dispatch_list" model="ir.actions.act_window">
+        <field name="name">Dispatch Lists</field>
+        <field name="res_model">abfall.dispatch.list</field>
+        <field name="view_mode">list,form</field>
+        <field name="path">dispatch-lists</field>
+        <field name="search_view_id" ref="view_abfall_dispatch_list_search"/>
+        <field name="context">{'search_default_active': 1}</field>
+    </record>
+
+    <menuitem id="menu_abfall_dispatch_lists"
+              name="Dispatch Lists"
+              parent="stock.menu_stock_warehouse_mgmt"
+              action="action_abfall_dispatch_list"
+              sequence="2"/>
+</odoo>

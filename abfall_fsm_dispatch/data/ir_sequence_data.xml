@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_abfall_dispatch_list" model="ir.sequence">
+        <field name="name">Dispatch List</field>
+        <field name="code">abfall.dispatch.list</field>
+        <field name="prefix">DL/%(y)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

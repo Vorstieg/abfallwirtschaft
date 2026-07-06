@@ -1,0 +1,496 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* abfall_fsm_dispatch
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-06 00:00+0000\n"
+"PO-Revision-Date: 2026-07-06 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: abfall_fsm_dispatch
+msgid "Create Field Service jobs from mixed dispatch lists"
+msgstr "Außendienstaufgaben aus gemischten Dispositionslisten erstellen"
+
+#. module: abfall_fsm_dispatch
+msgid ""
+"\n"
+"Creates mixed dispatch lists for stock transfers and one Field Service task\n"
+"per transfer when the dispatch list is confirmed or updated.\n"
+"    "
+msgstr ""
+"\n"
+"Erstellt gemischte Dispositionslisten für Lagertransfers und je Transfer eine "
+"Außendienstaufgabe, wenn die Dispositionsliste bestätigt oder aktualisiert "
+"wird.\n"
+"    "
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model,name:abfall_fsm_dispatch.model_abfall_dispatch_list
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_form
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__name
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_project_task__dispatch_list_id
+#: code:addons/abfall_fsm_dispatch/models/dispatch_list.py:0
+#, python-format
+msgid "Dispatch List"
+msgstr "Dispositionsliste"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.actions.act_window,name:abfall_fsm_dispatch.action_abfall_dispatch_list
+#: model:ir.ui.menu,name:abfall_fsm_dispatch.menu_abfall_dispatch_lists
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_stock_picking__dispatch_list_ids
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.stock_picking_form_inherit_abfall_fsm_dispatch
+msgid "Dispatch Lists"
+msgstr "Dispositionslisten"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_stock_picking__dispatch_list_count
+msgid "Dispatch List Count"
+msgstr "Anzahl Dispositionslisten"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__description
+msgid "Description"
+msgstr "Beschreibung"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__company_id
+msgid "Company"
+msgstr "Unternehmen"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__user_id
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_search
+msgid "Responsible"
+msgstr "Verantwortlich"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__scheduled_date
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_search
+msgid "Scheduled Date"
+msgstr "Geplantes Datum"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__vehicle_id
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_search
+msgid "Vehicle"
+msgstr "Fahrzeug"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__vehicle_category_id
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_search
+msgid "Vehicle Category"
+msgstr "Fahrzeugkategorie"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__picking_ids
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_form
+msgid "Transfers"
+msgstr "Transfers"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__picking_count
+msgid "Transfer Count"
+msgstr "Anzahl Transfers"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_project_task__stock_picking_id
+msgid "Stock Transfer"
+msgstr "Lagertransfer"
+
+#. module: abfall_fsm_dispatch
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_form
+msgid "Field Tasks"
+msgstr "Außendienstaufgaben"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__fsm_task_ids
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_form
+msgid "Field Service Tasks"
+msgstr "Außendienstaufgaben"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__fsm_task_count
+msgid "Field Service Task Count"
+msgstr "Anzahl Außendienstaufgaben"
+
+#. module: abfall_fsm_dispatch
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_form
+msgid "Confirm"
+msgstr "Bestätigen"
+
+#. module: abfall_fsm_dispatch
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_form
+msgid "Start"
+msgstr "Starten"
+
+#. module: abfall_fsm_dispatch
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_form
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_search
+#: model:ir.model.fields.selection,name:abfall_fsm_dispatch.selection__abfall_dispatch_list__state__done
+msgid "Done"
+msgstr "Erledigt"
+
+#. module: abfall_fsm_dispatch
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_form
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#. module: abfall_fsm_dispatch
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_form
+msgid "Reset to Draft"
+msgstr "Auf Entwurf zurücksetzen"
+
+#. module: abfall_fsm_dispatch
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_search
+#: model:ir.model.fields.selection,name:abfall_fsm_dispatch.selection__abfall_dispatch_list__state__draft
+msgid "Draft"
+msgstr "Entwurf"
+
+#. module: abfall_fsm_dispatch
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_search
+#: model:ir.model.fields.selection,name:abfall_fsm_dispatch.selection__abfall_dispatch_list__state__confirmed
+msgid "Confirmed"
+msgstr "Bestätigt"
+
+#. module: abfall_fsm_dispatch
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_search
+#: model:ir.model.fields.selection,name:abfall_fsm_dispatch.selection__abfall_dispatch_list__state__in_progress
+msgid "In Progress"
+msgstr "In Bearbeitung"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields.selection,name:abfall_fsm_dispatch.selection__abfall_dispatch_list__state__cancel
+msgid "Cancelled"
+msgstr "Abgebrochen"
+
+#. module: abfall_fsm_dispatch
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_search
+msgid "Active"
+msgstr "Aktiv"
+
+#. module: abfall_fsm_dispatch
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.view_abfall_dispatch_list_search
+msgid "State"
+msgstr "Status"
+
+#. module: abfall_fsm_dispatch
+#: code:addons/abfall_fsm_dispatch/models/dispatch_list.py:0
+#, python-format
+msgid "New"
+msgstr "Neu"
+
+#. module: abfall_fsm_dispatch
+#: code:addons/abfall_fsm_dispatch/models/dispatch_list.py:0
+#, python-format
+msgid "Add at least one transfer before confirming the dispatch list."
+msgstr "Fügen Sie mindestens einen Transfer hinzu, bevor Sie die Dispositionsliste bestätigen."
+
+#. module: abfall_fsm_dispatch
+#: code:addons/abfall_fsm_dispatch/models/dispatch_list.py:0
+#, python-format
+msgid "Done or cancelled transfers cannot be added to a dispatch list: %(pickings)s"
+msgstr "Erledigte oder abgebrochene Transfers können keiner Dispositionsliste hinzugefügt werden: %(pickings)s"
+
+#. module: abfall_fsm_dispatch
+#: code:addons/abfall_fsm_dispatch/models/dispatch_list.py:0
+#, python-format
+msgid "Transfers from another company cannot be added to this dispatch list: %(pickings)s"
+msgstr "Transfers eines anderen Unternehmens können dieser Dispositionsliste nicht hinzugefügt werden: %(pickings)s"
+
+#. module: abfall_fsm_dispatch
+#: code:addons/abfall_fsm_dispatch/models/dispatch_list.py:0
+#, python-format
+msgid "Transfers can only be on one active dispatch list. %(pickings)s are already on %(dispatch)s."
+msgstr "Transfers können nur auf einer aktiven Dispositionsliste stehen. %(pickings)s sind bereits auf %(dispatch)s."
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.constraint,message:abfall_fsm_dispatch.constraint_project_task_project_task_stock_picking_unique
+msgid "A stock transfer can only be linked to one field service task."
+msgstr "Ein Lagertransfer kann nur mit einer Außendienstaufgabe verknüpft werden."
+
+#. module: abfall_fsm_dispatch
+#. odoo-python
+#: code:addons/abfall_fsm_dispatch/models/project_task.py:0
+msgid ""
+"The stock transfer %(picking)s could not be validated automatically. Open the "
+"transfer and validate it manually."
+msgstr ""
+"Der Lagertransfer %(picking)s konnte nicht automatisch validiert werden. "
+"Öffnen Sie den Transfer und validieren Sie ihn manuell."
+
+#. module: abfall_fsm_dispatch
+#: code:addons/abfall_fsm_dispatch/models/dispatch_list.py:0
+#, python-format
+msgid "Dispatch List: %(dispatch)s"
+msgstr "Dispositionsliste: %(dispatch)s"
+
+#. module: abfall_fsm_dispatch
+#: code:addons/abfall_fsm_dispatch/models/dispatch_list.py:0
+#, python-format
+msgid "Transfer: %(transfer)s"
+msgstr "Transfer: %(transfer)s"
+
+#. module: abfall_fsm_dispatch
+#: code:addons/abfall_fsm_dispatch/models/dispatch_list.py:0
+#, python-format
+msgid "Operation Type: %(operation_type)s"
+msgstr "Vorgangsart: %(operation_type)s"
+
+#. module: abfall_fsm_dispatch
+#: code:addons/abfall_fsm_dispatch/models/dispatch_list.py:0
+#, python-format
+msgid "Origin: %(origin)s"
+msgstr "Herkunft: %(origin)s"
+
+#. module: abfall_fsm_dispatch
+#: code:addons/abfall_fsm_dispatch/models/dispatch_list.py:0
+#, python-format
+msgid "Dispatch Description: %(description)s"
+msgstr "Beschreibung der Dispositionsliste: %(description)s"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__message_needaction
+msgid "Action Needed"
+msgstr "Aktion erforderlich"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__activity_ids
+msgid "Activities"
+msgstr "Aktivitäten"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Aktivitätsausnahme-Dekoration"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__activity_state
+msgid "Activity State"
+msgstr "Aktivitätsstatus"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Aktivitätstyp-Symbol"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__message_attachment_count
+msgid "Attachment Count"
+msgstr "Anzahl Anhänge"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__create_uid
+msgid "Created by"
+msgstr "Erstellt von"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__create_date
+msgid "Created on"
+msgstr "Erstellt am"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__display_name
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_project_task__display_name
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_stock_picking__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__message_follower_ids
+msgid "Followers"
+msgstr "Follower"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Follower (Partner)"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,help:abfall_fsm_dispatch.field_abfall_dispatch_list__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Font-Awesome-Symbol, z. B. fa-tasks"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__has_message
+msgid "Has Message"
+msgstr "Hat Nachricht"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__id
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_project_task__id
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_stock_picking__id
+msgid "ID"
+msgstr "ID"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__activity_exception_icon
+msgid "Icon"
+msgstr "Symbol"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,help:abfall_fsm_dispatch.field_abfall_dispatch_list__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Symbol zur Kennzeichnung einer Aktivitätsausnahme."
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,help:abfall_fsm_dispatch.field_abfall_dispatch_list__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Wenn aktiviert, erfordern neue Nachrichten Ihre Aufmerksamkeit."
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,help:abfall_fsm_dispatch.field_abfall_dispatch_list__message_has_error
+#: model:ir.model.fields,help:abfall_fsm_dispatch.field_abfall_dispatch_list__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Wenn aktiviert, haben einige Nachrichten einen Zustellfehler."
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__message_is_follower
+msgid "Is Follower"
+msgstr "Ist Follower"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert von"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__message_has_error
+msgid "Message Delivery error"
+msgstr "Nachrichten-Zustellfehler"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__message_ids
+msgid "Messages"
+msgstr "Nachrichten"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Frist meiner Aktivität"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Frist der nächsten Aktivität"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__activity_summary
+msgid "Next Activity Summary"
+msgstr "Zusammenfassung der nächsten Aktivität"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__activity_type_id
+msgid "Next Activity Type"
+msgstr "Nächster Aktivitätstyp"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Anzahl Aktionen"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__message_has_error_counter
+msgid "Number of errors"
+msgstr "Anzahl Fehler"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,help:abfall_fsm_dispatch.field_abfall_dispatch_list__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Anzahl Nachrichten, die eine Aktion erfordern"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,help:abfall_fsm_dispatch.field_abfall_dispatch_list__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Anzahl Nachrichten mit Zustellfehler"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__rating_ids
+msgid "Ratings"
+msgstr "Bewertungen"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__activity_user_id
+msgid "Responsible User"
+msgstr "Verantwortlicher Benutzer"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "SMS-Zustellfehler"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,help:abfall_fsm_dispatch.field_abfall_dispatch_list__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Status basierend auf Aktivitäten\n"
+"Überfällig: Das Fälligkeitsdatum ist bereits überschritten\n"
+"Heute: Das Aktivitätsdatum ist heute\n"
+"Geplant: Zukünftige Aktivitäten."
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model,name:abfall_fsm_dispatch.model_project_task
+msgid "Task"
+msgstr "Aufgabe"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model,name:abfall_fsm_dispatch.model_stock_picking
+msgid "Transfer"
+msgstr "Transfer"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,help:abfall_fsm_dispatch.field_abfall_dispatch_list__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Typ der Aktivitätsausnahme am Datensatz."
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,help:abfall_fsm_dispatch.field_project_task__display_name
+msgid ""
+"Use these keywords in the title to set new tasks:\n"
+"\n"
+"        30h Allocate 30 hours to the task\n"
+"        #tags Set tags on the task\n"
+"        @user Assign the task to a user\n"
+"        ! Set the task a medium priority\n"
+"        !! Set the task a high priority\n"
+"        !!! Set the task a urgent priority\n"
+"\n"
+"        Make sure to use the right format and order e.g. Improve the configuration screen 5h #feature #v16 @Mitchell !"
+msgstr ""
+"Verwenden Sie diese Schlüsselwörter im Titel, um neue Aufgaben einzustellen:\n"
+"\n"
+"        30h Der Aufgabe 30 Stunden zuweisen\n"
+"        #tags Tags auf der Aufgabe setzen\n"
+"        @user Die Aufgabe einem Benutzer zuweisen\n"
+"        ! Der Aufgabe mittlere Priorität geben\n"
+"        !! Der Aufgabe hohe Priorität geben\n"
+"        !!! Der Aufgabe dringende Priorität geben\n"
+"\n"
+"        Achten Sie auf das richtige Format und die richtige Reihenfolge, z. B. Konfigurationsbildschirm verbessern 5h #feature #v16 @Mitchell !"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__website_message_ids
+msgid "Website Messages"
+msgstr "Website-Nachrichten"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,help:abfall_fsm_dispatch.field_abfall_dispatch_list__website_message_ids
+msgid "Website communication history"
+msgstr "Website-Kommunikationsverlauf"
