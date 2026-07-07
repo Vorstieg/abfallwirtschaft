@@ -65,6 +65,11 @@
                             <field name="description"/>
                         </group>
                     </group>
+                    <field name="vehicle_waste_management_enabled" invisible="1"/>
+                    <field name="vehicle_missing_waste_type_ids" invisible="1"/>
+                    <div class="alert alert-warning" role="alert" invisible="not vehicle_waste_warning">
+                        <field name="vehicle_waste_warning" nolabel="1" readonly="1"/>
+                    </div>
                     <notebook>
                         <page string="Transfers" name="transfers">
                             <field name="picking_ids"

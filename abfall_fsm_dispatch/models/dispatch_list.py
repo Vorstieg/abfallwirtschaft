@@ -42,6 +42,24 @@ class AbfallDispatchList(models.Model):
         string='Vehicle',
         tracking=True,
     )
+    hazardous_waste_type_ids = fields.Many2many(
+        'waste.type',
+        string='Hazardous Waste Types',
+        compute='_compute_vehicle_waste_warning',
+    )
+    vehicle_missing_waste_type_ids = fields.Many2many(
+        'waste.type',
+        string='Missing Vehicle Waste Type Approvals',
+        compute='_compute_vehicle_waste_warning',
+    )
+    vehicle_waste_warning = fields.Char(
+        string='Vehicle Waste Warning',
+        compute='_compute_vehicle_waste_warning',
+    )
+    vehicle_waste_management_enabled = fields.Boolean(
+        string='Vehicle Waste Management Enabled',
+        compute='_compute_vehicle_waste_management_enabled',
+    )
     vehicle_category_id = fields.Many2one(
         'fleet.vehicle.model.category',
         string='Vehicle Category',
@@ -98,6 +116,67 @@ class AbfallDispatchList(models.Model):
     def _compute_vehicle_category_id(self):
         for dispatch in self:
             dispatch.vehicle_category_id = dispatch.vehicle_id.category_id
+
+    @api.model
+    def _is_vehicle_waste_management_enabled(self):
+        value = self.env['ir.config_parameter'].sudo().get_param(
+            'abfall_fsm_dispatch.vehicle_waste_management'
+        )
+        return value in ('1', 'True', 'true')
+
+    def _compute_vehicle_waste_management_enabled(self):
+        enabled = self._is_vehicle_waste_management_enabled()
+        for dispatch in self:
+            dispatch.vehicle_waste_management_enabled = enabled
+
+    @api.depends(
+        'vehicle_id',
+        'vehicle_id.model_id.allowed_waste_type_ids',
+        'picking_ids.move_ids.product_id.waste_type_id',
+        'picking_ids.move_ids.product_id.waste_type_id.dangerous',
+        'picking_ids.move_line_ids.product_id.waste_type_id',
+        'picking_ids.move_line_ids.product_id.waste_type_id.dangerous',
+    )
+    def _compute_vehicle_waste_warning(self):
+        enabled = self._is_vehicle_waste_management_enabled()
+        for dispatch in self:
+            hazardous_waste_types = dispatch._get_hazardous_waste_types()
+            allowed_waste_types = dispatch.vehicle_id.model_id.allowed_waste_type_ids
+            missing_waste_types = hazardous_waste_types - allowed_waste_types if enabled and dispatch.vehicle_id else self.env['waste.type']
+
+            dispatch.hazardous_waste_type_ids = hazardous_waste_types
+            dispatch.vehicle_missing_waste_type_ids = missing_waste_types
+            dispatch.vehicle_waste_warning = dispatch._prepare_vehicle_waste_warning(missing_waste_types) if missing_waste_types else False
+
+    def _get_hazardous_waste_types(self):
+        self.ensure_one()
+        products = self.picking_ids.move_ids.product_id | self.picking_ids.move_line_ids.product_id
+        return products.mapped('waste_type_id').filtered('dangerous')
+
+    def _prepare_vehicle_waste_warning(self, missing_waste_types):
+        self.ensure_one()
+        waste_types = ', '.join(missing_waste_types.mapped('display_name'))
+        vehicle = self.vehicle_id.display_name
+        return _(
+            'Warnung: %(vehicle)s ist für diese gefährlichen Abfallarten nicht freigegeben: %(waste_types)s',
+            vehicle=vehicle,
+            waste_types=waste_types,
+        )
+
+    @api.onchange('vehicle_id', 'picking_ids')
+    def _onchange_vehicle_waste_warning(self):
+        if not self.vehicle_waste_warning:
+            return
+        return {
+            'warning': {
+                'title': _('Abfallarten-Freigabe am Fahrzeug fehlt'),
+                'message': _(
+                    '%(vehicle)s ist für diese gefährlichen Abfallarten nicht freigegeben: %(waste_types)s',
+                    vehicle=self.vehicle_id.display_name,
+                    waste_types=', '.join(self.vehicle_missing_waste_type_ids.mapped('display_name')),
+                ),
+            },
+        }
 
     @api.model_create_multi
     def create(self, vals_list):

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="analytic_plan_streckengeschaeft" model="account.analytic.plan">
+        <field name="name">Streckengeschäft</field>
+    </record>
+</odoo>

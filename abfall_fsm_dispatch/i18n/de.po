@@ -494,3 +494,71 @@ msgstr "Website-Nachrichten"
 #: model:ir.model.fields,help:abfall_fsm_dispatch.field_abfall_dispatch_list__website_message_ids
 msgid "Website communication history"
 msgstr "Website-Kommunikationsverlauf"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_fleet_vehicle_model__allowed_waste_type_ids
+msgid "Allowed Waste Types"
+msgstr "Zulässige Abfallarten"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,help:abfall_fsm_dispatch.field_fleet_vehicle_model__allowed_waste_type_ids
+msgid "Dangerous waste types this vehicle model is allowed to transport."
+msgstr "Gefährliche Abfallarten, die dieses Fahrzeugmodell transportieren darf."
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_fleet_vehicle_model__abfall_waste_management_enabled
+msgid "Waste Management Enabled"
+msgstr "Abfallmanagement aktiviert"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_res_config_settings__abfall_dispatch_vehicle_waste_management
+msgid "Check vehicle waste type approvals"
+msgstr "Abfallarten-Freigaben für Fahrzeuge prüfen"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__hazardous_waste_type_ids
+msgid "Hazardous Waste Types"
+msgstr "Gefährliche Abfallarten"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__vehicle_missing_waste_type_ids
+msgid "Missing Vehicle Waste Type Approvals"
+msgstr "Fehlende Abfallarten-Freigaben am Fahrzeug"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__vehicle_waste_warning
+msgid "Vehicle Waste Warning"
+msgstr "Fahrzeug-Abfallwarnung"
+
+#. module: abfall_fsm_dispatch
+#: model:ir.model.fields,field_description:abfall_fsm_dispatch.field_abfall_dispatch_list__vehicle_waste_management_enabled
+msgid "Vehicle Waste Management Enabled"
+msgstr "Fahrzeug-Abfallmanagement aktiviert"
+
+#. module: abfall_fsm_dispatch
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.res_config_settings_view_form_abfall_dispatch
+msgid "Disposition"
+msgstr "Disposition"
+
+#. module: abfall_fsm_dispatch
+#: model_terms:ir.ui.view,arch_db:abfall_fsm_dispatch.res_config_settings_view_form_abfall_dispatch
+msgid "Shows a warning on dispatch lists when a vehicle model is not approved for hazardous waste types in the selected transfers."
+msgstr "Zeigt auf Dispositionslisten eine Warnung an, wenn ein Fahrzeugmodell für gefährliche Abfallarten in den ausgewählten Transfers nicht freigegeben ist."
+
+#. module: abfall_fsm_dispatch
+#: code:addons/abfall_fsm_dispatch/models/dispatch_list.py:0
+#, python-format
+msgid "Warnung: %(vehicle)s ist für diese gefährlichen Abfallarten nicht freigegeben: %(waste_types)s"
+msgstr "Warnung: %(vehicle)s ist für diese gefährlichen Abfallarten nicht freigegeben: %(waste_types)s"
+
+#. module: abfall_fsm_dispatch
+#: code:addons/abfall_fsm_dispatch/models/dispatch_list.py:0
+#, python-format
+msgid "Abfallarten-Freigabe am Fahrzeug fehlt"
+msgstr "Abfallarten-Freigabe am Fahrzeug fehlt"
+
+#. module: abfall_fsm_dispatch
+#: code:addons/abfall_fsm_dispatch/models/dispatch_list.py:0
+#, python-format
+msgid "%(vehicle)s ist für diese gefährlichen Abfallarten nicht freigegeben: %(waste_types)s"
+msgstr "%(vehicle)s ist für diese gefährlichen Abfallarten nicht freigegeben: %(waste_types)s"

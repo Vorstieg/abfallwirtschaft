@@ -14,6 +14,7 @@ Außendienstaufgabe, wenn die Dispositionsliste bestätigt oder aktualisiert wir
     'depends': [
         'stock',
         'fleet',
+        'abfall_anlagenverzeichnis',
         'industry_fsm',
         'industry_fsm_report',
     ],
@@ -23,6 +24,8 @@ Außendienstaufgabe, wenn die Dispositionsliste bestätigt oder aktualisiert wir
         'data/worksheet_template_data.xml',
         'data/cleanup_data.xml',
         'views/dispatch_list_views.xml',
+        'views/fleet_vehicle_model_views.xml',
+        'views/res_config_settings_views.xml',
         'views/stock_picking_views.xml',
         'views/project_task_views.xml',
     ],
