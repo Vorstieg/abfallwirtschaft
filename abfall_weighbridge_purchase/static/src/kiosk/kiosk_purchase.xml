@@ -1,0 +1,13 @@
+<templates xml:space="preserve">
+    <t t-name="abfall_weighbridge_purchase.Kiosk" t-inherit="abfall_weighbridge.Kiosk" t-inherit-mode="extension">
+        <xpath expr="//button[@t-on-click='createTicket']" position="before">
+            <div t-if="state.commercialRole === 'purchase'" class="mt-3">
+                <label class="form-label">Purchase order line</label>
+                <select class="form-select form-select-lg" t-model.number="state.purchaseLineId">
+                    <option value="0">Spot purchase (create a new order)</option>
+                    <option t-foreach="state.purchaseLines" t-as="line" t-key="line.id" t-att-value="line.id" t-esc="line.label"/>
+                </select>
+            </div>
+        </xpath>
+    </t>
+</templates>

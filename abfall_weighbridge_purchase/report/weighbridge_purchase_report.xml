@@ -1,0 +1,1 @@
+<odoo><template id="report_weighbridge_ticket_purchase" inherit_id="abfall_weighbridge.report_weighbridge_ticket"><xpath expr="//div[hasclass('page')]" position="inside"><p t-if="o.purchase_line_id"><strong>Purchase order:</strong> <span t-field="o.purchase_line_id.order_id.name"/></p></xpath></template></odoo>

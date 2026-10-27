@@ -1,0 +1,29 @@
+<odoo>
+    <record id="action_report_weighbridge_ticket" model="ir.actions.report">
+        <field name="name">Weigh Ticket</field><field name="model">weighbridge.ticket</field>
+        <field name="report_type">qweb-pdf</field><field name="report_name">abfall_weighbridge.report_weighbridge_ticket</field>
+        <field name="report_file">abfall_weighbridge.report_weighbridge_ticket</field>
+        <field name="binding_model_id" ref="model_weighbridge_ticket"/><field name="binding_type">report</field>
+        <field name="print_report_name">'Weigh Ticket - %s' % object.name</field>
+    </record>
+    <template id="report_weighbridge_ticket">
+        <t t-call="web.html_container"><t t-foreach="docs" t-as="o"><t t-call="web.external_layout">
+            <div class="page">
+                <h2>Weigh Ticket <span t-field="o.name"/></h2>
+                <p><strong>Downstream ERP evidence.</strong> The certified, authoritative weighing record is held in the SysTec IT3/ASM archive.</p>
+                <table class="table table-sm table-borderless">
+                    <tr><th>Station</th><td t-field="o.station_id"/><th>Terminal / scale</th><td><span t-field="o.station_id.terminal_number"/> / <span t-field="o.station_id.scale_number"/></td></tr>
+                    <tr><th>Partner</th><td t-field="o.partner_id"/><th>Product</th><td t-field="o.product_id"/></tr>
+                    <tr><th>Direction</th><td t-field="o.direction"/><th>Commercial role</th><td t-field="o.commercial_role"/></tr>
+                </table>
+                <h4>Certified captures</h4>
+                <table class="table table-sm">
+                    <thead><tr><th>Position</th><th>Terminal date/time</th><th>Archive ID</th><th>Gross</th><th>Tare</th><th>Net</th><th>Status</th></tr></thead>
+                    <tbody><tr t-foreach="o.measurement_ids.sorted('position')" t-as="m"><td t-field="m.position"/><td t-field="m.terminal_timestamp"/><td t-field="m.archive_id"/><td><span t-field="m.gross_text"/> <span t-field="m.unit"/></td><td><span t-field="m.tare_text"/> <span t-field="m.unit"/></td><td><span t-field="m.net_text"/> <span t-field="m.unit"/></td><td t-field="m.scale_status"/></tr></tbody>
+                </table>
+                <table class="table table-sm"><tr><th>Measured net</th><td><span t-field="o.measured_net_kg"/> kg</td></tr><tr><th>Deductions</th><td><span t-field="o.deduction_kg"/> kg</td></tr><tr><th>Payable quantity</th><td><strong><span t-field="o.payable_weight_kg"/> kg</strong></td></tr></table>
+                <div t-if="o.deduction_ids"><h4>Deductions</h4><ul><li t-foreach="o.deduction_ids" t-as="d"><span t-field="d.reason"/>: <span t-field="d.amount_kg"/> kg</li></ul></div>
+            </div>
+        </t></t></t>
+    </template>
+</odoo>

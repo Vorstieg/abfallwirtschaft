@@ -1,0 +1,23 @@
+<templates xml:space="preserve">
+    <t t-name="abfall_weighbridge.Kiosk">
+        <div class="o_weighbridge_kiosk p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4"><h1>Weighbridge</h1><div class="o_wb_live" t-att-class="state.live.stale ? 'is-stale' : (state.live.settled ? 'is-stable' : 'is-motion')"><strong t-esc="state.live.weight"/> <span t-esc="state.live.unit"/><small t-esc="state.live.stale ? ' stale' : (state.live.settled ? ' stable' : ' motion')"/></div></div>
+            <div class="alert alert-danger" t-if="state.error" t-esc="state.error"/><div class="alert alert-info" t-if="state.message" t-esc="state.message"/>
+            <div class="row g-4">
+                <section class="col-lg-6"><div class="card h-100"><div class="card-body"><h3>New ticket</h3>
+                    <label class="form-label">Station</label><select class="form-select form-select-lg mb-3" t-on-change="onStationChange"><option t-foreach="state.stations" t-as="station" t-key="station.id" t-att-value="station.id" t-att-selected="station.id === state.stationId" t-esc="station.name"/></select>
+                    <label class="form-label">Partner</label><select class="form-select form-select-lg mb-3" t-on-change="onPartnerChange"><option value="0">Select…</option><option t-foreach="state.partners" t-as="partner" t-key="partner.id" t-att-value="partner.id" t-esc="partner.display_name"/></select>
+                    <label class="form-label">Product</label><select class="form-select form-select-lg mb-3" t-on-change="onProductChange"><option value="0">Select…</option><option t-foreach="state.products" t-as="product" t-key="product.id" t-att-value="product.id" t-esc="product.display_name"/></select>
+                    <div class="row"><div class="col"><label class="form-label">Physical direction</label><select class="form-select form-select-lg" t-model="state.direction"><option value="incoming">Incoming</option><option value="outgoing">Outgoing</option></select></div><div class="col"><label class="form-label">Commercial role</label><select class="form-select form-select-lg" t-on-change="onRoleChange"><option value="purchase">Purchase</option><option value="sale">Sale</option><option value="no_charge">No charge</option></select></div></div>
+                    <button class="btn btn-primary btn-lg w-100 mt-4" t-on-click="createTicket" t-att-disabled="state.busy">Create ticket</button>
+                </div></div></section>
+                <section class="col-lg-6"><div class="card h-100"><div class="card-body"><h3>Continue open ticket</h3>
+                    <select class="form-select form-select-lg mb-4" t-on-change="selectTicket"><option value="0">Select first-weigh ticket…</option><option t-foreach="state.openTickets" t-as="ticket" t-key="ticket.id" t-att-value="ticket.id"><t t-esc="ticket.name"/> — <t t-esc="ticket.partner_id[1]"/> — <t t-esc="ticket.product_id[1]"/></option></select>
+                    <div t-if="state.ticket" class="o_wb_ticket"><h2 t-esc="state.ticket.name"/><p><strong>Status:</strong> <span t-esc="state.ticket.state"/></p><p><strong>Partner:</strong> <span t-esc="state.ticket.partner_id[1]"/></p><p><strong>Product:</strong> <span t-esc="state.ticket.product_id[1]"/></p><div t-if="state.ticket.state !== 'draft'" class="display-6"><t t-esc="state.ticket.payable_weight_kg.toFixed(3)"/> kg payable</div></div>
+                    <button class="btn btn-success btn-lg w-100 mt-4" t-on-click="capture" t-att-disabled="state.busy || !state.ticketId || !state.live.settled || state.live.stale"><t t-if="state.busy">Capturing…</t><t t-else="">Capture certified weight</t></button>
+                    <button class="btn btn-outline-secondary btn-lg w-100 mt-3" t-on-click="printTicket" t-att-disabled="!state.ticket || state.ticket.state !== 'completed'">Print weigh ticket</button>
+                </div></div></section>
+            </div>
+        </div>
+    </t>
+</templates>

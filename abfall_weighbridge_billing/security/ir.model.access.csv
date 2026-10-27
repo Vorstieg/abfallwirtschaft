@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ticket_accounting,weighbridge.ticket accounting,abfall_weighbridge.model_weighbridge_ticket,group_weighbridge_accounting,1,0,0,0
+access_measurement_accounting,weighbridge.measurement accounting,abfall_weighbridge.model_weighbridge_measurement,group_weighbridge_accounting,1,0,0,0
+access_profile_accounting,weighbridge.billing.profile accounting,model_weighbridge_billing_profile,group_weighbridge_accounting,1,1,1,1
+access_profile_admin,weighbridge.billing.profile admin,model_weighbridge_billing_profile,abfall_weighbridge.group_weighbridge_station_admin,1,1,1,1

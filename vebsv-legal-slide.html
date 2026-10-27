@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VEBSV 2.0 Rechtliche Kernpunkte</title>
+  <style>
+    :root {
+      --bg1: #f6f8fb;
+      --bg2: #ffffff;
+      --text: #0f172a;
+      --muted: #334155;
+      --accent: #0b5fff;
+      --line: #dbe3ef;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(160deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      width: 100%;
+      height: 100%;
+    }
+    .slide {
+      box-sizing: border-box;
+      width: 100vw;
+      height: 100vh;
+      padding: 1.5cm 1.8cm;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 0.35cm;
+    }
+    h1 {
+      margin: 0;
+      font-size: 42px;
+      line-height: 1.1;
+      letter-spacing: 0.2px;
+    }
+    .stand {
+      margin: 0;
+      color: var(--muted);
+      font-size: 19px;
+      line-height: 1.35;
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+    }
+    .content {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 0.55cm;
+      align-items: start;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 0.45cm 0.55cm;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    }
+    .card h2 {
+      margin: 0 0 0.28cm 0;
+      font-size: 24px;
+      color: #0b3da8;
+    }
+    ul {
+      margin: 0;
+      padding-left: 0.52cm;
+      font-size: 20px;
+      line-height: 1.35;
+    }
+    li { margin: 0 0 0.2cm 0; }
+    .implication {
+      font-size: 24px;
+      line-height: 1.3;
+      font-weight: 600;
+    }
+    .footer {
+      margin-top: 0.1cm;
+      border-top: 1px solid var(--line);
+      padding-top: 0.25cm;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.4cm;
+      color: #475569;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    .source {
+      max-width: 72%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tag {
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <section class="slide">
+    <h1>VEBSV 2.0: Rechtliche Kernpunkte fuer Entscheider</h1>
+    <p class="stand">
+      <span class="tag">Stand</span><br>
+      Arbeitsentwurf der VEBSV-Verordnung (01.09.2025). Aenderungen bis zum Inkrafttreten moeglich.
+    </p>
+
+    <div class="content">
+      <div class="card">
+        <h2>Was jetzt relevant ist</h2>
+        <ul>
+          <li>Vollelektronische Begleitschein-Abwicklung fuer gefaehrliche Abfaelle und POP-Abfaelle.</li>
+          <li>Verpflichtende Nutzung fuer Betriebe mit Erlaubnis gemaess <strong>§ 24a Abs. 1</strong> und mehr als <strong>500</strong> Begleitschein-Meldungen pro Jahr.</li>
+          <li>Software muss Messages senden und empfangen koennen; Deklarationen und Meldungen sind technisch definiert.</li>
+          <li>SMS-Loesung fuer erste Uebergeber; SMS-Bestaetigung gilt als Unterschrift.</li>
+          <li>Systemausfall: laufende Transporte fortsetzen, neue Transporte mit Papierbegleitschein, Meldungen nachholen.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Management-Implikation</h2>
+        <p class="implication">VEBSV 2.0 ist nicht nur IT, sondern Compliance, Prozesssicherheit und Haftungsreduktion.</p>
+        <h2 style="margin-top:0.45cm;">Sprechtext (15-20 Sek.)</h2>
+        <p style="margin:0; font-size:17px; line-height:1.35; color:#1e293b;">
+          Die neue VEBSV 2.0 Verordnung macht den vollelektronischen Begleitschein zur Pflicht in klar definierten Faellen.
+          Wer heute digital sauber aufgesetzt ist, reduziert Compliance-Risiken, vermeidet Medienbrueche und bleibt bei Pruefungen handlungsfaehig.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="source">Quelle: WKO OOE Arbeitsentwurf | https://content.wko.at/ooe/Branchen/Industrie/Zusendungen/VEBSV%20Verordnung%20Arbeitsentwurf_.pdf</div>
+      <div>Vorstieg Software</div>
+    </div>
+  </section>
+</body>
+</html>

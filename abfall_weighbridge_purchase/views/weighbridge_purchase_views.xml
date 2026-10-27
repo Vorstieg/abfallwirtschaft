@@ -1,0 +1,7 @@
+<odoo>
+    <record id="view_weighbridge_ticket_form_purchase" model="ir.ui.view">
+        <field name="name">weighbridge.ticket.form.purchase</field><field name="model">weighbridge.ticket</field><field name="inherit_id" ref="abfall_weighbridge.view_weighbridge_ticket_form"/>
+        <field name="arch" type="xml">
+            <field name="commercial_role" position="after"><field name="purchase_line_id" invisible="commercial_role != 'purchase'" readonly="state != 'draft'"/><field name="purchase_order_id" invisible="not purchase_order_id"/><field name="price_unit" invisible="commercial_role != 'purchase'"/><field name="currency_id" invisible="commercial_role != 'purchase'"/><field name="manual_price" invisible="commercial_role != 'purchase'"/><field name="manual_price_reason" invisible="commercial_role != 'purchase' or not manual_price"/></field></field>
+    </record>
+</odoo>

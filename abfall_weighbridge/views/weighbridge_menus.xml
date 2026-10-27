@@ -1,0 +1,8 @@
+<odoo>
+    <record id="action_weighbridge_kiosk" model="ir.actions.client"><field name="name">Weighbridge Kiosk</field><field name="tag">abfall_weighbridge.kiosk</field></record>
+    <menuitem id="menu_weighbridge_root" name="Weighbridge" sequence="45" groups="abfall_weighbridge.group_weighbridge_operator"/>
+    <menuitem id="menu_weighbridge_kiosk" name="Kiosk" parent="menu_weighbridge_root" action="action_weighbridge_kiosk" sequence="1" groups="abfall_weighbridge.group_weighbridge_operator"/>
+    <menuitem id="menu_weighbridge_tickets" name="Tickets" parent="menu_weighbridge_root" action="action_weighbridge_ticket" sequence="10"/>
+    <menuitem id="menu_weighbridge_configuration" name="Configuration" parent="menu_weighbridge_root" sequence="90" groups="abfall_weighbridge.group_weighbridge_station_admin"/>
+    <menuitem id="menu_weighbridge_stations" name="Stations" parent="menu_weighbridge_configuration" action="action_weighbridge_station" groups="abfall_weighbridge.group_weighbridge_station_admin"/>
+</odoo>

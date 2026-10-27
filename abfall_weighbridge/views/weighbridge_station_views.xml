@@ -1,0 +1,27 @@
+<odoo>
+    <record id="view_weighbridge_station_list" model="ir.ui.view">
+        <field name="name">weighbridge.station.list</field>
+        <field name="model">weighbridge.station</field>
+        <field name="arch" type="xml">
+            <list><field name="name"/><field name="code"/><field name="company_id" groups="base.group_multi_company"/><field name="terminal_number"/><field name="scale_number"/><field name="connection_state"/><field name="last_seen"/></list>
+        </field>
+    </record>
+    <record id="view_weighbridge_station_form" model="ir.ui.view">
+        <field name="name">weighbridge.station.form</field>
+        <field name="model">weighbridge.station</field>
+        <field name="arch" type="xml">
+            <form string="Weighbridge Station">
+                <header><button name="action_rotate_secret" type="object" string="Rotate Secret" class="btn-secondary" groups="abfall_weighbridge.group_weighbridge_station_admin" confirm="The edge configuration must be updated immediately. Continue?"/></header>
+                <sheet>
+                    <div class="oe_title"><label for="name"/><h1><field name="name"/></h1></div>
+                    <group>
+                        <group><field name="code"/><field name="company_id"/><field name="edge_url"/><field name="allowed_origin"/><field name="shared_secret" password="True" groups="abfall_weighbridge.group_weighbridge_station_admin"/></group>
+                        <group><field name="protocol"/><field name="terminal_number"/><field name="scale_number"/><field name="archive_mode"/><field name="archive_id_length"/><field name="terminal_date_format"/><field name="terminal_time_format"/><field name="decimal_separator"/></group>
+                    </group>
+                    <group string="Health"><field name="connection_state"/><field name="last_seen"/></group>
+                </sheet><chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_weighbridge_station" model="ir.actions.act_window"><field name="name">Stations</field><field name="res_model">weighbridge.station</field><field name="view_mode">list,form</field></record>
+</odoo>

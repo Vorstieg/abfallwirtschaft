@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_station_operator,weighbridge.station operator,model_weighbridge_station,group_weighbridge_operator,1,0,0,0
+access_station_admin,weighbridge.station admin,model_weighbridge_station,group_weighbridge_station_admin,1,1,1,1
+access_ticket_operator,weighbridge.ticket operator,model_weighbridge_ticket,group_weighbridge_operator,1,1,1,0
+access_measurement_operator,weighbridge.measurement operator,model_weighbridge_measurement,group_weighbridge_operator,1,0,1,0
+access_deduction_operator,weighbridge.deduction operator,model_weighbridge_deduction,group_weighbridge_operator,1,1,1,1
+access_challenge_operator,weighbridge.capture.challenge operator,model_weighbridge_capture_challenge,group_weighbridge_operator,1,1,1,0

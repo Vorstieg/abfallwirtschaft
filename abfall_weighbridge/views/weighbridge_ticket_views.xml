@@ -1,0 +1,25 @@
+<odoo>
+    <record id="view_weighbridge_ticket_list" model="ir.ui.view">
+        <field name="name">weighbridge.ticket.list</field><field name="model">weighbridge.ticket</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'cancelled'"><field name="name"/><field name="station_id"/><field name="partner_id"/><field name="product_id"/><field name="direction"/><field name="commercial_role"/><field name="payable_weight_kg"/><field name="state"/></list></field>
+    </record>
+    <record id="view_weighbridge_ticket_form" model="ir.ui.view">
+        <field name="name">weighbridge.ticket.form</field><field name="model">weighbridge.ticket</field>
+        <field name="arch" type="xml">
+            <form>
+                <header><button name="%(action_report_weighbridge_ticket)d" type="action" string="Print Ticket" invisible="not second_measurement_id"/><field name="state" widget="statusbar" statusbar_visible="draft,first_weighed,completed,cancelled"/></header>
+                <sheet>
+                    <div class="oe_title"><label for="name"/><h1><field name="name"/></h1></div>
+                    <group><group><field name="station_id" readonly="state != 'draft'"/><field name="partner_id" readonly="state != 'draft'"/><field name="product_id" readonly="state != 'draft'"/></group><group><field name="direction" readonly="state != 'draft'"/><field name="commercial_role" readonly="state != 'draft'"/><field name="cancellation_reason" invisible="not cancellation_reason"/></group></group>
+                    <group string="Weight"><field name="measured_net_kg"/><field name="deduction_kg"/><field name="payable_weight_kg"/><field name="first_measurement_id"/><field name="second_measurement_id"/></group>
+                    <notebook>
+                        <page string="Deductions"><field name="deduction_ids" readonly="state in ('completed','cancelled')"><list editable="bottom"><field name="kind"/><field name="value"/><field name="amount_kg"/><field name="reason"/><field name="approved_by_id"/></list></field></page>
+                        <page string="Measurements"><field name="measurement_ids"><list><field name="position"/><field name="terminal_timestamp"/><field name="archive_id"/><field name="gross_text"/><field name="tare_text"/><field name="net_text"/><field name="unit"/><field name="terminal_number"/><field name="scale_number"/></list></field></page>
+                    </notebook>
+                </sheet><chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="action_weighbridge_ticket" model="ir.actions.act_window"><field name="name">Tickets</field><field name="res_model">weighbridge.ticket</field><field name="view_mode">list,form</field></record>
+</odoo>

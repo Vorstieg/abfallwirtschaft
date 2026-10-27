@@ -1,0 +1,5 @@
+<odoo>
+    <record id="privilege_weighbridge_accounting" model="res.groups.privilege"><field name="name">Weighbridge Accounting</field><field name="category_id" ref="abfall_weighbridge.module_category_weighbridge"/></record>
+    <record id="group_weighbridge_accounting" model="res.groups"><field name="name">Accounting</field><field name="sequence">10</field><field name="privilege_id" ref="privilege_weighbridge_accounting"/><field name="implied_ids" eval="[(4, ref('base.group_user'))]"/></record>
+    <record id="rule_billing_company" model="ir.rule"><field name="name">Weighbridge billing profiles by company</field><field name="model_id" ref="model_weighbridge_billing_profile"/><field name="domain_force">[('company_id', 'in', company_ids)]</field></record>
+</odoo>

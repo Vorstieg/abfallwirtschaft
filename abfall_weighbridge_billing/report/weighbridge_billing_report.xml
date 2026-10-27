@@ -1,0 +1,1 @@
+<odoo><template id="report_weighbridge_ticket_billing" inherit_id="abfall_weighbridge.report_weighbridge_ticket"><xpath expr="//div[hasclass('page')]" position="inside"><p t-if="o.invoice_ids"><strong>Accounting documents:</strong> <span t-esc="', '.join(o.invoice_ids.mapped('name'))"/></p></xpath></template></odoo>

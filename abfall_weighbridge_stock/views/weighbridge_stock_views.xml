@@ -1,0 +1,19 @@
+<odoo>
+    <record id="view_weighbridge_station_form_stock" model="ir.ui.view">
+        <field name="name">weighbridge.station.form.stock</field><field name="model">weighbridge.station</field><field name="inherit_id" ref="abfall_weighbridge.view_weighbridge_station_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='connection_state']/ancestor::group[1]" position="before"><group string="Stock"><field name="warehouse_id" required="1"/><field name="incoming_picking_type_id" required="1"/><field name="outgoing_picking_type_id" required="1"/><field name="source_location_id" required="1"/><field name="destination_location_id" required="1"/><field name="overdelivery_tolerance"/></group></xpath></field>
+    </record>
+    <record id="view_weighbridge_ticket_form_stock" model="ir.ui.view">
+        <field name="name">weighbridge.ticket.form.stock</field><field name="model">weighbridge.ticket</field><field name="inherit_id" ref="abfall_weighbridge.view_weighbridge_ticket_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="before"><button name="action_process_stock" type="object" string="Process Stock" class="btn-primary" invisible="state != 'completed' or stock_state in ('done','reversed','not_applicable')"/><button name="action_approve_overdelivery" type="object" string="Approve Over-delivery" groups="abfall_weighbridge.group_weighbridge_manager" invisible="stock_state != 'error'"/></xpath>
+            <xpath expr="//field[@name='payable_weight_kg']/ancestor::group[1]" position="after"><group string="Stock Processing"><field name="stock_state"/><field name="stock_error" invisible="not stock_error"/><field name="picking_ids" widget="many2many_tags"/><field name="stock_move_ids" widget="many2many_tags"/></group></xpath>
+        </field>
+    </record>
+    <record id="view_weighbridge_ticket_list_stock" model="ir.ui.view">
+        <field name="name">weighbridge.ticket.list.stock</field><field name="model">weighbridge.ticket</field><field name="inherit_id" ref="abfall_weighbridge.view_weighbridge_ticket_list"/>
+        <field name="arch" type="xml">
+            <field name="state" position="after"><field name="stock_state"/></field></field>
+    </record>
+</odoo>

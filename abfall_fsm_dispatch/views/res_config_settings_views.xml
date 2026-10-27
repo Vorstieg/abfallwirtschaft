@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_abfall_dispatch" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.abfall.dispatch</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="abfall_anlagenverzeichnis.res_config_settings_waste_management_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='abfall_anlagenverzeichnis']" position="inside">
+                <block title="Disposition" name="abfall_dispatch_settings">
+                    <setting help="Shows a warning on dispatch lists when a vehicle model is not approved for hazardous waste types in the selected transfers.">
+                        <field name="abfall_dispatch_vehicle_waste_management"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

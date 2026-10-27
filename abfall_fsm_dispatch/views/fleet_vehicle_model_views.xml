@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fleet_vehicle_model_view_form_abfall_waste_management" model="ir.ui.view">
+        <field name="name">fleet.vehicle.model.form.abfall.waste.management</field>
+        <field name="model">fleet.vehicle.model</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_model_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <field name="abfall_waste_management_enabled" invisible="1"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Abfallmanagement" name="abfall_management" invisible="not abfall_waste_management_enabled">
+                    <group>
+                        <field name="allowed_waste_type_ids"
+                               widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,8 @@
+.o_weighbridge_kiosk { background: #eef1f4; min-height: 100%; color: #18212b; }
+.o_weighbridge_kiosk .card { border: 2px solid #18212b; box-shadow: 0 .3rem 1rem rgba(0,0,0,.12); }
+.o_weighbridge_kiosk .btn-lg, .o_weighbridge_kiosk .form-select-lg { min-height: 3.5rem; }
+.o_wb_live { min-width: 18rem; padding: 1rem 1.5rem; border-radius: .5rem; text-align: center; background: #198754; color: white; font-size: 1.8rem; }
+.o_wb_live.is-motion { background: #b35c00; }
+.o_wb_live.is-stale { background: #b02a37; }
+.o_wb_live small { display: block; font-size: .9rem; text-transform: uppercase; }
+
